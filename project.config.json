@@ -1,0 +1,15 @@
+{
+	"description": "A WePY project",
+	"setting": {
+		"urlCheck": true,
+		"es6": false,
+		"postcss": false,
+		"minified": false,
+		"newFeature": true
+	},
+	"compileType": "miniprogram",
+	"appid": "wx5172d3fbf2ff014f",
+	"projectname": "top-of-the-king",
+	"miniprogramRoot": "./dist",
+	"condition": {}
+}
