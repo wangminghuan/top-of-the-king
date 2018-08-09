@@ -17,7 +17,8 @@ import 'wepy-async-function'
 export default class extends wepy.app {
   config = {
     pages: [
-      'pages/index'
+      'pages/index',
+      'pages/list'
     ],
     window: {
       backgroundTextStyle: 'light',
@@ -33,7 +34,31 @@ export default class extends wepy.app {
 
   constructor () {
     super()
-    this.use('requestfix')
+    //这两个是引入promise,还有修复微信原生同时发送多个请求可能会出现错误的bug
+    this.use('requestfix');
+    this.use('promisify');
+    this.intercept('request', {
+        config (p) {
+          return p;
+        },
+        success (response) {
+          if (response.data.code == 200) {
+            return response.data.data
+          }
+          if(response.data.code==400){
+            wepy.showModal({
+              title:'出错了。。',
+              content:'请下拉重新加载页面'
+            });
+            wepy.clearStorageSync();
+          }
+
+        },
+        fail (response) {
+ 
+          return response;
+        }
+      });
   }
 
   onLaunch() {
@@ -51,19 +76,6 @@ export default class extends wepy.app {
   async testAsync () {
     const data = await this.sleep(3)
     console.log(data)
-  }
-
-  getUserInfo(cb) {
-    const that = this
-    if (this.globalData.userInfo) {
-      return this.globalData.userInfo
-    }
-    wepy.getUserInfo({
-      success (res) {
-        that.globalData.userInfo = res.userInfo
-        cb && cb(res.userInfo)
-      }
-    })
   }
 }
 </script>
