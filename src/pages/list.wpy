@@ -1,0 +1,44 @@
+<style lang="less">
+  
+</style>
+<template>
+  <view class="container">
+    <view>
+     我是列表
+    </view>
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+
+  export default class Index extends wepy.page {
+    config = {
+      navigationBarTitleText: '列表'
+    }
+    components = {
+
+    }
+    data = {
+      mynum: 20,
+    }
+
+    computed = {
+      now () {
+        return +new Date()
+      }
+    }
+
+    methods = {
+
+    }
+
+    events = {
+    }
+
+    onLoad(params, data) {
+      console.log("list")
+      console.log(data.preload.userName);
+    }
+  }
+</script>
