@@ -65,13 +65,13 @@
 
     onLoad() {
       console.log("3333")
-      wepy.request({
-            url: 'https://www.madcoder.cn/tests/sleep.php?time=1&t=css&c=',
-            success: function (d) {
-              console.log(d)
-              self.$apply()
-            }
-          })
+      // wepy.request({
+      //       url: 'https://www.madcoder.cn/tests/sleep.php?time=1&t=css&c=',
+      //       success: function (d) {
+      //         console.log(d)
+      //         self.$apply()
+      //       }
+      //     })
     }
   }
 </script>

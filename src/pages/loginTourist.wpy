@@ -1,0 +1,122 @@
+<style lang="less">
+@import "../static/style/loginComTitle.less";
+@import "../static/style/userComBtn.less";
+.login-apply-wrap {
+  padding: 0 38rpx;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  .user-input {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    height: 94rpx;
+    align-items: center;
+    background-color: #1e3462;
+    margin: 0 auto;
+    font-size: 32rpx;
+    text {
+      padding-left: 35rpx;
+      color: #8bbbd2;
+    }
+    input {
+      width: 410rpx;
+      color: #fff;
+      margin-right: 35rpx;
+    }
+  }
+  .apply-input{
+      height: auto;
+      align-items: inherit;
+      padding: 24rpx 0;
+      textarea{
+          height:225rpx ;
+          width: 430rpx;
+          color: #fff;
+          margin-right: 35rpx;
+          line-height: 30rpx;
+      }
+  }
+  .result{
+       display: flex;
+       justify-content: space-around;
+       align-items: center;
+       flex-direction: column;
+       .cont{
+         display: flex;
+          align-items: center;
+          margin: 0 auto;
+          justify-content: space-between;
+       }
+       text{
+          color:#cbe3f7;
+          // padding-left:15rpx; 
+          font-size: 34rpx;
+       }
+  }
+}
+
+</style>
+<template>
+  <view class="login-apply-wrap" >
+    <view wx:if="{{applyStatus==1}}">
+    <view class="login-com-title">登录申请</view>
+    <view class="user-input"><text>请填写姓名：</text><input type="text" placeholder="" /></view>
+    <view class="user-input" style="margin-top:47rpx"><text>请填写电话：</text><input type="number" placeholder="" /></view>
+    <view class="user-input apply-input" style="margin-top:47rpx;margin-bottom:64rpx"><text>申请理由：</text><textarea /></view>
+    <button class="user-com-btn" @tap="handleSubmit">申请</button>
+    </view>
+    <view wx:else class="result">
+    <view wx:if="{{applyStatus==2}}" >
+      <view class="cont" style="width:280rpx">
+      <image src="../static/img/login/fail.png" mode="aspectFit" style="width:35rpx;height:35rpx;"/>
+      <text>账号审核未通过</text>
+      </view>
+      <button class="user-com-btn" style="margin-top:116rpx" @tap="handleJump">继续申请</button>
+    </view>
+    <view wx:else class="cont" style="width:220rpx">
+      <image src="../static/img/login/wait.png" mode="aspectFit" style="width:35rpx;height:35rpx;"/>
+      <text>账号审核中</text>
+    </view>
+  </view>
+  </view>
+  
+</template>
+
+<script>
+import wepy from 'wepy';
+
+export default class loginApply extends wepy.page {
+  config = {
+    navigationBarTitleText: '登录申请'
+  };
+  components = {};
+  data = {
+    applyStatus:2
+  };
+
+  computed = {
+    now() {
+      // return +new Date()
+    }
+  };
+
+  methods = {
+    handleSubmit(){
+       this.applyStatus=3;
+    },
+    handleJump() {
+      this.applyStatus=1;
+    }
+  };
+
+  events = {};
+
+  onLoad(params, data) {
+    console.log('list');
+  }
+}
+</script>

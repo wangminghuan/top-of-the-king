@@ -1,0 +1,302 @@
+<style lang="less">
+.page-dynamics {
+  padding: 0 40rpx 40rpx 40rpx;
+  .top-tips {
+    height: 74rpx;
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    border-radius: 6rpx;
+    background-color: #7eacd3;
+    margin-bottom: 26rpx;
+
+    .sound {
+      margin-left: 26rpx;
+      width: 88rpx;
+      height: 43rpx;
+      border: 1rpx solid #ab8c2c;
+      background-color: #f1b33d;
+      border-radius: 4rpx;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      margin-right: 28rpx;
+    }
+    text {
+      font-size: 24rpx;
+      color: #b7e3f6;
+      margin-right: 26rpx;
+    }
+  }
+  .special-title {
+    height: 88rpx;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.2);
+    position: relative;
+    text-align: center;
+    margin-bottom: 12rpx;
+    text {
+      line-height: 88rpx;
+      color: #f1f4ba;
+      font-size: 28rpx;
+
+      &::after,
+      &::before {
+        content: '';
+        width: 12rpx;
+        height: 12rpx;
+        border: 2rpx solid #f1f4ba;
+        position: absolute;
+        transform: rotateZ(45deg);
+        top: 36rpx;
+      }
+      &::after {
+        left: 260rpx;
+      }
+      &::before {
+        right: 260rpx;
+      }
+    }
+  }
+  .special-item {
+    width: 100%;
+    height: 270rpx;
+    overflow: hidden;
+    border: 2rpx solid #50baf2;
+    margin-bottom: 20rpx;
+    position: relative;
+    image {
+      width: 100%;
+    }
+    .btm {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      height: 70rpx;
+      background-color: rgba(0, 0, 0, 0.5);
+      padding-left: 44rpx;
+      line-height: 70rpx;
+      text {
+        display: block;
+        width: 370rpx;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        color: #fff;
+        font-size: 24rpx;
+        white-space: nowrap;
+      }
+    }
+  }
+  .post-item-wrap {
+    background-color: #4b6992;
+    padding: 0 45rpx;
+    .title {
+      height: 96rpx;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1rpx solid #3b8dc5;
+      text {
+        color: #f1f4ba;
+        font-size: 30rpx;
+      }
+    }
+    .post-item {
+      display: flex;
+      justify-content: space-between;
+      .lf {
+        width: 102rpx;
+        height: 102rpx;
+        margin-top: 36rpx;
+        border-radius: 50%;
+        border:1rpx solid #2678ca;
+        //  display: block;
+        //  flex-shrink: 0;
+      }
+      .rt {
+        width: 456rpx;
+        .name {
+          line-height: 54rpx;
+          font-size: 26rpx;
+          color: #f1f4ba;
+          margin-top: 16rpx;
+        }
+        .content {
+          line-height: 30rpx;
+          font-size: 24rpx;
+          color: #cbe3f7;
+        }
+        .time {
+          height: 46rpx;
+          display: flex;
+          justify-content: space-between;
+          color: #fff;
+          align-items: center;
+          font-size: 22rpx;
+          margin-bottom: 10rpx;
+        }
+        .discuss {
+          background-color: #3e76ab;
+
+          color: #fff;
+          padding: 0 30rpx;
+          .top {
+            //  height: 50rpx;
+            display: flex;
+            padding-top: 10rpx;
+            padding-bottom: 10rpx;
+            justify-content: flex-start;
+            align-items: center;
+            flex-wrap: wrap;
+            line-height: 34rpx;
+            border-bottom: 1rpx solid #236d88;
+            image {
+              margin-right: 8rpx;
+            }
+            text {
+              font-size: 20rpx;
+              padding: 0 8rpx;
+            }
+          }
+          .btm {
+            padding-bottom: 10rpx;
+            margin-bottom: 30rpx;
+          }
+          .btm-item {
+            padding-top: 10rpx;
+            padding-bottom: 10rpx;
+            display: flex;
+
+            text {
+              line-height: 36rpx;
+              font-size: 24rpx;
+            }
+            .btm-name {
+              color: #b4bfa9;
+              flex-shrink: 0;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+</style>
+<template>
+  <view class="page-dynamics">
+    <view class="top-tips">
+      <view class="sound"><image src="../static/img/dynamics/sound.png" mode="aspectFit" style="width:30rpx;height:27rpx;"/></view>
+      <text>我是左右滚动的</text></view>
+     <view class="special-title"><text>专题栏</text></view>
+     <repeat for="{{specialList}}" key="index" index="index" item="item">
+        <view class="special-item">
+           <image src="{{item.l_img}}" mode="widthFix" />
+           <view class="btm"><text>{{item.l_text}}</text></view>
+        </view>
+    </repeat>
+    <view class="post-item-wrap">
+       <view class="title">
+         <text>帖子</text>
+         <image src="../static/img/dynamics/edit.png" mode="aspectFit" style="width:35rpx;height:36rpx;"/>
+       </view>
+       <repeat for="{{postList}}" key="index" index="index" item="item">
+        <view class="post-item">
+           <image class="lf" src="{{item.s_avator}}" mode="scaleToFill" />
+           <view class="rt">
+             <view class="name">{{item.s_name}}</view>
+             <view class="content">{{item.s_content}}</view>
+             <view class="time">
+               <text>{{item.s_time}}</text>
+               <image src="../static/img/dynamics/msg.png" mode="aspectFit" style="width:31rpx;height:29rpx;"/>
+             </view>
+             <view class="discuss">
+                  <view class="top">
+                    <image src="../static/img/dynamics/like.png" mode="aspectFit" style="width:22rpx;height:20rpx;"/>
+                    <repeat for="{{item.s_like}}" key="sindex" index="sindex" item="sitem">
+                      <text>{{sitem}}</text>
+                    </repeat>
+                  </view>
+                  <view class="btm">
+                    <repeat for="{{item.s_discuss}}" key="dindex" index="dindex" item="ditem">
+                      <view class="btm-item">
+                        <text class="btm-name">{{ditem.d_name+"："}}</text><text>{{ditem.d_cont}}</text>
+                      </view>
+                    </repeat>
+                  </view>
+             </view>
+           </view>
+        </view>
+        </repeat>
+    </view>
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy';
+
+export default class pageDynamics extends wepy.page {
+  config = {
+    navigationBarTitleText: '动态'
+  };
+  components = {};
+  data = {
+    scrollTop: 100,
+    specialList: [
+      {
+        l_img:
+          'http://img1.360buyimg.com/da/jfs/t25096/340/321933848/390630/985a448c/5b6bbefeNafcfc263.jpg',
+        l_text: '1111李白被削弱的真相竟然是啊是大叔大叔的'
+      },
+      {
+        l_img:
+          'http://img1.360buyimg.com/da/jfs/t25096/340/321933848/390630/985a448c/5b6bbefeNafcfc263.jpg',
+        l_text: '2222李白被削弱的真相竟然是啊是大叔大叔的'
+      }
+    ],
+    postList: [
+      {
+        s_avator:
+          'http://m.360buyimg.com/mobilecms/jfs/t21658/347/221358098/7461/f86e6f74/5b03b170Nc9e0ec7c.png',
+        s_name: '王明欢',
+        s_content:
+          '王者荣耀新赛季已经开启一段时间了，大家伙上王者没。上王者不仅是段位提升的一种激励...',
+        s_time: '1小时前',
+        s_like: [
+          '张三',
+          '李四',
+          '张三',
+          '李四',
+          '张三',
+          '李四',
+          '张三',
+          '李四',
+          '张三',
+          '李四'
+        ],
+        s_discuss: [
+          {
+            d_name: '张三',
+            d_cont:
+              '很不错啊啊啊啊啊啊啊啊很不错啊啊啊啊啊啊啊啊很不错啊啊啊啊啊啊啊啊很不错啊啊啊啊啊啊啊啊很不错啊啊啊啊啊啊啊啊很不错啊啊啊啊啊啊啊啊'
+          },
+          {
+            d_name: '李四',
+            d_cont: '很不错啊啊啊啊啊啊啊啊'
+          }
+        ]
+      }
+    ]
+  };
+
+  computed = {};
+
+  methods = {};
+  lower() {
+    console.log('scroll btm!');
+  }
+  events = {};
+
+  onLoad(params, data) {}
+}
+</script>

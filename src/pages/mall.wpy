@@ -1,0 +1,42 @@
+<style lang="less">
+  
+</style>
+<template>
+  <view class="page-rank">
+    <view>
+     我是商城
+    </view>
+    <TabBar></TabBar>
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+  import TabBar from "../components/tabBar";
+  export default class pageRank extends wepy.page {
+    config = {
+      navigationBarTitleText: '商城'
+    }
+    components = {
+      TabBar
+    }
+    data = {
+    }
+
+    computed = {
+    }
+
+    methods = {
+     handleClickJump (path) {
+         this.$navigate(path);
+      }
+    }
+
+    events = {
+      
+    }
+
+    onLoad(params, data) {
+    }
+  }
+</script>

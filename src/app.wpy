@@ -1,11 +1,8 @@
 <style lang="less">
-.container {
+page{
   height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-  box-sizing: border-box;
+  width: 100%;
+  background-color: #242d56;
 }
 </style>
 
@@ -17,15 +14,57 @@ import 'wepy-async-function'
 export default class extends wepy.app {
   config = {
     pages: [
-      'pages/index',
-      'pages/list'
+      'pages/feedBack',
+      'pages/msgAdd',
+      'pages/login',
+      'pages/loginTourist',
+      'pages/loginUser',
+      //tabar //排行 //商城  //动态 // 我的 
+      'pages/dynamics',
+      'pages/rank',
+      'pages/mall',
+      
+      'pages/my',
+
+      // 'pages/login',
     ],
     window: {
       backgroundTextStyle: 'light',
-      navigationBarBackgroundColor: '#fff',
+      navigationBarBackgroundColor: '#242d56',
       navigationBarTitleText: 'WeChat',
-      navigationBarTextStyle: 'black'
-    }
+      navigationBarTextStyle: 'white'
+    },
+    // tabBar: {
+    //     color: '#707070',
+    //     selectedColor: '#36a2e6',
+    //     backgroundColor: '#203d79',
+    //     borderStyle: 'black',
+    //     list: [{
+    //       pagePath: 'pages/rank',
+    //       // selectedIconPath: './images/tabbars/icon-map-active.png',
+    //       // iconPath: './images/tabbars/icon-map.png',
+    //       text: '排行'
+    //     }, {
+    //       pagePath: 'pages/mall',
+    //       // selectedIconPath: './images/tabbars/icon-book-active.png',
+    //       // iconPath: './images/tabbars/icon-book.png',
+    //       text: '商城'
+    //     }, {
+    //       pagePath: 'pages/dynamics',
+    //       // selectedIconPath: './images/tabbars/icon-book-active.png',
+    //       // iconPath: './images/tabbars/icon-book.png',
+    //       text: '动态'
+    //     }, {
+    //       pagePath: 'pages/my',
+    //       // selectedIconPath: './images/tabbars/icon-book-active.png',
+    //       // iconPath: './images/tabbars/icon-book.png',
+    //       text: '我的'
+    //     }]
+    //   },
+      networkTimeout: {
+        request: 5000,
+        downloadFile: 10000
+      },
   }
 
   globalData = {
