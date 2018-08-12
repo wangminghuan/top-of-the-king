@@ -4,7 +4,7 @@
 <template>
   <view class="container">
     <view>
-     我是列表
+     帖子详情
     </view>
   </view>
 </template>
@@ -14,7 +14,7 @@
 
   export default class Index extends wepy.page {
     config = {
-      navigationBarTitleText: '列表'
+      navigationBarTitleText: '详情'
     }
     components = {
 
@@ -37,8 +37,6 @@
     }
 
     onLoad(params, data) {
-      console.log("list")
-      console.log(data.preload.userName);
     }
   }
 </script>

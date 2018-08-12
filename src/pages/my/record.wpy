@@ -1,0 +1,42 @@
+<style lang="less">
+  
+</style>
+<template>
+  <view class="container">
+    <view>
+     我的战绩
+    </view>
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+
+  export default class Index extends wepy.page {
+    config = {
+      navigationBarTitleText: '战绩'
+    }
+    components = {
+
+    }
+    data = {
+      mynum: 20,
+    }
+
+    computed = {
+      now () {
+        return +new Date()
+      }
+    }
+
+    methods = {
+
+    }
+
+    events = {
+    }
+
+    onLoad(params, data) {
+    }
+  }
+</script>

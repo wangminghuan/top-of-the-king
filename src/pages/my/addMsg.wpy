@@ -1,6 +1,6 @@
 <style lang="less">
-@import "../static/style/loginComTitle.less";
-@import "../static/style/userComBtn.less";
+@import "../../static/style/loginComTitle.less";
+@import "../../static/style/userComBtn.less";
 .msg-add-wrap{
   padding: 0 38rpx;
   position: absolute;

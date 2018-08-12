@@ -1,6 +1,6 @@
 <style lang="less">
-@import "../static/style/loginComTitle.less";
-@import "../static/style/userComBtn.less";
+@import "../../static/style/loginComTitle.less";
+@import "../../static/style/userComBtn.less";
 .feed-back-wrap{
   padding: 0 38rpx;
   position: absolute;
@@ -59,7 +59,7 @@
             <text>内容：</text><textarea placeholder="请至少输入五个字" />
         </view>
         <view class="up-img">
-            <image src="../static/img/login/upimg.png" mode="aspectFit" style="width:39rpx;height:34rpx;"/>
+            <image src="../../static/img/login/upimg.png" mode="aspectFit" style="width:39rpx;height:34rpx;"/>
         </view>
         </view>
     <button class="user-com-btn" @tap="handleSubmit" style="width:394rpx">提交</button>

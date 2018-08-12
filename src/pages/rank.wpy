@@ -1,42 +1,397 @@
 <style lang="less">
-  
+@import '../static/style/soundComTips.less';
+@import '../static/style/cardComItem.less';
+@import '../static/style/tabCom.less';
+.page-rank {
+  padding: 0 38rpx 38rpx 38rpx;
+  .sound {
+    color: #fff;
+    font-size: 22rpx;
+  }
+  .user-wrap {
+     display: flex;
+      justify-content: space-around;
+      flex-wrap: wrap;
+      align-items: center;
+      text-align: center;
+      .user-item{
+        width: 225rpx;
+        margin-top:35rpx;
+        font-size: 24rpx;
+        image{
+          width: 112rpx;
+        height: 112rpx;
+        // margin-top: 36rpx;
+        border-radius: 50%;
+        border:2rpx solid #4298d1;
+        }
+        view{
+          line-height: 36rpx;
+        }
+      }
+      
+    // .content {
+    //   display: flex;
+    //   justify-content: space-between;
+    //   flex-wrap: wrap;
+    //   align-items: center;
+    //   text-align: center;
+    //   padding: 56rpx 66rpx;
+    // }
+  }
+  .my-rank{
+        height: 93rpx;
+        width: 100%;
+        justify-content: space-between;
+        display: flex;
+        align-items: center;
+        background-color: rgba(255, 255, 255, 0.2);
+        margin:42rpx auto;
+        position: relative;
+        
+        &::after{
+          content:"";
+          position: absolute;
+          top:50%;
+          width: 17rpx;
+          height: 44rpx;
+          top:50%;
+          transform: translateY(-50%);
+          left:0;
+          right: 0;
+          margin:0 auto;
+          background-size: cover;
+          background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABEAAAAsCAMAAAC0V6O7AAAAilBMVEUAAAAJXv8JXv/r9cX5/sL6/8H6/8H6/8H6/8H6/8H6/8H6/8H6/8H6/8H6/8H5/8L4/sL6/8H6/8H6/8H6/8H6/8H6/8H6/8H2/cL6/8H6/8H6/8H6/8H6/8H6/8F+reH6/8H6/8H6/8H3/cL6/8H6/8Hv98T6/8H6/8HZ6cm00NP6/8H6/8H6/8Gva1LwAAAALXRSTlMABgRAPEv54atnWkYiHu/AejES9ubXuo2FbFdTPyoYD+fUxrOdcG5fNzMYDgZGjLKxAAAAs0lEQVQoz8XPRxKCQBBA0RkVJCjJLAjm/O9/PWXQksYqV1r+Xb/qRbeqSpkomYvTEM9xcilb6EtxYCFl/CZriKWsoCOlC5mUACwpNOUCeK+xN1e5kdh6QNfeXVP3kPhL26oAGE1mUQgYCqkXJEr1zc7UjcbAwFeqJNtNrNm8lw1LMOQpm3vH2BcHmsd+LK2ySlqmj9L+g+iySrTpuxICwbkubSDSddEbhoWUE3stRU+Lp9wAKxkkx49TzaoAAAAASUVORK5CYII=")
+        }
+        .item{
+          width: 50%;
+          font-size:26rpx; 
+          display: flex;
+          // justify-content: space-around;
+          align-items: center;
+          color: #b7e3f6;
+        }
+      }
+      .rank-list{
+        width: 677rpx;
+        margin:0 auto;
+        margin-left: 1px;
+        .tab-item{
+          width: 16.66%;
+        }
+      }
+      .tab-cont{
+        display: flex;
+        justify-content: flex-start;
+        border:1rpx solid #81c8e5;
+        color: #fff;
+        border-top:none;
+        padding-bottom: 44rpx;
+        .lf{
+           width: 163rpx;
+           display: flex;
+           flex-direction: column;
+           align-items: center;
+           
+           .lf-item{
+            //  height: 87rpx;
+             line-height: 87rpx;
+             position: relative;
+             width: 100%;
+             text-align: center;
+           }
+           .lf-item.active::after{
+              content: "";
+              display: block;
+              width: 108rpx;
+              height: 13rpx;
+              left: 0;
+              right: 0;
+              bottom: 0;
+              margin: 0 auto;
+              position: absolute;
+              background-size: cover;
+              background-image: url("data:image/png;base64,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");
+           }
+        }
+        .rt{
+          width:482rpx; 
+          .rt-item{
+            width: 100%;
+            height:100rpx;
+            border-radius: 10rpx;
+            border:1px solid #5b94b6;
+            background: -webkit-gradient(linear, 0% 0%, 0% 100%,from(#2a5585), to(#256fae));
+            box-shadow: inset 0 -7rpx 16rpx 0 #256fae;
+            margin-top:44rpx;
+            display: flex;
+            align-items: center;
+            font-size: 24rpx;
+            color: #fff;
+            .item-1{
+              width:75rpx; 
+              text-align: center;
+            }
+            .item-2{
+              width:60rpx;
+              height:60rpx; 
+              border-radius: 50%;
+              overflow: hidden;
+            }
+            .item-3{
+              display: flex;
+              flex-direction: column;
+              margin-left: 10rpx;
+              width:315rpx; 
+            }
+            .top-3{
+              display: flex;
+              justify-content: space-between;
+              height: 40rpx;
+              view{
+                height: 40rpx;
+                line-height: 40rpx;
+              }
+              .icon{
+                 background-size: 27rpx auto;
+                 background-position: 0 8rpx;;
+                 padding-left:40rpx; 
+                 background-repeat: no-repeat;
+                 background-image: url("data:image/png;base64,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");
+              }
+            }
+          }
+        }
+      }
+}
 </style>
 <template>
   <view class="page-rank">
-    <view>
-     我是排行
-    </view>
-    <TabBar></TabBar>
-  </view>
+     <view class="sound-com-tips">
+      <view class="sound">快讯</view>
+      <text>我是左右滚动的</text>
+      </view>
+      <view class="user-wrap">
+           <repeat for="{{userArr}}" key="index" index="index" item="item">
+             <view class="user-item"  @tap="handleClickTab('{{index}}')">
+               <image src="{{item.u_avator}}" mode="scaleToFill" />
+               <view style="color:#b7e3f6">{{item.u_type}}</view>
+               <view style="color:#f1f4ba">{{item.u_name}}</view>
+               </view>
+            </repeat>
+      </view>
+      <view class="my-rank">
+          <view class="item"><text style="padding-left:117rpx">我的：</text><text style="color:#fff">术士</text></view>
+          <view class="item"><text style="padding-left:117rpx">战力：</text><text style="color:#fff">78名</text></view>
+      </view>
+      <image class="mid" src="../static/img/rank/01.png" mode="widthFix" style="display:block;width:681rpx;height:87rpx"/>
+      <view class="rank-list">
+          <view class="tab-com">
+           <repeat for="{{tabArr}}" key="index" index="index" item="item">
+             <view class="{{item.t_active==1?'active':''}}" @tap="handleClickTab('{{index}}')">{{item.t_name}}</view>
+            </repeat>
+        </view>
+        <view class="tab-cont">
+          <view class="lf">
+            <repeat for="{{lfArr}}" key="index" index="index" item="item">
+             <view class="{{item.l_active==1?'active lf-item':'lf-item'}}" @tap="handleClickTabLf('{{index}}')">{{item.l_name}}</view>
+            </repeat>
+          </view>
+          <view class="rt">
+              <repeat for="{{rtArr}}" key="index" index="index" item="item">
+               <view class="rt-item">
+                 <view class="item-1">{{index+1}}</view>
+                  <image class="item-2" src="{{item.r_avator}}" mode="scaleToFill" />
+                 <view class="item-3">
+                   <view class="top-3">
+                       <view>{{item.r_name}}</view>
+                       <view class="icon">
+                         <!-- <image class="mid" src="../static/img/rank/01.png" mode="widthFix" style="display:block;width:681rpx;height:87rpx"/> -->
+                         <text>{{item.r_nums}}</text>
+                         </view>
+                   </view>
+                   <text>{{item.r_type}}</text>
+                 </view>
+
+               </view>
+             </repeat>
+          </view>
+        </view>
+      </view>
+        <!-- <view class="content">
+          <repeat for="{{contList}}" key="index" index="index" item="item">
+             <view class="card-com-item">
+             <view class="txt">
+                      <view class="top">{{item.c_name}}</view>
+                      <image class="mid" src="../static/img/mall/1-1.png" mode="aspectFit" style="width:96rpx;height:96rpx"/>
+                      <view class="btm" @tap="handleClick">
+                        <view>{{item.c_score}}积分</view>
+                        <view style="color:#fffd78;padding-left:5rpx;">兑换</view>
+                         </view>
+               </view>
+              </view>
+            </repeat>
+        </view> -->
+      </view>
 </template>
 
 <script>
-  import wepy from 'wepy'
-  import TabBar from "../components/tabBar";
-  export default class pageRank extends wepy.page {
-    config = {
-      navigationBarTitleText: '排行'
-    }
-    components = {
-      TabBar
-    }
-    data = {
-    }
-
-    computed = {
-    }
-
-    methods = {
-     handleClickJump (path) {
-         this.$navigate(path);
+import wepy from 'wepy';
+export default class pageRank extends wepy.page {
+  config = {
+    navigationBarTitleText: '商城'
+  };
+  components = {};
+  data = {
+    userArr: [
+      {
+        u_avator:
+          'http://img1.360buyimg.com/da/jfs/t25096/340/321933848/390630/985a448c/5b6bbefeNafcfc263.jpg',
+        u_name: '张三地',
+        u_type: '最强战士'
+      },
+      {
+        u_avator:
+          'http://img1.360buyimg.com/da/jfs/t25096/340/321933848/390630/985a448c/5b6bbefeNafcfc263.jpg',
+        u_name: '张三地',
+        u_type: '最强战士'
+      },{
+        u_avator:
+          'http://img1.360buyimg.com/da/jfs/t25096/340/321933848/390630/985a448c/5b6bbefeNafcfc263.jpg',
+        u_name: '张三地',
+        u_type: '最强战士'
+      },
+      {
+        u_avator:
+          'http://img1.360buyimg.com/da/jfs/t25096/340/321933848/390630/985a448c/5b6bbefeNafcfc263.jpg',
+        u_name: '张三地',
+        u_type: '最强战士'
+      },{
+        u_avator:
+          'http://img1.360buyimg.com/da/jfs/t25096/340/321933848/390630/985a448c/5b6bbefeNafcfc263.jpg',
+        u_name: '张三地',
+        u_type: '最强战士'
+      },
+      {
+        u_avator:
+          'http://img1.360buyimg.com/da/jfs/t25096/340/321933848/390630/985a448c/5b6bbefeNafcfc263.jpg',
+        u_name: '张三地',
+        u_type: '最强战士'
+      },
+    ],
+    contList: [
+      {
+        c_name: '深造卡',
+        c_score: '1000'
+      },
+      {
+        c_name: '主力体验',
+        c_score: '8000'
+      },
+      {
+        c_name: '岗位体验',
+        c_score: '4000'
+      },
+      {
+        c_name: '拜师卡',
+        c_score: '7000'
       }
-    }
+    ],
+     tabArr: [
+      { t_name: '战士', t_value: '0', t_active: 1 },
+      { t_name: '射手', t_value: '1', t_active: 0 },
+      { t_name: '法师', t_value: '2', t_active: 0 },
+      { t_name: '术士', t_value: '3', t_active: 0 },
+      { t_name: '修士', t_value: '4', t_active: 0 },
+      { t_name: '骑士', t_value: '6', t_active: 0 }
+    ],
+    lfArr:[
+      { l_name: '日榜', l_value: '0', l_active: 1 },
+      { l_name: '周榜', l_value: '1', l_active: 0 },
+      { l_name: '月榜', l_value: '2', l_active: 0 },
+      { l_name: '季榜', l_value: '3', l_active: 0 },
+      { l_name: '年榜', l_value: '4', l_active: 0 },
+      { l_name: '减损榜', l_value: '5', l_active: 0 },
+      { l_name: '团队榜', l_value: '6', l_active: 0 },
+    ],
+    rtArr:[
+       {
+        r_avator:
+          'http://img1.360buyimg.com/da/jfs/t25096/340/321933848/390630/985a448c/5b6bbefeNafcfc263.jpg',
+        r_name: '张三',
+        r_type: '最强战士',
+        r_nums: '5555'
+      },
+      {
+        r_avator:
+          'http://img1.360buyimg.com/da/jfs/t25096/340/321933848/390630/985a448c/5b6bbefeNafcfc263.jpg',
+        r_name: '张三',
+        r_type: '最强战士',
+        r_nums: '5555'
+      },
+      {
+        r_avator:
+          'http://img1.360buyimg.com/da/jfs/t25096/340/321933848/390630/985a448c/5b6bbefeNafcfc263.jpg',
+        r_name: '张三',
+        r_type: '最强战士',
+        r_nums: '5555'
+      },
+      {
+        r_avator:
+          'http://img1.360buyimg.com/da/jfs/t25096/340/321933848/390630/985a448c/5b6bbefeNafcfc263.jpg',
+        r_name: '张三',
+        r_type: '最强战士',
+        r_nums: '5555'
+      },
+      {
+        r_avator:
+          'http://img1.360buyimg.com/da/jfs/t25096/340/321933848/390630/985a448c/5b6bbefeNafcfc263.jpg',
+        r_name: '张三',
+        r_type: '最强战士',
+        r_nums: '5555'
+      },
+      {
+        r_avator:
+          'http://img1.360buyimg.com/da/jfs/t25096/340/321933848/390630/985a448c/5b6bbefeNafcfc263.jpg',
+        r_name: '张三',
+        r_type: '最强战士',
+        r_nums: '5555'
+      }
+    ]
+  };
 
-    events = {
-      
-    }
+  computed = {};
 
-    onLoad(params, data) {
+  methods = {
+    handleClickTab(inx) {
+      this.tabArr.map((item, index) => {
+        index == inx ? (item.t_active = 1) : (item.t_active = 0);
+      });
+    },
+    handleClickTabLf(inx) {
+      this.lfArr.map((item, index) => {
+        index == inx ? (item.l_active = 1) : (item.l_active = 0);
+      });
+    },
+    handleClick() {
+      const that = this;
+      wx.showModal({
+        title: '提示',
+        content: '确定兑换？',
+        success: function(res) {
+          if (res.confirm) {
+            that.$navigate('/pages/mall/success');
+          }
+        }
+      });
+    },
+    handleClickJump(path) {
+      this.$navigate(path);
     }
-  }
+  };
+
+  events = {};
+
+  onLoad(params, data) {}
+}
 </script>

@@ -1,34 +1,7 @@
 <style lang="less">
+@import "../static/style/soundComTips.less";
 .page-dynamics {
   padding: 0 40rpx 40rpx 40rpx;
-  .top-tips {
-    height: 74rpx;
-    width: 100%;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    border-radius: 6rpx;
-    background-color: #7eacd3;
-    margin-bottom: 26rpx;
-
-    .sound {
-      margin-left: 26rpx;
-      width: 88rpx;
-      height: 43rpx;
-      border: 1rpx solid #ab8c2c;
-      background-color: #f1b33d;
-      border-radius: 4rpx;
-      display: flex;
-      justify-content: space-around;
-      align-items: center;
-      margin-right: 28rpx;
-    }
-    text {
-      font-size: 24rpx;
-      color: #b7e3f6;
-      margin-right: 26rpx;
-    }
-  }
   .special-title {
     height: 88rpx;
     width: 100%;
@@ -185,7 +158,7 @@
 </style>
 <template>
   <view class="page-dynamics">
-    <view class="top-tips">
+    <view class="sound-com-tips">
       <view class="sound"><image src="../static/img/dynamics/sound.png" mode="aspectFit" style="width:30rpx;height:27rpx;"/></view>
       <text>我是左右滚动的</text></view>
      <view class="special-title"><text>专题栏</text></view>
@@ -198,14 +171,14 @@
     <view class="post-item-wrap">
        <view class="title">
          <text>帖子</text>
-         <image src="../static/img/dynamics/edit.png" mode="aspectFit" style="width:35rpx;height:36rpx;"/>
+         <image @tap="handleJumpAdd" src="../static/img/dynamics/edit.png" mode="aspectFit" style="width:35rpx;height:36rpx;"/>
        </view>
        <repeat for="{{postList}}" key="index" index="index" item="item">
         <view class="post-item">
            <image class="lf" src="{{item.s_avator}}" mode="scaleToFill" />
            <view class="rt">
              <view class="name">{{item.s_name}}</view>
-             <view class="content">{{item.s_content}}</view>
+             <view class="content" @tap="handleJumpDetail">{{item.s_content}}</view>
              <view class="time">
                <text>{{item.s_time}}</text>
                <image src="../static/img/dynamics/msg.png" mode="aspectFit" style="width:31rpx;height:29rpx;"/>
@@ -291,10 +264,15 @@ export default class pageDynamics extends wepy.page {
 
   computed = {};
 
-  methods = {};
-  lower() {
-    console.log('scroll btm!');
-  }
+  methods = {
+    handleJumpDetail() {
+      this.$navigate("/pages/dynamics/detail");
+    },
+    handleJumpAdd() {
+      this.$navigate("/pages/dynamics/add");
+    } 
+  };
+  
   events = {};
 
   onLoad(params, data) {}

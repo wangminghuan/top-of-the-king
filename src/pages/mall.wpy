@@ -1,42 +1,117 @@
 <style lang="less">
-  
+@import '../static/style/soundComTips.less';
+@import '../static/style/cardComItem.less';
+@import '../static/style/tabCom.less';
+.page-mall {
+  padding: 0 38rpx;
+  .tab-wrap {
+    border: 1px solid #85d1ea;
+    height: 924rpx;
+    box-shadow: inset 0 0 10rpx 3rpx #405784;
+    background-color: #475881;
+    .content {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      align-items: center;
+      text-align: center;
+      padding: 56rpx 66rpx;
+    }
+  }
+}
 </style>
 <template>
-  <view class="page-rank">
-    <view>
-     我是商城
-    </view>
-    <TabBar></TabBar>
+  <view class="page-mall">
+     <view class="sound-com-tips">
+      <view class="sound"><image src="../static/img/dynamics/sound.png" mode="aspectFit" style="width:30rpx;height:27rpx;"/></view>
+      <text>我是左右滚动的</text>
+      </view>
+      <view class="tab-wrap">
+        <view class="tab-com">
+           <repeat for="{{tabArr}}" key="index" index="index" item="item">
+             <view class="{{item.t_active==1?'active':''}}" @tap="handleClickTab('{{index}}')">{{item.t_name}}</view>
+            </repeat>
+        </view>
+        <view class="content">
+          <repeat for="{{contList}}" key="index" index="index" item="item">
+             <view class="card-com-item">
+             <view class="txt">
+                      <view class="top">{{item.c_name}}</view>
+                      <image class="mid" src="../static/img/mall/1-1.png" mode="aspectFit" style="width:96rpx;height:96rpx"/>
+                      <view class="btm" @tap="handleClick">
+                        <view>{{item.c_score}}积分</view>
+                        <view style="color:#fffd78;padding-left:5rpx;">兑换</view>
+                         </view>
+               </view>
+              </view>
+            </repeat>
+        </view>
+      </view>
   </view>
 </template>
 
 <script>
-  import wepy from 'wepy'
-  import TabBar from "../components/tabBar";
-  export default class pageRank extends wepy.page {
-    config = {
-      navigationBarTitleText: '商城'
-    }
-    components = {
-      TabBar
-    }
-    data = {
-    }
-
-    computed = {
-    }
-
-    methods = {
-     handleClickJump (path) {
-         this.$navigate(path);
+import wepy from 'wepy';
+export default class pageMall extends wepy.page {
+  config = {
+    navigationBarTitleText: '商城'
+  };
+  components = {};
+  data = {
+    tabArr: [
+      { t_name: '学习类', t_value: '0', t_active: 1 },
+      { t_name: '特权类', t_value: '1', t_active: 0 },
+      { t_name: '礼品类', t_value: '2', t_active: 0 },
+      { t_name: '其他类', t_value: '3', t_active: 0 }
+    ],
+    contList: [
+      {
+        c_name: '深造卡',
+        c_score: '1000',
+      },
+      {
+        c_name: '主力体验',
+        c_score: '8000'
+      },
+      {
+        c_name: '岗位体验',
+        c_score: '4000'
+      },
+      {
+        c_name: '拜师卡',
+        c_score: '7000'
       }
-    }
+    ]
+  };
 
-    events = {
-      
-    }
+  computed = {};
 
-    onLoad(params, data) {
+  methods = {
+    handleClickTab(inx) {
+      this.tabArr.map((item, index) => {
+        index == inx ? (item.t_active = 1) : (item.t_active = 0);
+      });
+    },
+    handleClick(){
+      const that=this;
+      wx.showModal({
+      title: '提示',
+      content: '确定兑换？',
+      success: function(res) {
+        if (res.confirm) {
+          that.$navigate("/pages/mall/success");
+        }
+      }
+    })
+          
+    },
+    handleClickJump(path) {
+      this.$navigate(path);
     }
-  }
+  };
+
+  events = {};
+
+  onLoad(params, data) {}
+}
 </script>

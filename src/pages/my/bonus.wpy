@@ -1,0 +1,112 @@
+<style lang="less">
+  .my-bonus-wrap{
+      padding: 0 38rpx;
+      position: relative;
+      .bouns-nums{
+          position: absolute;
+          line-height: 50rpx;
+          top:110rpx;
+          width: 100%;
+          text-align: center;
+          left:0;
+          right: 0;
+          margin:0 auto;
+          color: #fff;
+          font-size: 32rpx;
+      }
+      .item{
+          display: flex;
+         flex-direction: column;
+         color: #f1f4ba;
+        //  align-items: center;
+      }
+     .item-txt{
+         height: 158rpx;
+         display: flex;
+         flex-direction: column;
+         
+        //  align-items: center;
+     }
+     .top{
+         display: flex;
+        //  width: 100%;
+         justify-content: space-between;
+         align-items: center;
+         font-size: 26rpx;
+         line-height: 66rpx;
+         margin-top:30rpx;
+         
+        
+     }
+     .btm{
+         color: #cbe3f7;
+          font-size: 20rpx;
+     }
+     .top,.btm{
+         margin-left: 57rpx;
+         margin-right: 37rpx;
+     }
+  }
+</style>
+<template>
+  <view class="my-bonus-wrap">
+    <image src="../../static/img/my/score-title.png" mode="aspectFit" style="width:671rpx;height:202rpx;margin-bottom:20rpx"/>
+    <view class="bouns-nums">4545454</view>
+    <repeat for="{{listArr}}" key="index" index="index" item="item">
+        <view  @tap="handleClickTab('{{index}}')">
+             <view class="item-txt">
+                  <view class="top">
+                      <view>{{item.l_name}}</view>
+                      <view>{{item.l_score}}</view>
+                  </view>
+                  <view class="btm">{{item.l_time}}</view>
+             </view>
+             <image src="../../static/img/my/score-line.png" mode="aspectFit" style="width:668rpx;height:4rpx;"/>
+        </view>
+    </repeat>
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+
+  export default class myBonus extends wepy.page {
+    config = {
+      navigationBarTitleText: '我的积分'
+    }
+    components = {
+
+    }
+    data = {
+      listArr: [{
+          l_name:"员工",
+          l_score:"+1000",
+          l_time:"2018.06.09 12:00:00"
+      },{
+          l_name:"员工",
+          l_score:"+1000",
+          l_time:"2018.06.09 12:00:00"
+      },{
+          l_name:"员工",
+          l_score:"+1000",
+          l_time:"2018.06.09 12:00:00"
+      }],
+    }
+
+    computed = {
+      now () {
+        return +new Date()
+      }
+    }
+
+    methods = {
+
+    }
+
+    events = {
+    }
+
+    onLoad(params, data) {
+    }
+  }
+</script>

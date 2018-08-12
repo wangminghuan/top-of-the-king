@@ -1,6 +1,6 @@
 <style lang="less">
-@import "../static/style/loginComTitle.less";
-@import "../static/style/userComBtn.less";
+@import "../../static/style/loginComTitle.less";
+@import "../../static/style/userComBtn.less";
 .login-apply-wrap {
   padding: 0 38rpx;
   position: absolute;
@@ -72,7 +72,7 @@
     <view wx:else class="result">
     <view wx:if="{{applyStatus==2}}" >
       <view class="cont" style="width:280rpx">
-      <image src="../static/img/login/fail.png" mode="aspectFit" style="width:35rpx;height:35rpx;"/>
+      <image src="../../static/img/login/fail.png" mode="aspectFit" style="width:35rpx;height:35rpx;"/>
       <text>账号审核未通过</text>
       </view>
       <button class="user-com-btn" style="margin-top:116rpx" @tap="handleJump">继续申请</button>

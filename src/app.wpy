@@ -14,17 +14,32 @@ import 'wepy-async-function'
 export default class extends wepy.app {
   config = {
     pages: [
-      'pages/feedBack',
-      'pages/msgAdd',
-      'pages/login',
-      'pages/loginTourist',
-      'pages/loginUser',
+      // 'pages/feedBack',
+      // 'pages/msgAdd',
+      // 'pages/login',
+      // 'pages/loginTourist',
+      // 'pages/loginUser',
       //tabar //排行 //商城  //动态 // 我的 
+      'pages/my/npc',
+      'pages/my/bonus',
+       'pages/rank',
       'pages/dynamics',
-      'pages/rank',
-      'pages/mall',
-      
       'pages/my',
+      'pages/mall',
+      'pages/mall/success',
+      'pages/dynamics/add',
+      'pages/dynamics/detail',
+
+
+      'pages/my/bags',
+      'pages/my/feedback',
+      'pages/my/message',
+      'pages/my/record',
+      'pages/my/gift',
+      
+      // 'pages/mall/success'
+      
+      
 
       // 'pages/login',
     ],
@@ -34,33 +49,33 @@ export default class extends wepy.app {
       navigationBarTitleText: 'WeChat',
       navigationBarTextStyle: 'white'
     },
-    // tabBar: {
-    //     color: '#707070',
-    //     selectedColor: '#36a2e6',
-    //     backgroundColor: '#203d79',
-    //     borderStyle: 'black',
-    //     list: [{
-    //       pagePath: 'pages/rank',
-    //       // selectedIconPath: './images/tabbars/icon-map-active.png',
-    //       // iconPath: './images/tabbars/icon-map.png',
-    //       text: '排行'
-    //     }, {
-    //       pagePath: 'pages/mall',
-    //       // selectedIconPath: './images/tabbars/icon-book-active.png',
-    //       // iconPath: './images/tabbars/icon-book.png',
-    //       text: '商城'
-    //     }, {
-    //       pagePath: 'pages/dynamics',
-    //       // selectedIconPath: './images/tabbars/icon-book-active.png',
-    //       // iconPath: './images/tabbars/icon-book.png',
-    //       text: '动态'
-    //     }, {
-    //       pagePath: 'pages/my',
-    //       // selectedIconPath: './images/tabbars/icon-book-active.png',
-    //       // iconPath: './images/tabbars/icon-book.png',
-    //       text: '我的'
-    //     }]
-    //   },
+    tabBar: {
+        color: '#fff',
+        selectedColor: '#5eddfe',
+        backgroundColor: '#203d79',
+        borderStyle: 'black',
+        list: [{
+          pagePath: 'pages/rank',
+          selectedIconPath: './static/img/my/rank-active.png',
+          iconPath: './static/img/my/rank.png',
+          text: '排行'
+        }, {
+          pagePath: 'pages/mall',
+          selectedIconPath: './static/img/my/mall-active.png',
+          iconPath: './static/img/my/mall.png',
+          text: '商城'
+        }, {
+          pagePath: 'pages/dynamics',
+           selectedIconPath: './static/img/my/dynamics-active.png',
+          iconPath: './static/img/my/dynamics.png',
+          text: '动态'
+        }, {
+          pagePath: 'pages/my',
+          selectedIconPath: './static/img/my/my-active.png',
+          iconPath: './static/img/my/my.png',
+          text: '我的'
+        }]
+      },
       networkTimeout: {
         request: 5000,
         downloadFile: 10000
