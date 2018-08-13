@@ -2,7 +2,8 @@
 page{
   height: 100%;
   width: 100%;
-  background-color: #242d56;
+  background-image: url("http://s29.9956.cn/res/zhushou/danye/topking/bg.png");
+  background-size: cover;
 }
 </style>
 
@@ -20,15 +21,18 @@ export default class extends wepy.app {
       // 'pages/loginTourist',
       // 'pages/loginUser',
       //tabar //排行 //商城  //动态 // 我的 
+       
+      'pages/rank',
       'pages/my/npc',
       'pages/my/bonus',
-       'pages/rank',
+       
       'pages/dynamics',
       'pages/my',
       'pages/mall',
       'pages/mall/success',
       'pages/dynamics/add',
       'pages/dynamics/detail',
+       'pages/dynamics/leaveMsg',
 
 
       'pages/my/bags',

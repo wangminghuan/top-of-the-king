@@ -1,20 +1,16 @@
 <style lang="less">
 @import "../../static/style/userComBtn.less";
+@import "../../static/style/borderComLine.less";
   .my-npc-wrap{
       padding: 0 38rpx;
       height: 100%;
       .item{
          
-        display: flex;
-         flex-direction: column;
-         align-items: center;
-         width: 100%;
-      }
-      .item-inner{
-           height: 161rpx;
+         height: 161rpx;
  display: flex;
          justify-content: space-between;
          align-items: center;
+         width: 100%;
       }
       .icon{
           width:100rpx;
@@ -65,9 +61,9 @@
 </style>
 <template>
   <view class="my-npc-wrap">
+    <scroll-view scroll-y style="height: 500rpx;" lower-threshold="50" bindscrolltolower="handleScroll">
     <repeat for="{{listArr}}" key="index" index="index" item="item">
-        <view  @tap="handleClickTab('{{index}}')" class="item">
-            <view class="item-inner">
+        <view  @tap="handleClickTab('{{index}}')" class="item border-com-line">
             <view class="icon"></view>
              <view class="txt">
                   <view class="top">
@@ -77,9 +73,8 @@
                   <view class="btm">{{item.l_cont}}</view>
              </view>
              </view>
-             <image src="../../static/img/my/score-line.png" mode="aspectFit" style="width:668rpx;height:4rpx;"/>
-        </view>
     </repeat>
+    </scroll-view>
     <button class="user-com-btn" style="width:400rpx;margin-top:134rpx">全部清空</button>
     <view class="btm-fix" @tap="handleJump">意见和反馈</view>
   </view>
@@ -114,6 +109,9 @@
     }
 
     methods = {
+      handleScroll(){
+        console.log("scroll")
+      },
      handleJump(){
          this.$navigate("/pages/my/feedback");
      }

@@ -1,4 +1,5 @@
 <style lang="less">
+@import "../../static/style/borderComLine.less";
   .my-bonus-wrap{
       padding: 0 38rpx;
       position: relative;
@@ -13,6 +14,13 @@
           margin:0 auto;
           color: #fff;
           font-size: 32rpx;
+      }
+      .bouns-info{
+          position: absolute;
+          top:27rpx;
+          width:40rpx;
+          height: 40rpx;
+          right: 72rpx;
       }
       .item{
           display: flex;
@@ -30,6 +38,7 @@
      .top{
          display: flex;
         //  width: 100%;
+        color: #fff;
          justify-content: space-between;
          align-items: center;
          font-size: 26rpx;
@@ -51,19 +60,19 @@
 <template>
   <view class="my-bonus-wrap">
     <image src="../../static/img/my/score-title.png" mode="aspectFit" style="width:671rpx;height:202rpx;margin-bottom:20rpx"/>
+    <view class="bouns-info" @tap="handleShowQuestion"></view>
     <view class="bouns-nums">4545454</view>
+    <scroll-view scroll-y style="height: 850rpx;" lower-threshold="50" bindscrolltolower="handleScroll">
     <repeat for="{{listArr}}" key="index" index="index" item="item">
-        <view  @tap="handleClickTab('{{index}}')">
-             <view class="item-txt">
+        <view  @tap="handleClickTab('{{index}}')" class="item-txt border-com-line">
                   <view class="top">
                       <view>{{item.l_name}}</view>
                       <view>{{item.l_score}}</view>
                   </view>
                   <view class="btm">{{item.l_time}}</view>
-             </view>
-             <image src="../../static/img/my/score-line.png" mode="aspectFit" style="width:668rpx;height:4rpx;"/>
         </view>
     </repeat>
+    </scroll-view>
   </view>
 </template>
 
@@ -78,7 +87,52 @@
 
     }
     data = {
+    scrollTop: 100,
       listArr: [{
+          l_name:"员工",
+          l_score:"+1000",
+          l_time:"2018.06.09 12:00:00"
+      },{
+          l_name:"员工",
+          l_score:"+1000",
+          l_time:"2018.06.09 12:00:00"
+      },{
+          l_name:"员工",
+          l_score:"+1000",
+          l_time:"2018.06.09 12:00:00"
+      },{
+          l_name:"员工",
+          l_score:"+3000",
+          l_time:"2018.06.09 12:00:00"
+      },{
+          l_name:"员工",
+          l_score:"+1000",
+          l_time:"2018.06.09 12:00:00"
+      },{
+          l_name:"员工",
+          l_score:"+1000",
+          l_time:"2018.06.09 12:00:00"
+      },{
+          l_name:"员工",
+          l_score:"+1000",
+          l_time:"2018.06.09 12:00:00"
+      },{
+          l_name:"员工",
+          l_score:"+1000",
+          l_time:"2018.06.09 12:00:00"
+      },{
+          l_name:"员工",
+          l_score:"+1000",
+          l_time:"2018.06.09 12:00:00"
+      },{
+          l_name:"员工",
+          l_score:"+1000",
+          l_time:"2018.06.09 12:00:00"
+      },{
+          l_name:"员工",
+          l_score:"+1000",
+          l_time:"2018.06.09 12:00:00"
+      },{
           l_name:"员工",
           l_score:"+1000",
           l_time:"2018.06.09 12:00:00"
@@ -100,9 +154,18 @@
     }
 
     methods = {
-
+        handleShowQuestion(){
+                wx.showToast({
+                title: '点击展示',
+                icon: 'success',
+                duration: 2000
+                })
+        },
+       handleScroll() {
+       console.log("lower")
+       },
     }
-
+   
     events = {
     }
 

@@ -1,18 +1,155 @@
 <style lang="less">
-  
+@import "../../static/style/borderComLine.less";
+  .dynamic-deatail{
+    padding: 0 34rpx 34rpx 34rpx;
+    color: #fff;
+    .ye{
+      color: #f1f4ba
+    }
+    .msg-title{
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding:0 40rpx;
+      font-size: 28rpx;
+      height:118rpx ;
+    }
+    .avator{
+         width: 100rpx;
+         height: 100rpx;
+         border-radius: 50%;
+         overflow: hidden;
+         border:1rpx solid #d8a83f;
+         margin-right: 30rpx;
+         flex-shrink: 0;
+    }
+    .cont{
+      background-color: #4c6b94;
+      box-shadow: inset 0 0 24rpx 8rpx #9fa4a9;
+      border:1rpx solid #232b4f;
+      .info,.status{
+        display: flex;
+        align-items: center;
+      }
+      .info{
+              height: 170rpx;
+               padding:0 40rpx;
+      }
+      .info-txt{
+         font-size: 30rpx;
+         view{
+           line-height: 48rpx;
+           font-size: 28rpx;
+         }
+         text{
+           line-height: 38rpx;
+           font-size: 22rpx;
+           color: #c5ddf1;
+         }
+      }
+      .titl{
+         font-size: 30rpx;
+         text-align: center;
+          padding:30rpx 40rpx 20rpx 40rpx;
+           line-height: 50rpx;
+      }
+      .msg{
+        line-height: 30rpx;
+        font-size: 24rpx;
+         padding:38rpx 40rpx 0;
+        
+      }
+      .status{
+        // height: 40px;
+        padding:0 40rpx;
+        // justify-content: space-between;
+        color: #cbe3f7;
+        font-size: 24rpx;
+        color: #cbe3f7;
+        view{
+          height: 40px;
+          display: flex;
+          align-items: center;
+        }
+        .icon{
+         color: #f1f4ba;
+         padding-left:40rpx;
+         margin-left:68rpx;  
+         background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAaCAMAAACaYWzBAAAAV1BMVEUAAADx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lp45tP4AAAAHHRSTlMAPEvhRAr6hfLqy5HV0Luaf1ktEt+ja2dBNC4bf/r0rgAAAIBJREFUKM91z0kOhDAMRFEHyEwz9dzt+5+TJCyQsOsv60lRTGdf7++kZBzzaBWYufRS4FZhkrt1FaKED9eChNxglC/FBl7Awq3tuq+u7XE4MuXSn8/zZvhS6Nr3OwHcU68DIwgIJgQLggGAswASAcgIVgR/AA8C8ETwLpAUSJZoB+O9KHScoGflAAAAAElFTkSuQmCC");
+         background-repeat: no-repeat;
+         background-size: 24rpx auto;
+         background-position-y: center;
+         background-position-x: 0;
+        }
+      }
+    }
+    .item{
+       height: 198rpx;
+       display: flex;
+       align-items: center;
+       padding: 0 40rpx;
+       .rt{
+          flex-shrink: 1;
+         display: flex;
+         flex-direction: column;
+         view{
+           line-height: 48rpx;
+           font-size: 26rpx;
+
+         }
+         text{
+            color: #cbe3f7;
+           line-height: 30rpx;
+           font-size: 20rpx;
+           display: -webkit-box;
+          -webkit-box-orient: vertical;
+          -webkit-line-clamp: 2;
+          overflow: hidden;
+         }
+       }
+    }
+  }
 </style>
 <template>
-  <view class="container">
-    <view>
-     帖子详情
+  <view class="dynamic-deatail">
+    <view class="cont">
+      <view class="info border-com-line">
+        <image class="avator" src="http://img1.360buyimg.com/da/jfs/t25096/340/321933848/390630/985a448c/5b6bbefeNafcfc263.jpg" mode="scaleToFill" />
+        <view class="info-txt">
+              <view class="ye">张三</view>
+              <text>2018.9.45</text>
+        </view>
+      </view>
+      <view class="titl border-com-line ye">卓系统，QQ微信都可以，人好，</view>
+      <view class="msg">安卓系统，QQ微信都可以，人好，心肠好，不演不挂机不骂人不扣分，每天都时间多，活跃，要求是段位无所谓，铭文两套以上，英雄多一点</view>
+      <view class="status">
+        <view >阅读：565656</view>
+        <view class="icon">阅读：565656</view>
+      </view>
     </view>
+    <view class="msg-title border-com-line">
+      <text>留言区</text>
+     <image @tap="handleJumpAdd" src="../../static/img/dynamics/msg-add.png" mode="aspectFit" style="width:36rpx;height:45rpx;"/>
+    </view>
+    <scroll-view scroll-y style="height: 560rpx;" lower-threshold="50" bindscrolltolower="handleScroll">
+        
+        <repeat for="{{listArr}}" key="index" index="index" item="item">
+          <view class="item border-com-line">
+            <image class="avator" src="{{item.d_avator}}" mode="scaleToFill" />
+            <view class="rt" @tap="handleJumpDetail">
+              <view class="ye">{{item.d_name}}</view>
+              <text>{{item.d_cont}}</text>
+            </view>
+            </view>
+        </repeat>
+    </scroll-view>
   </view>
 </template>
 
 <script>
   import wepy from 'wepy'
 
-  export default class Index extends wepy.page {
+  export default class dynamicDeatail extends wepy.page {
     config = {
       navigationBarTitleText: '详情'
     }
@@ -20,7 +157,35 @@
 
     }
     data = {
-      mynum: 20,
+      listArr:[{
+        d_avator:"http://img1.360buyimg.com/da/jfs/t25096/340/321933848/390630/985a448c/5b6bbefeNafcfc263.jpg",
+        d_name:"张三",
+        d_cont:"王者荣耀新赛季已经开启一段时间了，大家伙上王者没。上王者不仅是段位提升的一种激励王者荣耀新赛季已经开启一段时间了，大家伙上王者没。上王者不仅是段位提升的一种激励",
+      },{
+        d_avator:"http://img1.360buyimg.com/da/jfs/t25096/340/321933848/390630/985a448c/5b6bbefeNafcfc263.jpg",
+        d_name:"张三",
+        d_cont:"王者荣耀新赛季已经开启一段时间了，大家伙上王者没。上王者不仅是段位提升的一种激励王者荣耀新赛季已经开启一段时间了，大家伙上王者没。上王者不仅是段位提升的一种激励",
+      },{
+        d_avator:"http://img1.360buyimg.com/da/jfs/t25096/340/321933848/390630/985a448c/5b6bbefeNafcfc263.jpg",
+        d_name:"张三",
+        d_cont:"王者荣耀新赛季已经开启一段时间了，大家伙上王者没。上王者不仅是段位提升的一种激励王者荣耀新赛季已经开启一段时间了，大家伙上王者没。上王者不仅是段位提升的一种激励",
+      },{
+        d_avator:"http://img1.360buyimg.com/da/jfs/t25096/340/321933848/390630/985a448c/5b6bbefeNafcfc263.jpg",
+        d_name:"张三",
+        d_cont:"王者荣耀新赛季已经开启一段时间了，大家伙上王者没。上王者不仅是段位提升的一种激励王者荣耀新赛季已经开启一段时间了，大家伙上王者没。上王者不仅是段位提升的一种激励",
+      },{
+        d_avator:"http://img1.360buyimg.com/da/jfs/t25096/340/321933848/390630/985a448c/5b6bbefeNafcfc263.jpg",
+        d_name:"张三",
+        d_cont:"王者荣耀新赛季已经开启一段时间了，大家伙上王者没。上王者不仅是段位提升的一种激励王者荣耀新赛季已经开启一段时间了，大家伙上王者没。上王者不仅是段位提升的一种激励",
+      },{
+        d_avator:"http://img1.360buyimg.com/da/jfs/t25096/340/321933848/390630/985a448c/5b6bbefeNafcfc263.jpg",
+        d_name:"张三",
+        d_cont:"王者荣耀新赛季已经开启一段时间了，大家伙上王者没。上王者不仅是段位提升的一种激励王者荣耀新赛季已经开启一段时间了，大家伙上王者没。上王者不仅是段位提升的一种激励",
+      },{
+        d_avator:"http://img1.360buyimg.com/da/jfs/t25096/340/321933848/390630/985a448c/5b6bbefeNafcfc263.jpg",
+        d_name:"张三",
+        d_cont:"王者荣耀新赛季已经开启一段时间了，大家伙上王者没。上王者不仅是段位提升的一种激励王者荣耀新赛季已经开启一段时间了，大家伙上王者没。上王者不仅是段位提升的一种激励",
+      }]
     }
 
     computed = {
@@ -30,7 +195,15 @@
     }
 
     methods = {
-
+      handleScroll(){
+        console.log("scroll")
+      },
+      handleJumpAdd(){
+        this.$navigate("/pages/dynamics/add")
+      },
+      handleJumpDetail(){
+        this.$navigate("/pages/dynamics/leaveMsg")
+      }
     }
 
     events = {
