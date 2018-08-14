@@ -52,10 +52,10 @@
     justify-content: space-between;
     padding-top: 30rpx;
     .name-box {
-      width: 160rpx;
+      width: 260rpx;
       height: 44rpx;
       background-image: url('http://s29.9956.cn/res/zhushou/danye/topking/btn1.png');
-      background-size: cover;
+      background-size: 100% 100%;
       font-size: 20rpx;
       color: #b7e3f6;
       line-height: 44rpx;

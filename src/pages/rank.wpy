@@ -174,7 +174,7 @@
       </view>
       <view class="user-wrap">
            <repeat for="{{userArr}}" key="index" index="index" item="item">
-             <view class="user-item"  @tap="handleClickTab('{{index}}')">
+             <view class="user-item"  @tap="handleJumpDetail">
                <image src="{{item.u_avator}}" mode="scaleToFill" />
                <view style="color:#b7e3f6">{{item.u_type}}</view>
                <view style="color:#f1f4ba">{{item.u_name}}</view>
@@ -366,6 +366,9 @@ export default class pageRank extends wepy.page {
   methods = {
      handleScroll(){
         console.log("scroll")
+      },
+      handleJumpDetail(){
+        this.$navigate('/pages/rank/detail');
       },
     handleClickTab(inx) {
       this.tabArr.map((item, index) => {
