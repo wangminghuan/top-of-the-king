@@ -1,5 +1,6 @@
 <style lang="less">
 @import "../static/style/soundComTips.less";
+@import "../static/style/comAvator.less";
 .page-dynamics {
   padding: 0 40rpx 40rpx 40rpx;
   .special-title {
@@ -78,15 +79,6 @@
     .post-item {
       display: flex;
       justify-content: space-between;
-      .lf {
-        width: 102rpx;
-        height: 102rpx;
-        margin-top: 36rpx;
-        border-radius: 50%;
-        border:1rpx solid #2678ca;
-        //  display: block;
-        //  flex-shrink: 0;
-      }
       .rt {
         width: 456rpx;
         .name {
@@ -139,7 +131,7 @@
           .btm-item {
             padding-top: 10rpx;
             padding-bottom: 10rpx;
-            display: flex;
+            // display: flex;
 
             text {
               line-height: 36rpx;
@@ -175,7 +167,7 @@
        </view>
        <repeat for="{{postList}}" key="index" index="index" item="item">
         <view class="post-item">
-           <image class="lf" src="{{item.s_avator}}" mode="scaleToFill" />
+           <view class="com-avator" style="margin-top: 36rpx;"><image  src="{{item.s_avator}}" mode="scaleToFill" /></view>
            <view class="rt">
              <view class="name">{{item.s_name}}</view>
              <view class="content" @tap="handleJumpDetail">{{item.s_content}}</view>
@@ -230,7 +222,7 @@ export default class pageDynamics extends wepy.page {
     postList: [
       {
         s_avator:
-          'http://m.360buyimg.com/mobilecms/jfs/t21658/347/221358098/7461/f86e6f74/5b03b170Nc9e0ec7c.png',
+          'https://m.360buyimg.com/mobilecms/s130x130_jfs/t22720/294/691837312/220531/cc7f36e9/5b3d742aN699e6299.jpg!q70.jpg',
         s_name: '王明欢',
         s_content:
           '王者荣耀新赛季已经开启一段时间了，大家伙上王者没。上王者不仅是段位提升的一种激励...',

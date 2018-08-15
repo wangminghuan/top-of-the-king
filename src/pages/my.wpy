@@ -52,7 +52,7 @@
     justify-content: space-between;
     padding-top: 30rpx;
     .name-box {
-      width: 260rpx;
+      width: 160rpx;
       height: 44rpx;
       background-image: url('http://s29.9956.cn/res/zhushou/danye/topking/btn1.png');
       background-size: 100% 100%;
@@ -180,7 +180,7 @@
         </view>
         <view class="content">
           <repeat for="{{contList}}" key="index" index="index" item="item">
-             <view class="card-com-item">
+             <view class="card-com-item used">
              <view class="txt">
                       <view class="top">{{item.c_name}}</view>
                       <image class="mid" src="../static/img/mall/1-1.png" mode="aspectFit" style="width:96rpx;height:96rpx"/>

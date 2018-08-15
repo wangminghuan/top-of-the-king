@@ -1,6 +1,7 @@
 <style lang="less">
 @import "../../static/style/userComBtn.less";
 @import "../../static/style/borderComLine.less";
+@import "../../static/style/comAvator.less";
   .my-npc-wrap{
       padding: 0 38rpx;
       height: 100%;
@@ -12,12 +13,12 @@
          align-items: center;
          width: 100%;
       }
-      .icon{
-          width:100rpx;
-          height: 100rpx;
-          border-radius: 50%;
-          border:1rpx solid red; 
-      }
+      // .icon{
+      //     width:100rpx;
+      //     height: 100rpx;
+      //     border-radius: 50%;
+      //     border:1rpx solid red; 
+      // }
      .txt{
          display: flex;
          flex-direction: column;
@@ -64,7 +65,7 @@
     <scroll-view scroll-y style="height: 500rpx;" lower-threshold="50" bindscrolltolower="handleScroll">
     <repeat for="{{listArr}}" key="index" index="index" item="item">
         <view  @tap="handleClickTab('{{index}}')" class="item border-com-line">
-            <view class="icon"></view>
+            <view class="com-avator"></view>
              <view class="txt">
                   <view class="top">
                       <view style="color:#f1f4ba;font-size:26rpx;">{{item.l_name}}</view>

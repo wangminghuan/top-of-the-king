@@ -1,5 +1,6 @@
 <style lang="less">
 @import "../../static/style/borderComLine.less";
+@import "../../static/style/comAvator.less";
   .dynamic-deatail{
     padding: 0 34rpx 34rpx 34rpx;
     color: #fff;
@@ -14,14 +15,8 @@
       font-size: 28rpx;
       height:118rpx ;
     }
-    .avator{
-         width: 100rpx;
-         height: 100rpx;
-         border-radius: 50%;
-         overflow: hidden;
-         border:1rpx solid #d8a83f;
-         margin-right: 30rpx;
-         flex-shrink: 0;
+    .com-avator{
+      margin-right: 30rpx;
     }
     .cont{
       background-color: #4c6b94;
@@ -114,7 +109,7 @@
   <view class="dynamic-deatail">
     <view class="cont">
       <view class="info border-com-line">
-        <image class="avator" src="http://img1.360buyimg.com/da/jfs/t25096/340/321933848/390630/985a448c/5b6bbefeNafcfc263.jpg" mode="scaleToFill" />
+        <view class="com-avator"><image src="http://img1.360buyimg.com/da/jfs/t25096/340/321933848/390630/985a448c/5b6bbefeNafcfc263.jpg" mode="scaleToFill" /></view>
         <view class="info-txt">
               <view class="ye">张三</view>
               <text>2018.9.45</text>
@@ -135,7 +130,7 @@
         
         <repeat for="{{listArr}}" key="index" index="index" item="item">
           <view class="item border-com-line">
-            <image class="avator" src="{{item.d_avator}}" mode="scaleToFill" />
+            <view class="com-avator"><image src="{{item.d_avator}}" mode="scaleToFill" /></view>
             <view class="rt" @tap="handleJumpDetail">
               <view class="ye">{{item.d_name}}</view>
               <text>{{item.d_cont}}</text>
