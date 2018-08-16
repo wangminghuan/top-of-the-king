@@ -21,6 +21,7 @@ export default class extends wepy.app {
       // 'pages/loginTourist',
       // 'pages/loginUser',
       //tabar //排行 //商城  //动态 // 我的 
+      'pages/my/uplevel',
       'pages/dynamics',
       'pages/rank/detail',
        'pages/my',
