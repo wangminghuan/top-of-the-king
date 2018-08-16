@@ -167,6 +167,26 @@
 }
 </style>
 <template>
+<!-- 
+/res/zhushou/danye/topking/com-card.png-> 等待上线
+
+/res/zhushou/danye/topking/level_1.png-> 等待上线
+
+/res/zhushou/danye/topking/level_2.png-> 等待上线
+
+/res/zhushou/danye/topking/level_3.png-> 等待上线
+
+/res/zhushou/danye/topking/level_4.png-> 等待上线
+
+/res/zhushou/danye/topking/level_5.png-> 等待上线
+
+/res/zhushou/danye/topking/level_6.png-> 等待上线
+
+/res/zhushou/danye/topking/ry_bg.png-> 等待上线
+
+/res/zhushou/danye/topking/used.png-> 等待上线
+
+-->
   <view class="page-rank">
      <view class="sound-com-tips">
       <view class="sound">快讯</view>
