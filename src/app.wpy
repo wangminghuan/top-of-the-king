@@ -21,10 +21,14 @@ export default class extends wepy.app {
       // 'pages/loginTourist',
       // 'pages/loginUser',
       //tabar //排行 //商城  //动态 // 我的 
+       'pages/my/title',
+      'pages/my',
+        'pages/my/record',
+       
       'pages/my/uplevel',
       'pages/dynamics',
       'pages/rank/detail',
-       'pages/my',
+      
       'pages/rank',
       'pages/my/npc',
       'pages/my/bonus',
@@ -41,7 +45,7 @@ export default class extends wepy.app {
       'pages/my/bags',
       'pages/my/feedback',
       'pages/my/message',
-      'pages/my/record',
+    
       'pages/my/gift',
       
       // 'pages/mall/success'

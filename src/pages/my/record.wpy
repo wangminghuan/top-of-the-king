@@ -1,18 +1,68 @@
 <style lang="less">
-  
+@import "../../static/style/loginComTitle.less";
+  .my-record-wrap{
+    padding: 0 44rpx;
+    .login-com-title{
+      margin-bottom: 62rpx;
+      margin-top:40rpx;
+    }
+    .content{
+      border: 1px solid #85d1ea;
+    padding-bottom: 60rpx;
+    box-shadow: inset 0 0 10rpx 3rpx #405784;
+    background-color: #475881;
+    
+    .row-wrap{
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      height: 68rpx;
+        .item{
+        width: 33.3%;
+        color: #b7e3f6;
+        font-size: 26rpx;
+        align-self: center;
+        text-align: center;
+      }
+    }
+    .row-title{
+      margin-top:57rpx;
+        .item{
+        color: #f1f4ba;
+        font-size: 30rpx;
+      }
+    }
+    }
+  }
 </style>
 <template>
-  <view class="container">
-    <view>
-     我的战绩
+  <view class="my-record-wrap">
+    <view class="login-com-title">
+     历史战绩
     </view>
+    <view class="content">
+      <view class="row-wrap row-title">
+               <view class="item">事件</view>
+               <view class="item">获得战力数</view>
+               <view class="item">时间</view>
+              </view>
+        <scroll-view scroll-y style="height: 764rpx;" >
+          <repeat for="{{contList}}" key="index" index="index" item="item">
+             <view class="row-wrap">
+               <view class="item">{{item.c_event}}</view>
+               <view class="item">{{item.c_power}}</view>
+               <view class="item">{{item.c_time}}</view>
+              </view>
+            </repeat>
+            </scroll-view>
+        </view>
   </view>
 </template>
 
 <script>
   import wepy from 'wepy'
 
-  export default class Index extends wepy.page {
+  export default class myRecord extends wepy.page {
     config = {
       navigationBarTitleText: '战绩'
     }
@@ -20,7 +70,71 @@
 
     }
     data = {
-      mynum: 20,
+      contList:[{
+        c_event:"销售",
+        c_power:"获得888技能",
+        c_time:"09.30 08:00"
+      },{
+        c_event:"销售",
+        c_power:"获得888技能",
+        c_time:"09.30 08:00"
+      },{
+        c_event:"销售",
+        c_power:"获得888技能",
+        c_time:"09.30 08:00"
+      },{
+        c_event:"销售",
+        c_power:"获得888技能",
+        c_time:"09.30 08:00"
+      },{
+        c_event:"销售",
+        c_power:"获得888技能",
+        c_time:"09.30 08:00"
+      },{
+        c_event:"销售",
+        c_power:"获得888技能",
+        c_time:"09.30 08:00"
+      },{
+        c_event:"销售",
+        c_power:"获得888技能",
+        c_time:"09.30 08:00"
+      },{
+        c_event:"销售",
+        c_power:"获得888技能",
+        c_time:"09.30 08:00"
+      },{
+        c_event:"销售",
+        c_power:"获得888技能",
+        c_time:"09.30 08:00"
+      },{
+        c_event:"销售",
+        c_power:"获得888技能",
+        c_time:"09.30 08:00"
+      },{
+        c_event:"销售",
+        c_power:"获得888技能",
+        c_time:"09.30 08:00"
+      },{
+        c_event:"销售",
+        c_power:"获得888技能",
+        c_time:"09.30 08:00"
+      },{
+        c_event:"销售",
+        c_power:"获得888技能",
+        c_time:"09.30 08:00"
+      },{
+        c_event:"销售",
+        c_power:"获得888技能",
+        c_time:"09.30 08:00"
+      },{
+        c_event:"销售",
+        c_power:"获得888技能",
+        c_time:"09.30 08:00"
+      },{
+        c_event:"销售",
+        c_power:"获得888技能",
+        c_time:"09.30 08:00"
+      }]
     }
 
     computed = {

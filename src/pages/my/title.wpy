@@ -1,0 +1,115 @@
+<style lang="less">
+@import "../../static/style/loginComTitle.less";
+  .my-title-wrap{
+    padding: 0 44rpx;
+    .login-com-title{
+      margin-bottom: 110rpx;
+      margin-top:40rpx;
+    }
+    .content{
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      padding: 0 68rpx;
+      .item{
+ display: flex;
+      flex-direction: column;
+      height: 254rpx;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 82rpx;
+      text{
+          text-align: center;
+          font-size: 30rpx;
+          color:#fff;
+        //   line-height: 
+      }
+      }
+    .title-bg{
+     background-color: #b7e3f6;
+      width: 180rpx;
+      height: 180rpx;
+      border-radius: 50%;
+      overflow: hidden;
+     
+      image{
+          width: 180rpx;
+          height: 180rpx;
+      }
+    }
+    }
+  }
+</style>
+<template>
+  <view class="my-title-wrap">
+    <view class="login-com-title">
+     已获称号
+    </view>
+    
+        <scroll-view scroll-y style="height: 860rpx;" >
+         <view  class="content">
+          <repeat for="{{titleList}}" key="index" index="index" item="item">
+             <view class="item">
+             <view class="title-bg title-{{(index+1)}}">
+              <image  src="../../static/img/my/ry1.png" mode="aspectFit"  />
+             
+             </view>
+              <text>{{item.t_name}}</text>
+              </view>
+            </repeat>
+            </view>
+            </scroll-view>
+        
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+
+  export default class myRecord extends wepy.page {
+    config = {
+      navigationBarTitleText: '已获称号'
+    }
+    components = {
+
+    }
+    data = {
+      titleList:[{
+        t_name:"销售",
+        t_val:"1"
+      },{
+        t_name:"销售2",
+        t_val:"1"
+      },{
+        t_name:"销售",
+        t_val:"1"
+      },{
+        t_name:"销售2",
+        t_val:"1"
+      },{
+        t_name:"销售",
+        t_val:"1"
+      },{
+        t_name:"销售2",
+        t_val:"1"
+      }]
+    }
+
+    computed = {
+      now () {
+        return +new Date()
+      }
+    }
+
+    methods = {
+
+    }
+
+    events = {
+    }
+
+    onLoad(params, data) {
+    }
+  }
+</script>
