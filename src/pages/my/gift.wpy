@@ -1,26 +1,133 @@
 <style lang="less">
-  
+@import "../../static/style/borderComLine.less";
+@import "../../static/style/tabCom.less";
+@import "../../static/style/comAvator.less";
+  .my-gift-wrap{
+    padding: 0 75rpx;
+    .top-wrap{
+      height: 264rpx;position: relative;
+    }
+    .tab-com{
+      width: 474rpx;
+      margin:0 auto;
+      position: absolute;
+      top:50%;
+      transform: translateY(-50%);
+      left:0;
+      right: 0;
+      view{
+        width: 50%;
+      }
+    }
+    .com-avator{
+      margin-right: 30rpx;
+    }
+    
+    .item{
+       height: 198rpx;
+       display: flex;
+       align-items: center;
+       justify-content: space-between;
+       padding: 0 40rpx;
+       color: #f1f4ba;
+       .lf{
+           display: flex;
+       }
+       .lf-box{
+         display: flex;
+         flex-direction: column;
+         font-size: 24rpx;
+         text{
+           color: #a2d0ee;
+           line-height:44rpx; 
+         }
+       }
+       .lf-titl{
+         font-size: 30rpx;
+         line-height: 68rpx;
+       }
+       .rt{
+         font-size:32rpx; 
+       }
+       .rt{
+         font-size:32rpx; 
+       }
+    }
+  }
 </style>
 <template>
-  <view class="container">
-    <view>
-     我的礼包
+  <view class="my-gift-wrap">
+    <view class="top-wrap">
+    <view class="tab-com">
+      <view class="active">我收到的礼包</view>
+      <view class="">我发出的礼包</view>
     </view>
+    </view>
+    <scroll-view scroll-y style="height: 606rpx;" lower-threshold="50" bindscrolltolower="handleScroll">
+        <view class="border-com-line" style="height:2rpx;"></view>
+        <repeat for="{{listArr}}" key="index" index="index" item="item">
+          <view class="item border-com-line">
+            <view class="lf">
+            <view class="com-avator"><image src="{{item.d_avator}}" mode="scaleToFill" /></view>
+            <view class="lf-box">
+             <view class="lf-titl">{{item.d_name}}</view>
+             <text>{{item.d_time}}</text>
+            </view>
+            </view>
+            <view class="rt">{{item.d_nums}}</view>
+            </view>
+        </repeat>
+    </scroll-view>
   </view>
 </template>
 
 <script>
   import wepy from 'wepy'
 
-  export default class Index extends wepy.page {
+  export default class myGift extends wepy.page {
     config = {
-      navigationBarTitleText: '我的礼包'
+      navigationBarTitleText: '留言'
     }
     components = {
 
     }
     data = {
-      mynum: 20,
+      listArr:[{
+        d_avator:"http://img1.360buyimg.com/da/jfs/t25096/340/321933848/390630/985a448c/5b6bbefeNafcfc263.jpg",
+        d_name:"张三赠送",
+        d_time:"08.09 12:00",
+        d_nums:"+11"
+        },{
+        d_avator:"http://img1.360buyimg.com/da/jfs/t25096/340/321933848/390630/985a448c/5b6bbefeNafcfc263.jpg",
+        d_name:"张三赠送",
+        d_time:"08.09 12:00",
+        d_nums:"+11"
+        },{
+        d_avator:"http://img1.360buyimg.com/da/jfs/t25096/340/321933848/390630/985a448c/5b6bbefeNafcfc263.jpg",
+        d_name:"张三赠送",
+        d_time:"08.09 12:00",
+        d_nums:"+11"
+        },{
+        d_avator:"http://img1.360buyimg.com/da/jfs/t25096/340/321933848/390630/985a448c/5b6bbefeNafcfc263.jpg",
+        d_name:"张三赠送",
+        d_time:"08.09 12:00",
+        d_nums:"+11"
+        },{
+        d_avator:"http://img1.360buyimg.com/da/jfs/t25096/340/321933848/390630/985a448c/5b6bbefeNafcfc263.jpg",
+        d_name:"张三赠送",
+        d_time:"08.09 12:00",
+        d_nums:"+11"
+        },{
+        d_avator:"http://img1.360buyimg.com/da/jfs/t25096/340/321933848/390630/985a448c/5b6bbefeNafcfc263.jpg",
+        d_name:"张三赠送",
+        d_time:"08.09 12:00",
+        d_nums:"+11"
+        },{
+        d_avator:"http://img1.360buyimg.com/da/jfs/t25096/340/321933848/390630/985a448c/5b6bbefeNafcfc263.jpg",
+        d_name:"张三赠送",
+        d_time:"08.09 12:00",
+        d_nums:"+11"
+        }]
     }
 
     computed = {
@@ -30,7 +137,15 @@
     }
 
     methods = {
-
+      handleScroll(){
+        console.log("scroll")
+      },
+      handleJumpAdd(){
+        this.$navigate("/pages/dynamics/add")
+      },
+      handleJumpDetail(){
+        this.$navigate("/pages/dynamics/leaveMsg")
+      }
     }
 
     events = {

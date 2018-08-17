@@ -16,13 +16,16 @@ export default class extends wepy.app {
   config = {
     pages: [
       // 'pages/feedBack',
-      // 'pages/msgAdd',
+     
       // 'pages/login',
       // 'pages/loginTourist',
       // 'pages/loginUser',
       //tabar //排行 //商城  //动态 // 我的 
-       'pages/my/title',
+       'pages/my/feedbackTips',
+       'pages/my/changeTips',
       'pages/my',
+       'pages/my/addMsg',
+      'pages/my/title',
         'pages/my/record',
        
       'pages/my/uplevel',

@@ -1,26 +1,140 @@
 <style lang="less">
-  
+@import "../../static/style/borderComLine.less";
+@import "../../static/style/tabCom.less";
+@import "../../static/style/comAvator.less";
+@import "../../static/style/userComBtn.less";
+  .my-message-wrap{
+    padding: 0 75rpx;
+    .top-wrap{
+      height: 264rpx;position: relative;
+    }
+    .tab-com{
+      width: 474rpx;
+      margin:0 auto;
+      position: absolute;
+      top:50%;
+      transform: translateY(-50%);
+      left:0;
+      right: 0;
+      view{
+        width: 50%;
+      }
+    }
+    
+    .com-avator{
+      margin-right: 30rpx;
+    }
+    
+    .item{
+       height: 198rpx;
+       display: flex;
+       align-items: center;
+       padding: 0 40rpx;
+       .rt{
+          flex-shrink: 1;
+         display: flex;
+         flex-direction: column;
+         view{
+           line-height: 48rpx;
+           font-size: 26rpx;
+
+         }
+         text.txt{
+            color: #cbe3f7;
+           line-height: 30rpx;
+           font-size: 20rpx;
+           display: -webkit-box;
+          -webkit-box-orient: vertical;
+          -webkit-line-clamp: 2;
+          overflow: hidden;
+         }
+       }
+       .name-top{
+         display: flex;
+         justify-content: space-between;
+         font-size: 24rpx;
+         text{
+           color: #cbe3f7
+         }
+       }
+    }
+    .btm-btn{
+      width: 394rpx;
+      margin-top:100rpx;
+    }
+  }
 </style>
 <template>
-  <view class="container">
-    <view>
-     我的留言
+  <view class="my-message-wrap">
+    <view class="top-wrap">
+    <view class="tab-com">
+      <view class="active" >收到的留言</view>
+      <view >我的留言</view>
     </view>
+    </view>
+    <scroll-view scroll-y style="height: 606rpx;" lower-threshold="50" bindscrolltolower="handleScroll">
+        <view class="border-com-line" style="height:2rpx;"></view>
+        <repeat for="{{listArr}}" key="index" index="index" item="item">
+          <view class="item border-com-line">
+            <view class="com-avator"><image src="{{item.d_avator}}" mode="scaleToFill" /></view>
+            <view class="rt" @tap="handleJumpDetail">
+              <view class="name-top"><text style="color:#f1f4ba">{{item.d_name}}</text><text>{{item.d_time}}</text></view>
+              <text class="txt">{{item.d_cont}}</text>
+            </view>
+            </view>
+        </repeat>
+    </scroll-view>
+    <button class="btm-btn user-com-btn" @tap="handleJumpAdd">我要留言</button>
   </view>
 </template>
 
 <script>
   import wepy from 'wepy'
 
-  export default class Index extends wepy.page {
+  export default class myMessage extends wepy.page {
     config = {
-      navigationBarTitleText: '我的留言'
+      navigationBarTitleText: '留言'
     }
     components = {
 
     }
     data = {
-      mynum: 20,
+      listArr:[{
+        d_avator:"http://img1.360buyimg.com/da/jfs/t25096/340/321933848/390630/985a448c/5b6bbefeNafcfc263.jpg",
+        d_name:"张三",
+         d_time:"09:09",
+        d_cont:"王者荣耀新赛季已经开启一段时间了，大家伙上王者没。上王者不仅是段位提升的一种激励王者荣耀新赛季已经开启一段时间了，大家伙上王者没。上王者不仅是段位提升的一种激励",
+      },{
+        d_avator:"http://img1.360buyimg.com/da/jfs/t25096/340/321933848/390630/985a448c/5b6bbefeNafcfc263.jpg",
+        d_name:"张三",
+        d_time:"09:09",
+        d_cont:"王者荣耀新赛季已经开启一段时间了，大家伙上王者没。上王者不仅是段位提升的一种激励王者荣耀新赛季已经开启一段时间了，大家伙上王者没。上王者不仅是段位提升的一种激励",
+      },{
+        d_avator:"http://img1.360buyimg.com/da/jfs/t25096/340/321933848/390630/985a448c/5b6bbefeNafcfc263.jpg",
+        d_name:"张三",
+        d_time:"09:09",
+        d_cont:"王者荣耀新赛季已经开启一段时间了，大家伙上王者没。上王者不仅是段位提升的一种激励王者荣耀新赛季已经开启一段时间了，大家伙上王者没。上王者不仅是段位提升的一种激励",
+      },{
+        d_avator:"http://img1.360buyimg.com/da/jfs/t25096/340/321933848/390630/985a448c/5b6bbefeNafcfc263.jpg",
+        d_name:"张三",
+        d_time:"09:09",
+        d_cont:"王者荣耀新赛季已经开启一段时间了，大家伙上王者没。上王者不仅是段位提升的一种激励王者荣耀新赛季已经开启一段时间了，大家伙上王者没。上王者不仅是段位提升的一种激励",
+      },{
+        d_avator:"http://img1.360buyimg.com/da/jfs/t25096/340/321933848/390630/985a448c/5b6bbefeNafcfc263.jpg",
+        d_name:"张三",
+        d_time:"09:09",
+        d_cont:"王者荣耀新赛季已经开启一段时间了，大家伙上王者没。上王者不仅是段位提升的一种激励王者荣耀新赛季已经开启一段时间了，大家伙上王者没。上王者不仅是段位提升的一种激励",
+      },{
+        d_avator:"http://img1.360buyimg.com/da/jfs/t25096/340/321933848/390630/985a448c/5b6bbefeNafcfc263.jpg",
+        d_name:"张三",
+        d_time:"09:09",
+        d_cont:"王者荣耀新赛季已经开启一段时间了，大家伙上王者没。上王者不仅是段位提升的一种激励王者荣耀新赛季已经开启一段时间了，大家伙上王者没。上王者不仅是段位提升的一种激励",
+      },{
+        d_avator:"http://img1.360buyimg.com/da/jfs/t25096/340/321933848/390630/985a448c/5b6bbefeNafcfc263.jpg",
+        d_name:"张三",
+        d_time:"09:09",
+        d_cont:"王者荣耀新赛季已经开启一段时间了，大家伙上王者没。上王者不仅是段位提升的一种激励王者荣耀新赛季已经开启一段时间了，大家伙上王者没。上王者不仅是段位提升的一种激励",
+      }]
     }
 
     computed = {
@@ -30,7 +144,15 @@
     }
 
     methods = {
-
+      handleScroll(){
+        console.log("scroll")
+      },
+      handleJumpAdd(){
+        this.$navigate("/pages/my/addMsg")
+      },
+      handleJumpDetail(){
+        this.$navigate("/pages/dynamics/leaveMsg")
+      }
     }
 
     events = {
