@@ -194,7 +194,7 @@
         console.log("scroll")
       },
       handleJumpAdd(){
-        this.$navigate("/pages/dynamics/add")
+        this.$navigate("/pages/my/addMsg")
       },
       handleJumpDetail(){
         this.$navigate("/pages/dynamics/leaveMsg")

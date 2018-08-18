@@ -51,6 +51,7 @@
     display: flex;
     justify-content: space-between;
     padding-top: 30rpx;
+    position: relative;
     .name-box {
       width: 160rpx;
       height: 44rpx;
@@ -101,6 +102,12 @@
       font-size: 20rpx;
       color: #b7e3f6;
     }
+    .up-level{
+      position: absolute;
+      right: 0;
+      top:15rpx;
+      padding: 15rpx;
+    }
   }
   .tab-wrap {
     border: 1px solid #85d1ea;
@@ -116,6 +123,69 @@
       padding: 56rpx 66rpx;
     }
   }
+  .score-pop-wrap{
+   
+
+
+    .bg{
+        position: fixed;
+        top:0;
+        right: 0;
+        left:0;
+        bottom:0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.4);
+        z-index: 99;
+      }
+      .pop-cont{
+        position: fixed;
+        top:50%;
+        transform: translateY(-50%);
+        left: 0;
+        right: 0;
+        margin:0 auto;
+        width: 500rpx;
+        height: 600rpx;
+        background-color: #4b98ec;
+        z-index: 100;
+      
+      }
+        .close{
+          position: absolute;
+          right: 0;
+          top:0;
+          width: 52rpx;
+          height: 52rpx;
+        }
+.row-wrap{
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      height: 50rpx;
+        .item{
+        width: 33.3%;
+        color: #b7e3f6;
+        font-size: 24rpx;
+        align-self: center;
+        text-align: center;
+      }
+    }
+    .row-title{
+      margin-top:38rpx;
+        .item{
+        color: #f1f4ba;
+        font-size: 24rpx;
+      }
+    }
+    .more{
+       color: #f1f4ba;
+        font-size: 24rpx;
+        text-align: center;
+        line-height: 80rpx;
+        margin-top:10rpx;
+    }
+  }
 }
 </style>
 <template>
@@ -128,12 +198,15 @@
           <view class="rt">
             <view class="rt-top">
             <view class="top-lf">
-            <text>王明欢</text>
-            <image src="../static/img/my/edit.png" mode="aspectFit" style="width:30rpx;height:30rpx;margin-left:30rpx;"/>
+            <input  wx:if="{{isEditName}}" bindblur="handleBlur" value="{{bindKeyInput}}" focus="focus" placeholder="输入用户名"/>
+            <view wx:else>
+            <text>{{bindKeyInput}}</text>
+            <image @tap="handleEditName" src="../static/img/my/edit.png" mode="aspectFit" style="width:30rpx;height:30rpx;margin-left:30rpx;"/>
             </view>
-            <image src="../static/img/my/15.png" mode="aspectFit" style="width:30rpx;height:30rpx;"/>
             </view>
-            <view class="rt-mid">称号：刀锋战士</view>
+            <view class="up-level" @tap="handleJump('/pages/my/uplevel')"><image  src="../static/img/my/15.png" mode="scaleToFill" style="width:30rpx;height:30rpx;"/></view>
+            </view>
+            <view class="rt-mid" @tap="handleJump('/pages/my/title')">称号：刀锋战士</view>
             <view class="rt-btm" @tap="handleJump('/pages/my/bonus')">
               <view class="btm-box" style="margin-top:20rpx;margin-bottom:24rpx">
                  <image src="../static/img/my/11.png" mode="aspectFit" style="width:30rpx;height:30rpx;margin:0 15rpx 0 20rpx;"/>
@@ -147,7 +220,7 @@
           </view>
       </view>
       <view class="my-tool">
-          <view class="tool-item" @tap="handleJump('/pages/my/bags')">
+          <view class="tool-item">
             <image src="../static/img/my/1.png" mode="aspectFit"/>
             <view class="txt">背包</view>
           </view>
@@ -159,7 +232,7 @@
             <image src="../static/img/my/3.png" mode="aspectFit"/>
             <view class="txt">留言</view>
           </view>
-           <view class="tool-item" @tap="handleJump('/pages/my/record')">
+           <view class="tool-item" @tap="handleShowPop">
             <image src="../static/img/my/4.png" mode="aspectFit"/>
             <view class="txt">战绩</view>
           </view>
@@ -193,6 +266,29 @@
             </repeat>
         </view>
       </view>
+      <view class="score-pop-wrap" style="display:{{isShowPop?'block':'none'}}">
+         <view class="bg"></view>
+         <view class="pop-cont">
+         <image class="mid" src="../static/img/my/score-titl.png" mode="aspectFit" style="width:500rpx;height:91rpx"/>
+         <view class="row-wrap row-title">
+               <view class="item">事件</view>
+               <view class="item">获得战力数</view>
+               <view class="item">时间</view>
+              </view>
+          <view style="height:300rpx;overflow:hidden">
+          <repeat for="{{scoreList}}" key="index" index="index" item="item">
+             <view class="row-wrap">
+               <view class="item">{{item.c_event}}</view>
+               <view class="item">{{item.c_power}}</view>
+               <view class="item">{{item.c_time}}</view>
+              </view>
+          </repeat>
+          </view>
+          <view class="more" @tap="handleJumpRecord">查看更多</view>
+          <view class="close" @tap="handleClose"></view>
+          </view>
+          
+      </view>
   </view>
 </template>
 
@@ -200,10 +296,13 @@
 import wepy from 'wepy';
 export default class pageMy extends wepy.page {
   config = {
-    navigationBarTitleText: '商城'
+    navigationBarTitleText: '我的'
   };
   components = {};
   data = {
+    isShowPop:false,
+    isEditName:false,
+    bindKeyInput:"王明欢",
     tabArr: [
       { t_name: '全部', t_value: '0', t_active: 1 },
       { t_name: '已使用', t_value: '1', t_active: 0 },
@@ -226,12 +325,107 @@ export default class pageMy extends wepy.page {
         c_name: '拜师卡',
         c_score: '7000'
       }
-    ]
+    ],
+    scoreList:[{
+        c_event:"销售",
+        c_power:"获得888技能",
+        c_time:"09.30 08:00"
+      },{
+        c_event:"销售",
+        c_power:"获得888技能",
+        c_time:"09.30 08:00"
+      },{
+        c_event:"销售",
+        c_power:"获得888技能",
+        c_time:"09.30 08:00"
+      },{
+        c_event:"销售",
+        c_power:"获得888技能",
+        c_time:"09.30 08:00"
+      },{
+        c_event:"销售",
+        c_power:"获得888技能",
+        c_time:"09.30 08:00"
+      },{
+        c_event:"销售",
+        c_power:"获得888技能",
+        c_time:"09.30 08:00"
+      },{
+        c_event:"销售",
+        c_power:"获得888技能",
+        c_time:"09.30 08:00"
+      },{
+        c_event:"销售",
+        c_power:"获得888技能",
+        c_time:"09.30 08:00"
+      },{
+        c_event:"销售",
+        c_power:"获得888技能",
+        c_time:"09.30 08:00"
+      },{
+        c_event:"销售",
+        c_power:"获得888技能",
+        c_time:"09.30 08:00"
+      },{
+        c_event:"销售",
+        c_power:"获得888技能",
+        c_time:"09.30 08:00"
+      },{
+        c_event:"销售",
+        c_power:"获得888技能",
+        c_time:"09.30 08:00"
+      },{
+        c_event:"销售",
+        c_power:"获得888技能",
+        c_time:"09.30 08:00"
+      },{
+        c_event:"销售",
+        c_power:"获得888技能",
+        c_time:"09.30 08:00"
+      },{
+        c_event:"销售",
+        c_power:"获得888技能",
+        c_time:"09.30 08:00"
+      },{
+        c_event:"销售",
+        c_power:"获得888技能",
+        c_time:"09.30 08:00"
+      }]
   };
 
   computed = {};
 
   methods = {
+    handleBlur(ev){
+      console.log(ev.detail)
+     wx.showLoading({
+      title: '加载中',
+    })
+    setTimeout(()=>{
+      wx.hideLoading();
+      this.isEditName=false;
+      this.bindKeyInput=ev.detail.value;
+      this.$apply();
+      wx.showToast({
+      title: '修改成功',
+      icon: 'success',
+      duration: 2000
+    })
+
+    },2000)
+    },
+    handleEditName(){
+      this.isEditName=true;
+    },
+    handleShowPop(){
+      this.isShowPop=true;
+    },
+    handleClose(){
+         this.isShowPop=false;
+    },
+    handleJumpRecord(){
+       this.$navigate("/pages/my/record");
+    },
     handleClickTab(inx) {
       this.tabArr.map((item, index) => {
         index == inx ? (item.t_active = 1) : (item.t_active = 0);

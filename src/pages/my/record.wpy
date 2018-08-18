@@ -2,9 +2,9 @@
 @import "../../static/style/loginComTitle.less";
   .my-record-wrap{
     padding: 0 44rpx;
+    padding-top:40rpx;
     .login-com-title{
       margin-bottom: 62rpx;
-      margin-top:40rpx;
     }
     .content{
       border: 1px solid #85d1ea;

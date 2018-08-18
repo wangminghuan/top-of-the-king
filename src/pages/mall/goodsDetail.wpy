@@ -1,0 +1,172 @@
+<style lang="less">
+@import "../../static/style/cardComBg.less";
+@import "../../static/style/userComBtn.less";
+  .goods-detail-wrap{
+    padding: 0 34rpx;
+    padding-top:92rpx;
+    .cont{
+     border: 1px solid #85d1ea;
+    // heigh/t: 454rpx;
+    box-shadow: inset 0 0 10rpx 3rpx #405784;
+    background-color: #475881;
+    padding: 44rpx 60rpx 90rpx 60rpx;
+    display: flex;
+    // justify-content: space-between;
+    color: #b7e3f6;
+    .lf{
+        flex-shrink: 0;
+        width: 246rpx;
+        margin-right: 20rpx;
+    }
+    .card-com-bg{
+        margin:0 auto;
+    }
+    .top{
+         font-size: 32rpx;
+         color: #f1f4ba;
+         line-height: 46rpx;
+    }
+    .mid{
+        // width: 172rpx;
+        // height:175rpx;
+        // background-color: red;
+        // margin:0 auto;
+        // margin-bottom: 44rpx;
+        color: #b7e3f6;
+        line-height: 32rpx;
+        margin-top:27rpx;
+        margin-bottom: 20rpx;
+        font-size: 24rpx;
+    }
+    .btm{
+        display: flex;
+        flex-direction: column;
+         color: #b7e3f6;
+        line-height: 32rpx;
+        font-size: 24rpx;
+        // height:34rpx;
+        // line-height: 34rpx;
+    }
+    }
+    .titl{
+        font-size: 28rpx;
+        color: #fff;
+        margin-top:88rpx;
+        margin-bottom:40rpx; 
+    }
+    .txt{
+        font-size: 24rpx;
+        color: #fff;
+        margin-top: 77rpx;
+        margin-bottom: 50rpx;
+    }
+    .tab-wrap{
+        display: flex;
+        justify-content: space-between;
+        .item{
+            width: 122rpx;
+            height: 52rpx;
+            background-color: #496089;
+            color: #fff;
+            font-size: 24rpx;
+            line-height:  52rpx;
+            text-align: center;
+            box-shadow:inset 0px 0px 22rpx 10rpx #5180a9;
+        }
+        .item.active{
+             background-color: #243d65;
+             box-shadow: initial;
+        }
+    }
+    .sub-btn{
+       width: 397rpx;
+       border-radius: 0;
+       position: fixed;
+       bottom: 116rpx;
+       left: 0;
+       right: 0;
+       margin:0 auto;
+    }
+  }
+</style>
+<template>
+  <view class="goods-detail-wrap">
+      <view class="cont">
+          <view class="lf "><view class="card-com-bg">
+               <image src="../../static/img/mall/1-1.png" mode="aspectFit" style="width:120rpx;height:100rpx;"/>
+              </view></view>
+          <view class="rt">
+          <view class="top">助理体验卡</view>
+          <view class="mid">消耗积分：1000</view>
+          <view class="btm">
+              <text >岗位体验卡介绍：</text>
+              <text>体验助理岗位一天</text>
+          </view>
+          </view>
+      </view>
+      <view class="titl">选择岗位级别</view>
+      <view class="tab-wrap">
+          <repeat for="{{tabList}}" key="index" index="index" item="item">
+             <view @tap="handleClickTab({{index}})" class="item {{index==activeIndex?'active':''}}">{{item.t_name}}</view>
+            </repeat>
+      </view>
+      <view class="txt">
+          <text>使用要求：</text><text style="color:#b7e3f6">无要求</text>
+      </view>
+      <button class="sub-btn user-com-btn"  @tap="handleClickSubmit">立即兑换</button>
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+
+  export default class goodsDetail extends wepy.page {
+    config = {
+      navigationBarTitleText: '商品详情'
+    }
+    components = {
+
+    }
+    data = {
+    activeIndex:-1,
+     tabList:[{
+         t_name:"主管",
+     },{
+         t_name:"店长"
+     },{
+         t_name:"总监"
+     },{
+         t_name:"经理"
+     }]
+    }
+
+    computed = {
+      now () {
+        return +new Date()
+      }
+    }
+
+    methods = {
+     handleClickTab(index){
+         this.activeIndex=index;
+     },
+     handleClickSubmit(){
+         wx.showLoading({
+           title: '加载中',
+        })
+
+        setTimeout(()=>{
+        wx.hideLoading();
+           this.$navigate("/pages/mall/success");
+        },2000)
+      
+     }
+    }
+
+    events = {
+    }
+
+    onLoad(params, data) {
+    }
+  }
+</script>

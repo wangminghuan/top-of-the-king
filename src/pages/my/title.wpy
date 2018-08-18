@@ -2,9 +2,11 @@
 @import "../../static/style/loginComTitle.less";
   .my-title-wrap{
     padding: 0 44rpx;
+    // height: 100%;
+    padding-top:40rpx;
     .login-com-title{
       margin-bottom: 110rpx;
-      margin-top:40rpx;
+     
     }
     .content{
       display: flex;
@@ -27,11 +29,12 @@
       }
       }
     .title-bg{
-     background-color: #b7e3f6;
       width: 180rpx;
       height: 180rpx;
       border-radius: 50%;
       overflow: hidden;
+      background-image: url("http://s29.9956.cn/res/zhushou/danye/topking/ry_bg.png");
+      background-size: cover;
      
       image{
           width: 180rpx;

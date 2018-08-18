@@ -263,7 +263,7 @@
         <image  src="../../static/img/rank/gift.png"  mode="scaleToFill" style="height:198rpx;width:100%" />
         <view class="gift-btn">
           <repeat for="{{giftArr}}" key="index" index="index" item="item">
-            <view class="btn-item" @tap="handleShowPop"></view>
+            <view class="btn-item" @tap="handleShowPop({{item.g_value}})"></view>
           </repeat>
         </view>
      </view>
@@ -289,9 +289,26 @@
         <view class="bg"></view>
         <view class="pop-cont">
           <image  src="../../static/img/rank/pop-title.png" mode="scaleToFill" style="width:500rpx;height:62rpx;"/>
-           <image class="avator" src="http://img1.360buyimg.com/da/jfs/t25096/340/321933848/390630/985a448c/5b6bbefeNafcfc263.jpg" mode="scaleToFill" style="margin:0 auto;display:block" />
+           <view wx:if="{{popIndex==0}}">
+           <image class="avator" src="../../static/img/rank/gift-1.png" mode="scaleToFill" style="margin:0 auto;display:block" />
            <view style="color:#fffd78;font-size:26rpx;line-height:84rpx">名称：蛋糕</view>
            <view style="line-height:44rpx">消耗积分：500</view>
+           </view>
+           <view wx:if="{{popIndex==1}}">
+           <image class="avator" src="../../static/img/rank/gift-2.png" mode="scaleToFill" style="margin:0 auto;display:block" />
+           <view style="color:#fffd78;font-size:26rpx;line-height:84rpx">名称：跑车</view>
+           <view style="line-height:44rpx">消耗积分：500</view>
+           </view>
+           <view wx:if="{{popIndex==2}}">
+           <image class="avator" src="../../static/img/rank/gift-3.png" mode="scaleToFill" style="margin:0 auto;display:block" />
+           <view style="color:#fffd78;font-size:26rpx;line-height:84rpx">名称：玫瑰</view>
+           <view style="line-height:44rpx">消耗积分：500</view>
+           </view>
+           <view wx:if="{{popIndex==3}}">
+           <image class="avator" src="../../static/img/rank/gift-4.png" mode="scaleToFill" style="margin:0 auto;display:block" />
+           <view style="color:#fffd78;font-size:26rpx;line-height:84rpx">名称：星星</view>
+           <view style="line-height:44rpx">消耗积分：500</view>
+           </view>
            <view style="width:174rpx;line-height:44rpx"><text style="display:block;text-align:left;padding-left:8rpx;">打赏数量</text></view>
            <view class="nums-cal">
              <view class="n-lf" @tap="handleClickSub">-</view>
@@ -300,7 +317,7 @@
            </view>
           <view class="btn">
             <button class="user-com-btn"  @tap="closePop">取消</button>
-            <button class="user-com-btn confirm"  @tap="closePop">确定</button>
+            <button class="user-com-btn confirm"  @tap="handlePopConfirm">确定</button>
           </view>
           <view class="close"  @tap="closePop"></view>
         </view>
@@ -318,19 +335,20 @@ export default class rankDeatail extends wepy.page {
   components = {};
   data = {
     isShowPop:false,
+    popIndex:0, //弹窗索引
     giftNums:1,
     giftArr: [
       {
-        g_value: '0'
+        g_value: '2'
       },
       {
         g_value: '1'
       },
       {
-        g_value: '2'
+        g_value: '3'
       },
       {
-        g_value: '3'
+        g_value: '0'
       }
     ],
     listArr: [
@@ -402,14 +420,31 @@ export default class rankDeatail extends wepy.page {
     closePop(){
        this.isShowPop=false;
     },
-    handleShowPop(){
+    handlePopConfirm(){
+      const that=this;
+        wx.showLoading({
+          title: '加载中',
+        })
+        setTimeout(()=>{
+          wx.hideLoading();
+          this.isShowPop=false;
+          wx.showToast({
+          title: '打赏成功',
+          icon: 'success',
+          duration: 2000
+        })
+          this.$apply();
+        },2000)
+    },
+    handleShowPop(index){
+        this.popIndex=index
         this.isShowPop=true;
     },
     handleScroll() {
       console.log('scroll');
     },
     handleJumpAdd() {
-      this.$navigate('/pages/dynamics/add');
+      this.$navigate('/pages/my/addMsg');
     },
     handleJumpDetail() {
       this.$navigate('/pages/dynamics/leaveMsg');

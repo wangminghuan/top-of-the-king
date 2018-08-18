@@ -93,16 +93,17 @@ export default class pageMall extends wepy.page {
       });
     },
     handleClick(){
-      const that=this;
-      wx.showModal({
-      title: '提示',
-      content: '确定兑换？',
-      success: function(res) {
-        if (res.confirm) {
-          that.$navigate("/pages/mall/success");
-        }
-      }
-    })
+       this.$navigate("/pages/mall/goodsDetail");
+      // const that=this;
+    //   wx.showModal({
+    //   title: '提示',
+    //   content: '确定兑换？',
+    //   success: function(res) {
+    //     if (res.confirm) {
+    //       that.$navigate("/pages/mall/success");
+    //     }
+    //   }
+    // })
           
     },
     handleClickJump(path) {

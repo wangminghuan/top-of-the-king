@@ -44,6 +44,7 @@
 
 </style>
 <template>
+<!-- 暂时无用-->
   <view class="msg-add-wrap" >
     <view class="login-com-title" style="margin-bottom:52rpx;">写留言</view>
     <view class="user-input"><text>对象：</text><input type="text" placeholder="" /></view>
