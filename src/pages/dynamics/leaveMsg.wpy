@@ -57,7 +57,7 @@
 
   export default class dynamicLeaveMsg extends wepy.page {
     config = {
-      navigationBarTitleText: '详情'
+      navigationBarTitleText: '留言详情'
     }
     components = {
 

@@ -15,51 +15,32 @@ import 'wepy-async-function'
 export default class extends wepy.app {
   config = {
     pages: [
-      // 'pages/feedBack',
-     
-      // 'pages/login',
-      // 'pages/loginTourist',
-      // 'pages/loginUser',
       //tabar //排行 //商城  //动态 // 我的 
       'pages/rank',
       'pages/dynamics',
+      'pages/mall',
       'pages/my',
-       'pages/mall',
-       'pages/mall/goodsDetail',
-       'pages/my/feedbackTips',
-       'pages/my/changeTips',
-       'pages/my/addMsg',
+      'pages/my/feedbackTips',
+      'pages/my/changeTips',
+      'pages/my/addMsg',
       'pages/my/title',
-        'pages/my/record',
-       
+      'pages/my/record',
       'pages/my/uplevel',
-      
-      'pages/rank/detail',
-      
-      
       'pages/my/npc',
       'pages/my/bonus',
-       
-      
-      
-     
-      'pages/mall/success',
-      'pages/dynamics/add',
-      'pages/dynamics/detail',
-       'pages/dynamics/leaveMsg',
-
-
       'pages/my/bags',
       'pages/my/feedback',
       'pages/my/message',
-    
       'pages/my/gift',
-      
-      // 'pages/mall/success'
-      
-      
-
-      // 'pages/login',
+      'pages/rank/detail',
+      'pages/mall/goodsDetail',
+      'pages/mall/success',
+      'pages/dynamics/add',
+      'pages/dynamics/detail',
+      'pages/dynamics/leaveMsg',
+      'pages/login/login',
+      'pages/login/loginTourist',
+      'pages/login/loginUser'
     ],
     window: {
       backgroundTextStyle: 'light',
@@ -109,28 +90,43 @@ export default class extends wepy.app {
     //这两个是引入promise,还有修复微信原生同时发送多个请求可能会出现错误的bug
     this.use('requestfix');
     this.use('promisify');
-    this.intercept('request', {
-        config (p) {
-          return p;
-        },
-        success (response) {
-          if (response.data.code == 200) {
-            return response.data.data
-          }
-          if(response.data.code==400){
-            wepy.showModal({
-              title:'出错了。。',
-              content:'请下拉重新加载页面'
-            });
-            wepy.clearStorageSync();
-          }
+  // 拦截request请求
+        this.intercept('request', {
+            // 发出请求时的回调函数
+            config (p) {
+              
+                // 对所有request请求中的OBJECT参数对象统一附加时间戳属性
+                p.data.timestamp = new Date().getTime();
+                // 必须返回OBJECT参数对象，否则无法发送请求到服务端
+                console.log(p)
+                return p;
+            },
 
-        },
-        fail (response) {
- 
-          return response;
-        }
-      });
+            // 请求成功后的回调函数
+            success (p) {
+                // 可以在这里对收到的响应数据对象进行加工处理
+                console.log('request success: ', p);
+                // 必须返回响应数据对象，否则后续无法对响应数据进行处理
+                return p;
+            },
+
+            //请求失败后的回调函数
+            fail (p) {
+                console.log('request fail: ', p);
+                wx.showToast({
+                  title: '请求失败',
+                  icon:"none",
+                  duration: 2000
+                })
+                // 必须返回响应数据对象，否则后续无法对响应数据进行处理
+                return p;
+            },
+
+            // 请求完成时的回调函数(请求成功或失败都会被执行)
+            complete (p) {
+                // console.log('request complete: ', p);
+            }
+        });  
   }
 
   onLaunch() {

@@ -285,7 +285,7 @@
         </repeat>
     </scroll-view>
     </view>
-    <view class="pop-wrap" style="display:{{isShowPop?'block':'none'}}">
+    <view class="pop-wrap" catchtouchmove="preventTouchMove" style="display:{{isShowPop?'block':'none'}}">
         <view class="bg"></view>
         <view class="pop-cont">
           <image  src="../../static/img/rank/pop-title.png" mode="scaleToFill" style="width:500rpx;height:62rpx;"/>

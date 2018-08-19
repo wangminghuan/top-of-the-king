@@ -92,6 +92,9 @@
       color: #b7e3f6;
       font-size: 24rpx;
     }
+    .rt-btm{
+      position: relative;
+    }
     .btm-box {
       width: 224rpx;
       height: 46rpx;
@@ -101,6 +104,27 @@
       background-size: cover;
       font-size: 20rpx;
       color: #b7e3f6;
+    }
+    .my-title{
+     position: absolute;
+     right:0 ;
+     bottom: 0;
+     height:46rpx;
+     line-height: 46rpx;
+     color: #b7e3f6;
+     font-size: 24rpx;
+     padding-right: 25rpx;
+     &::after{
+       content: "";
+       position: absolute;
+       width:15rpx;
+       height: 15rpx;
+       border-top: 1rpx solid #b7e3f6;
+       border-right: 1rpx solid #b7e3f6;
+       transform: rotateZ(45deg);
+       right: 0;
+       top:15rpx;
+     }
     }
     .up-level{
       position: absolute;
@@ -206,9 +230,9 @@
             </view>
             <view class="up-level" @tap="handleJump('/pages/my/uplevel')"><image  src="../static/img/my/15.png" mode="scaleToFill" style="width:30rpx;height:30rpx;"/></view>
             </view>
-            <view class="rt-mid" @tap="handleJump('/pages/my/title')">称号：刀锋战士</view>
-            <view class="rt-btm" @tap="handleJump('/pages/my/bonus')">
-              <view class="btm-box" style="margin-top:20rpx;margin-bottom:24rpx">
+            <view class="rt-mid" >称号：刀锋战士</view>
+            <view class="rt-btm" >
+              <view @tap="handleJump('/pages/my/bonus')" class="btm-box" style="margin-top:20rpx;margin-bottom:24rpx">
                  <image src="../static/img/my/11.png" mode="aspectFit" style="width:30rpx;height:30rpx;margin:0 15rpx 0 20rpx;"/>
                 <view>积分：87585</view>
                 </view>
@@ -216,6 +240,7 @@
                  <image src="../static/img/my/12.png" mode="aspectFit" style="width:30rpx;height:30rpx;margin:0 15rpx 0 20rpx;"/>
                 <view>战斗值：888</view>
                 </view>
+              <view class="my-title" @tap="handleJump('/pages/my/title')">查看我的称号</view>
             </view>
           </view>
       </view>
@@ -266,7 +291,7 @@
             </repeat>
         </view>
       </view>
-      <view class="score-pop-wrap" style="display:{{isShowPop?'block':'none'}}">
+      <view class="score-pop-wrap" catchtouchmove="preventTouchMove" style="display:{{isShowPop?'block':'none'}}">
          <view class="bg"></view>
          <view class="pop-cont">
          <image class="mid" src="../static/img/my/score-titl.png" mode="aspectFit" style="width:500rpx;height:91rpx"/>

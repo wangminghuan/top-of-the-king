@@ -244,7 +244,7 @@
              </view>
              <view class="discuss">
                   <view class="top">
-                    <image src="../static/img/dynamics/like.png" mode="aspectFit" style="width:22rpx;height:20rpx;"/>
+                    <image @tap="handleLike" src="../static/img/dynamics/like.png" mode="aspectFit" style="width:22rpx;height:20rpx;"/>
                     <repeat for="{{item.s_like}}" key="sindex" index="sindex" item="sitem">
                       <text>{{sitem}}</text>
                     </repeat>
@@ -261,7 +261,7 @@
         </view>
         </repeat>
     </view>
-    <view class="pop-shake" style="display:{{isShowPop?'block':'none'}}">
+    <view class="pop-shake" catchtouchmove="preventTouchMove" style="display:{{isShowPop?'block':'none'}}">
        <view class="bg"></view>
         <image class="shake-bg" src="../static/img/dynamics/shake.gif" mode="scaleToFill" />
        <view class="pop-cont">
@@ -334,6 +334,16 @@ export default class pageDynamics extends wepy.page {
   computed = {};
 
   methods = {
+    preventTouchMove(){
+
+    },
+    handleLike(){
+      wx.showToast({
+      title: '点赞成功',
+      icon: 'success',
+      duration: 2000
+    })
+    },
     handleJumpDetail() {
       this.$navigate("/pages/dynamics/detail");
     },

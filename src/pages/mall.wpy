@@ -34,13 +34,13 @@
         </view>
         <view class="content">
           <repeat for="{{contList}}" key="index" index="index" item="item">
-             <view class="card-com-item">
+             <view class="card-com-item"  @tap="handleClick">
              <view class="txt">
                       <view class="top">{{item.c_name}}</view>
                       <image class="mid" src="../static/img/mall/1-1.png" mode="aspectFit" style="width:96rpx;height:96rpx"/>
-                      <view class="btm" @tap="handleClick">
+                      <view class="btm">
                         <view>{{item.c_score}}积分</view>
-                        <view style="color:#fffd78;padding-left:5rpx;">兑换</view>
+                        <view style="color:#fffd78;padding-left:48rpx;" @tap.stop="handleClickExchange({{item}})">兑换</view>
                          </view>
                </view>
               </view>
@@ -87,6 +87,14 @@ export default class pageMall extends wepy.page {
   computed = {};
 
   methods = {
+    handleClickExchange(item){
+      console.log(item)
+      wx.showToast({
+      title: '兑换弹窗',
+      icon: 'success',
+      duration: 2000
+    })
+    },
     handleClickTab(inx) {
       this.tabArr.map((item, index) => {
         index == inx ? (item.t_active = 1) : (item.t_active = 0);

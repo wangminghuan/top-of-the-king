@@ -55,7 +55,7 @@
 <script>
 import wepy from 'wepy';
 
-export default class login extends wepy.page {
+export default class loginUser extends wepy.page {
   config = {
     navigationBarTitleText: '登录'
   };

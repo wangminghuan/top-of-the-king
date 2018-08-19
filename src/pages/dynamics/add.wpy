@@ -58,7 +58,7 @@
         <view class="user-input apply-input" >
             <text>内容：</text><textarea placeholder="请至少输入五个字" />
         </view>
-        <view class="up-img">
+        <view class="up-img" @tap="handleChooseImg">
             <image src="../../static/img/login/upimg.png" mode="aspectFit" style="width:39rpx;height:34rpx;"/>
         </view>
         </view>
@@ -82,6 +82,18 @@ export default class dynamicsAdd  extends wepy.page {
   };
 
   methods = {
+    handleChooseImg(){
+    wx.chooseImage({
+      count: 1, // 默认9
+      sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
+      sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
+      success: function (res) {
+        // 返回选定照片的本地文件路径列表，tempFilePath可以作为img标签的src属性显示图片
+        var tempFilePaths = res.tempFilePaths;
+        console.log(res)
+      }
+    })
+    },
     handleSubmit(){
        this.applyStatus=3;
     }

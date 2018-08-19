@@ -258,9 +258,10 @@
 
 <script>
 import wepy from 'wepy';
+import wxRequest from "../util/wxRequest.js"
 export default class pageRank extends wepy.page {
   config = {
-    navigationBarTitleText: '商城'
+    navigationBarTitleText: '排行'
   };
   components = {};
   data = {
@@ -418,7 +419,23 @@ export default class pageRank extends wepy.page {
   };
 
   events = {};
-
-  onLoad(params, data) {}
+  async editAddress(address) {
+    let that = this;
+    const json = await wxRequest({
+      query:{
+        name:1
+      }},'https://apis.map.qq.com/ws/distance/v1/');
+    if (json.data.code == 0) {
+      
+    } else {
+      console.log("2222")
+    }
+    that.showLoading = false;
+  }
+   onLoad(params, data) {
+   this.editAddress()
+    // console.log( wepy.request)
+    // wepy.request({name:0},'http://apis.map.qq.com/ws/distance/v1/').then((d) => console.log(d));
+  }
 }
 </script>
