@@ -144,7 +144,7 @@
 <script>
   import wepy from 'wepy'
 
-  export default class dynamicDeatail extends wepy.page {
+  export default class dynamicDetail extends wepy.page {
     config = {
       navigationBarTitleText: '详情'
     }
