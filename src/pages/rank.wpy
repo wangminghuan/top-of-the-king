@@ -423,14 +423,14 @@ export default class pageRank extends wepy.page {
     let that = this;
     const json = await wxRequest({
       query:{
-        name:1
+        name:23
       }},'https://apis.map.qq.com/ws/distance/v1/');
     if (json.data.code == 0) {
       
     } else {
       console.log("2222")
     }
-    that.showLoading = false;
+   
   }
    onLoad(params, data) {
    this.editAddress()

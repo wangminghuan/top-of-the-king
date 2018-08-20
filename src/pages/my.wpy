@@ -216,7 +216,7 @@
   <view class="page-my">
        <view class="my-info">
           <view class="lf">
-            <image src="http://img1.360buyimg.com/da/jfs/t25096/340/321933848/390630/985a448c/5b6bbefeNafcfc263.jpg" mode="scaleToFill" />
+            <image src="{{myAvator}}" mode="scaleToFill" />
           <view class="name-box">段位：白金</view>          
           </view>
           <view class="rt">
@@ -314,6 +314,7 @@
           </view>
           
       </view>
+     <button wx:if="{{canIUse}}" open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo">授权登录</button>
   </view>
 </template>
 
@@ -325,9 +326,11 @@ export default class pageMy extends wepy.page {
   };
   components = {};
   data = {
+    canIUse: wx.canIUse('button.open-type.getUserInfo'),
     isShowPop:false,
     isEditName:false,
-    bindKeyInput:"王明欢",
+    bindKeyInput:"",
+    myAvator:"",
     tabArr: [
       { t_name: '全部', t_value: '0', t_active: 1 },
       { t_name: '已使用', t_value: '1', t_active: 0 },
@@ -421,6 +424,9 @@ export default class pageMy extends wepy.page {
   computed = {};
 
   methods = {
+    bindGetUserInfo(){
+
+    },
     handleBlur(ev){
       console.log(ev.detail)
      wx.showLoading({
@@ -467,7 +473,42 @@ export default class pageMy extends wepy.page {
   };
 
   events = {};
-
-  onLoad(params, data) {}
+  // getUserInfo(cb) {
+  //     const that = this
+  //     // if (this.globalData.userInfo) {
+  //     //   return this.globalData.userInfo
+  //     // }
+  //     wepy.getUserInfo({
+  //       success (res) {
+  //         // that.globalData.userInfo = res.userInfo
+  //         cb && cb(res.userInfo)
+  //       }
+  //     })
+  //   }
+  onLoad(params, data) {
+    console.log(this.canIUse)
+    const that =this;
+     wx.getSetting({
+      success: function(res){
+        if (res.authSetting['scope.userInfo']) {
+          // 已经授权，可以直接调用 getUserInfo 获取头像昵称
+          wx.getUserInfo({
+            success: function(res) {
+                  var info=(res.userInfo)
+                  console.log(info)
+                  that.bindKeyInput=info.nickName;
+                  that.myAvator=info.avatarUrl
+                  that.$apply();
+            }
+          })
+        }
+      }
+    })
+    // this.getUserInfo((res)=>{
+    //   console.log(2,res)
+    //     this.bindKeyInput=res.nickName;
+    //     this.$apply();
+    // })
+  }
 }
 </script>
