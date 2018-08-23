@@ -158,79 +158,81 @@
       }
     }
   }
-  .pop-wrap{
-      .bg{
-        position: fixed;
-        top:0;
-        right: 0;
-        left:0;
-        bottom:0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.4);
+  .pop-wrap {
+    .bg {
+      position: fixed;
+      top: 0;
+      right: 0;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.4);
+    }
+    .pop-cont {
+      position: fixed;
+      top: 50%;
+      transform: translateY(-50%);
+      left: 0;
+      right: 0;
+      margin: 0 auto;
+      width: 500rpx;
+      height: 600rpx;
+      background-color: #4b98ec;
+      // box-shadow: inset 0 0 40rpx 10rpx #b4d1ee;
+      view {
+        color: #d1f4ff;
+        font-size: 24rpx;
+        text-align: center;
+        margin: 0 auto;
       }
-      .pop-cont{
-        position: fixed;
-        top:50%;
-        transform: translateY(-50%);
-        left: 0;
+      .close {
+        position: absolute;
         right: 0;
-        margin:0 auto;
-        width: 500rpx;
-        height: 600rpx;
-        background-color: #4b98ec;
-        // box-shadow: inset 0 0 40rpx 10rpx #b4d1ee;
-        view{
-          color:#d1f4ff;font-size:24rpx;
-          text-align: center;
-          margin:0 auto;
+        top: 0;
+        width: 52rpx;
+        height: 52rpx;
+      }
+      .nums-cal {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 174rpx;
+        // height: 46rpx;
+        margin-top: 12rpx;
+        // border-top:1rpx solid #fff;
+        .n-lf,
+        .n-rt {
+          width: 46rpx;
+          height: 46rpx;
+          border: 1rpx solid #fff;
+          font-size: 30rpx;
+          box-sizing: border-box;
         }
-        .close{
-          position: absolute;
-          right: 0;
-          top:0;
-          width: 52rpx;
-          height: 52rpx;
+        .n-mid {
+          width: 82rpx;
+          height: 46rpx;
+          line-height: 46rpx;
+          border-top: 1rpx solid #fff;
+          border-bottom: 1rpx solid #fff;
+          box-sizing: border-box;
         }
-        .nums-cal{
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          width:174rpx;
-          // height: 46rpx;
-          margin-top:12rpx;
-          // border-top:1rpx solid #fff;
-          .n-lf,.n-rt{
-            width: 46rpx;
-            height: 46rpx;
-            border: 1rpx solid #fff;
-            font-size: 30rpx;
-            box-sizing: border-box;
-          }
-          .n-mid{
-            width:82rpx; 
-            height: 46rpx;
-            line-height: 46rpx;
-            border-top:1rpx solid #fff;
-            border-bottom:1rpx solid #fff;
-            box-sizing: border-box;
-          }
-          .n-lf{
-            line-height: 36rpx;
-          }
+        .n-lf {
+          line-height: 36rpx;
         }
-        .btn{
-          width:346rpx;
-          display: flex;
-          justify-content: space-between; 
-          margin:0 auto;
-          margin-top:64rpx;
-        }
-        .user-com-btn{
-          width: 138rpx;
-        }
-        .confirm{
-           background: -webkit-gradient(
+      }
+      .btn {
+        width: 346rpx;
+        display: flex;
+        justify-content: space-between;
+        margin: 0 auto;
+        margin-top: 64rpx;
+      }
+      .user-com-btn {
+        width: 138rpx;
+      }
+      .confirm {
+        background: -webkit-gradient(
           linear,
           0% 0%,
           0% 100%,
@@ -239,8 +241,8 @@
         );
         box-shadow: inset 0 -7rpx 16rpx 0 #f6c747;
         border: 1rpx solid #ab8c2c;
-        }
       }
+    }
   }
 }
 </style>
@@ -327,16 +329,16 @@
 
 <script>
 import wepy from 'wepy';
-
+import wxRequest from "../../util/wxRequest.js";
 export default class rankDeatail extends wepy.page {
   config = {
     navigationBarTitleText: '玩家详情'
   };
   components = {};
   data = {
-    isShowPop:false,
-    popIndex:0, //弹窗索引
-    giftNums:1,
+    isShowPop: false,
+    popIndex: 0, //弹窗索引
+    giftNums: 1,
     giftArr: [
       {
         g_value: '2'
@@ -404,41 +406,37 @@ export default class rankDeatail extends wepy.page {
     ]
   };
 
-  computed = {
-    now() {
-      return +new Date();
-    }
-  };
+  computed = {};
 
   methods = {
-    handleClickAdd(){
+    handleClickAdd() {
       this.giftNums++;
     },
-    handleClickSub(){
+    handleClickSub() {
       this.giftNums--;
     },
-    closePop(){
-       this.isShowPop=false;
+    closePop() {
+      this.isShowPop = false;
     },
-    handlePopConfirm(){
-      const that=this;
-        wx.showLoading({
-          title: '加载中',
-        })
-        setTimeout(()=>{
-          wx.hideLoading();
-          this.isShowPop=false;
-          wx.showToast({
+    handlePopConfirm() {
+      const that = this;
+      wx.showLoading({
+        title: '加载中'
+      });
+      setTimeout(() => {
+        wx.hideLoading();
+        this.isShowPop = false;
+        wx.showToast({
           title: '打赏成功',
           icon: 'success',
           duration: 2000
-        })
-          this.$apply();
-        },2000)
+        });
+        this.$apply();
+      }, 2000);
     },
-    handleShowPop(index){
-        this.popIndex=index
-        this.isShowPop=true;
+    handleShowPop(index) {
+      this.popIndex = index;
+      this.isShowPop = true;
     },
     handleScroll() {
       console.log('scroll');
@@ -452,7 +450,19 @@ export default class rankDeatail extends wepy.page {
   };
 
   events = {};
+  async getData() {
+    const that = this;
+    const res = await wxRequest({
+      query:{
+        opt: 'CheckCanApply',
+      }
+      },that.$parent.globalData.apiUrl);
+   if (res.data.retcode == -1) {
 
-  onLoad(params, data) {}
+    }else {
+
+    }
+  }
+  onLoad() {}
 }
 </script>

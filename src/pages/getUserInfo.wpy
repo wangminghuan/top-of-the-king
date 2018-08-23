@@ -1,4 +1,5 @@
 <style lang="less">
+@import "../static/style/userComBtn.less";
 .user-info-btn{
     position: absolute;
     top:50%;
@@ -11,12 +12,13 @@
 </style>
 <template>
 <view>
-    <button class="user-info-btn" wx:if="{{canIUse}}" type="primary" open-type="getUserInfo" lang="zh_CN"  bindgetuserinfo="bindGetUserInfo">微信身份授权</button>
+     <button class="user-info-btn user-com-btn" wx:if="{{canIUse}}" type="primary" open-type="getUserInfo" lang="zh_CN"  bindgetuserinfo="bindGetUserInfo">微信身份授权</button>
      <view wx:else>请升级微信版本</view>
   </view>
 </template>
 <script>
 import wepy from 'wepy';
+import wxRequest from '../util/wxRequest.js';
 export default class getUserInfo extends wepy.page {
   config = {
     navigationBarTitleText: '授权'

@@ -54,8 +54,8 @@
 
 <script>
 import wepy from 'wepy';
-
-export default class loginUser extends wepy.page {
+import wxRequest from "../../util/wxRequest.js";
+export default class LoginPlayer extends wepy.page {
   config = {
     navigationBarTitleText: '登录'
   };
@@ -76,39 +76,39 @@ export default class loginUser extends wepy.page {
       this.$navigate('/pages/login/loginVisitor');
     },
     handleClick(){
-      const that=this;
-      wx.request({
-      url: that.$parent.globalData.apiUrl,
-      data: {
+      if(typeof this.erpusername=="string" && this.erpusername.replace(/\s+/,'')==""){
+        this.$parent.showErrorMsg("提示", "ERP账号不能为空");
+        return;
+      }else if(typeof this.erppassword=="string" && this.erppassword.replace(/\s+/,'')==""){
+         this.$parent.showErrorMsg("提示", "ERP密码不能为空");
+         return;
+      }
+      this.submit();
+    }
+  }
+  async submit() {
+    let that = this;
+    const res = await wxRequest({
+      query:{
         opt: 'Login_Player',
-        sysid: that.$parent.globalData.sysId,
-        openid: that.$parent.globalData.openid,
         erpusername: that.erpusername,
         erppassword: that.erppassword,
         nickName: that.$parent.globalData.userInfo.nickName,
         gender: that.$parent.globalData.userInfo.gender,
         avatarUrl: that.$parent.globalData.userInfo.avatarUrl
-      },
-      header: {
-        'content-type': 'application/json'
-      },
-      success: function (res) {
-        if (res.data.retcode == 0) {
-          that.globalData.HeroInfo = res.data.result;    
-          that.$parent.navigateRank();
-        }
-        else {
-          that.$parent.showErrorMsg("系统提示", res.data.msg);
-        }
       }
-    });  
+      },that.$parent.globalData.apiUrl);
+    if (res.data.retcode == 0) {
+        that.globalData.HeroInfo = res.data.result;    
+        that.$parent.navigateRank()
+    }else {
+      // that.$parent.showErrorMsg("系统提示", res.data.msg);
+       that.$parent.navigateRank()
     }
   }
-
   events = {};
 
-  onLoad(params, data) {
-    console.log('list');
+  onLoad(){
   }
 }
 </script>

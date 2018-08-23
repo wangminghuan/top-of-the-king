@@ -52,6 +52,7 @@
 
 <script>
 import wepy from 'wepy';
+import wxRequest from '../util/wxRequest.js';
 export default class pageMall extends wepy.page {
   config = {
     navigationBarTitleText: '商城'
@@ -67,7 +68,7 @@ export default class pageMall extends wepy.page {
     contList: [
       {
         c_name: '深造卡',
-        c_score: '1000',
+        c_score: '1000'
       },
       {
         c_name: '主力体验',
@@ -87,32 +88,31 @@ export default class pageMall extends wepy.page {
   computed = {};
 
   methods = {
-    handleClickExchange(item){
-      console.log(item)
+    handleClickExchange(item) {
+      console.log(item);
       wx.showToast({
-      title: '兑换弹窗',
-      icon: 'success',
-      duration: 2000
-    })
+        title: '兑换弹窗',
+        icon: 'success',
+        duration: 2000
+      });
     },
     handleClickTab(inx) {
       this.tabArr.map((item, index) => {
         index == inx ? (item.t_active = 1) : (item.t_active = 0);
       });
     },
-    handleClick(){
-       this.$navigate("/pages/mall/goodsDetail");
+    handleClick() {
+      this.$navigate('/pages/mall/goodsDetail');
       // const that=this;
-    //   wx.showModal({
-    //   title: '提示',
-    //   content: '确定兑换？',
-    //   success: function(res) {
-    //     if (res.confirm) {
-    //       that.$navigate("/pages/mall/success");
-    //     }
-    //   }
-    // })
-          
+      //   wx.showModal({
+      //   title: '提示',
+      //   content: '确定兑换？',
+      //   success: function(res) {
+      //     if (res.confirm) {
+      //       that.$navigate("/pages/mall/success");
+      //     }
+      //   }
+      // })
     },
     handleClickJump(path) {
       this.$navigate(path);
@@ -120,7 +120,19 @@ export default class pageMall extends wepy.page {
   };
 
   events = {};
+  async getData() {
+    const that = this;
+    const res = await wxRequest({
+      query:{
+        opt: 'CheckCanApply',
+      }
+      },that.$parent.globalData.apiUrl);
+   if (res.data.retcode == -1) {
 
-  onLoad(params, data) {}
+    }else {
+
+    }
+  }
+  onLoad() {}
 }
 </script>

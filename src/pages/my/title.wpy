@@ -1,48 +1,47 @@
 <style lang="less">
-@import "../../static/style/loginComTitle.less";
-  .my-title-wrap{
-    padding: 0 44rpx;
-    // height: 100%;
-    padding-top:40rpx;
-    .login-com-title{
-      margin-bottom: 110rpx;
-     
-    }
-    .content{
+@import '../../static/style/loginComTitle.less';
+.my-title-wrap {
+  padding: 0 44rpx;
+  // height: 100%;
+  padding-top: 40rpx;
+  .login-com-title {
+    margin-bottom: 110rpx;
+  }
+  .content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 0 68rpx;
+    .item {
       display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      padding: 0 68rpx;
-      .item{
- display: flex;
       flex-direction: column;
       height: 254rpx;
       justify-content: space-between;
       align-items: center;
       margin-bottom: 82rpx;
-      text{
-          text-align: center;
-          font-size: 30rpx;
-          color:#fff;
-        //   line-height: 
+      text {
+        text-align: center;
+        font-size: 30rpx;
+        color: #fff;
+        //   line-height:
       }
-      }
-    .title-bg{
+    }
+    .title-bg {
       width: 180rpx;
       height: 180rpx;
       border-radius: 50%;
       overflow: hidden;
-      background-image: url("http://s29.9956.cn/res/zhushou/danye/topking/ry_bg.png");
+      background-image: url('http://s29.9956.cn/res/zhushou/danye/topking/ry_bg.png');
       background-size: cover;
-     
-      image{
-          width: 180rpx;
-          height: 180rpx;
+
+      image {
+        width: 180rpx;
+        height: 180rpx;
       }
     }
-    }
   }
+}
 </style>
 <template>
   <view class="my-title-wrap">
@@ -68,51 +67,57 @@
 </template>
 
 <script>
-  import wepy from 'wepy'
-
-  export default class myRecord extends wepy.page {
-    config = {
-      navigationBarTitleText: '已获称号'
-    }
-    components = {
-
-    }
-    data = {
-      titleList:[{
-        t_name:"销售",
-        t_val:"1"
-      },{
-        t_name:"销售2",
-        t_val:"1"
-      },{
-        t_name:"销售",
-        t_val:"1"
-      },{
-        t_name:"销售2",
-        t_val:"1"
-      },{
-        t_name:"销售",
-        t_val:"1"
-      },{
-        t_name:"销售2",
-        t_val:"1"
-      }]
-    }
-
-    computed = {
-      now () {
-        return +new Date()
+import wepy from 'wepy';
+import wxRequest from "../../util/wxRequest.js";
+export default class myRecord extends wepy.page {
+  config = {
+    navigationBarTitleText: '已获称号'
+  };
+  components = {};
+  data = {
+    titleList: [
+      {
+        t_name: '销售',
+        t_val: '1'
+      },
+      {
+        t_name: '销售2',
+        t_val: '1'
+      },
+      {
+        t_name: '销售',
+        t_val: '1'
+      },
+      {
+        t_name: '销售2',
+        t_val: '1'
+      },
+      {
+        t_name: '销售',
+        t_val: '1'
+      },
+      {
+        t_name: '销售2',
+        t_val: '1'
       }
-    }
+    ]
+  };
+  methods = {};
 
-    methods = {
+ async getData() {
+    const that = this;
+    const res = await wxRequest({
+      query:{
+        opt: 'CheckCanApply',
+      }
+      },that.$parent.globalData.apiUrl);
+   if (res.data.retcode == -1) {
 
-    }
+    }else {
 
-    events = {
-    }
-
-    onLoad(params, data) {
     }
   }
+
+  onLoad() {}
+}
 </script>

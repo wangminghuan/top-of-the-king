@@ -239,26 +239,12 @@
              </scroll-view>
         </view>
       </view>
-        <!-- <view class="content">
-          <repeat for="{{contList}}" key="index" index="index" item="item">
-             <view class="card-com-item">
-             <view class="txt">
-                      <view class="top">{{item.c_name}}</view>
-                      <image class="mid" src="../static/img/mall/1-1.png" mode="aspectFit" style="width:96rpx;height:96rpx"/>
-                      <view class="btm" @tap="handleClick">
-                        <view>{{item.c_score}}积分</view>
-                        <view style="color:#fffd78;padding-left:5rpx;">兑换</view>
-                         </view>
-               </view>
-              </view>
-            </repeat>
-        </view> -->
       </view>
 </template>
 
 <script>
 import wepy from 'wepy';
-import wxRequest from "../util/wxRequest.js"
+import wxRequest from '../util/wxRequest.js';
 export default class pageRank extends wepy.page {
   config = {
     navigationBarTitleText: '排行'
@@ -419,23 +405,20 @@ export default class pageRank extends wepy.page {
   };
 
   events = {};
-  async editAddress(address) {
-    let that = this;
-    const json = await wxRequest({
+  async getData() {
+    const that = this;
+    const res = await wxRequest({
       query:{
-        name:23
-      }},'https://apis.map.qq.com/ws/distance/v1/');
-    if (json.data.code == 0) {
-      
-    } else {
-      console.log("2222")
+        opt: 'CheckCanApply',
+      }
+      },that.$parent.globalData.apiUrl);
+   if (res.data.retcode == -1) {
+
+    }else {
+
     }
-   
   }
-   onLoad(params, data) {
-   this.editAddress()
-    // console.log( wepy.request)
-    // wepy.request({name:0},'http://apis.map.qq.com/ws/distance/v1/').then((d) => console.log(d));
+   onLoad() {
   }
 }
 </script>

@@ -1,7 +1,7 @@
 <style lang="less">
-@import "../../static/style/loginComTitle.less";
-@import "../../static/style/userComBtn.less";
-.dynamics-add-wrap{
+@import '../../static/style/loginComTitle.less';
+@import '../../static/style/userComBtn.less';
+.dynamics-add-wrap {
   padding: 0 38rpx;
   position: absolute;
   top: 50%;
@@ -28,27 +28,25 @@
       margin-right: 35rpx;
     }
   }
-  .apply-input{
-      height: auto;
-      align-items: inherit;
-      padding: 24rpx 0;
-      textarea{
-          height:526rpx ;
-          width: 490rpx;
-          color: #fff;
-          margin-right: 35rpx;
-          line-height: 30rpx;
-      }
-  }
-  .up-img{
-      display: flex;
-      justify-content: flex-end;
-       padding:20rpx 0;
+  .apply-input {
+    height: auto;
+    align-items: inherit;
+    padding: 24rpx 0;
+    textarea {
+      height: 526rpx;
+      width: 490rpx;
+      color: #fff;
       margin-right: 35rpx;
-     
+      line-height: 30rpx;
+    }
+  }
+  .up-img {
+    display: flex;
+    justify-content: flex-end;
+    padding: 20rpx 0;
+    margin-right: 35rpx;
   }
 }
-
 </style>
 <template>
   <view class="dynamics-add-wrap" >
@@ -69,7 +67,7 @@
 
 <script>
 import wepy from 'wepy';
-
+import wxRequest from "../../util/wxRequest.js";
 export default class dynamicsAdd  extends wepy.page {
   config = {
     navigationBarTitleText: '发帖'
@@ -100,9 +98,20 @@ export default class dynamicsAdd  extends wepy.page {
   };
 
   events = {};
+  async getData() {
+    const that = this;
+    const res = await wxRequest({
+      query:{
+        opt: 'CheckCanApply',
+      }
+      },that.$parent.globalData.apiUrl);
+   if (res.data.retcode == -1) {
 
-  onLoad(params, data) {
-    console.log('list');
+    }else {
+
+    }
+  }
+  onLoad(){
   }
 }
 </script>

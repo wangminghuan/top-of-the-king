@@ -1,11 +1,11 @@
 <style lang="less">
-@import "../../static/style/cardComBg.less";
-@import "../../static/style/userComBtn.less";
-  .goods-detail-wrap{
-    padding: 0 34rpx;
-    padding-top:92rpx;
-    .cont{
-     border: 1px solid #85d1ea;
+@import '../../static/style/cardComBg.less';
+@import '../../static/style/userComBtn.less';
+.goods-detail-wrap {
+  padding: 0 34rpx;
+  padding-top: 92rpx;
+  .cont {
+    border: 1px solid #85d1ea;
     // heigh/t: 454rpx;
     box-shadow: inset 0 0 10rpx 3rpx #405784;
     background-color: #475881;
@@ -13,81 +13,81 @@
     display: flex;
     // justify-content: space-between;
     color: #b7e3f6;
-    .lf{
-        flex-shrink: 0;
-        width: 246rpx;
-        margin-right: 20rpx;
+    .lf {
+      flex-shrink: 0;
+      width: 246rpx;
+      margin-right: 20rpx;
     }
-    .card-com-bg{
-        margin:0 auto;
+    .card-com-bg {
+      margin: 0 auto;
     }
-    .top{
-         font-size: 32rpx;
-         color: #f1f4ba;
-         line-height: 46rpx;
+    .top {
+      font-size: 32rpx;
+      color: #f1f4ba;
+      line-height: 46rpx;
     }
-    .mid{
-        // width: 172rpx;
-        // height:175rpx;
-        // background-color: red;
-        // margin:0 auto;
-        // margin-bottom: 44rpx;
-        color: #b7e3f6;
-        line-height: 32rpx;
-        margin-top:27rpx;
-        margin-bottom: 20rpx;
-        font-size: 24rpx;
+    .mid {
+      // width: 172rpx;
+      // height:175rpx;
+      // background-color: red;
+      // margin:0 auto;
+      // margin-bottom: 44rpx;
+      color: #b7e3f6;
+      line-height: 32rpx;
+      margin-top: 27rpx;
+      margin-bottom: 20rpx;
+      font-size: 24rpx;
     }
-    .btm{
-        display: flex;
-        flex-direction: column;
-         color: #b7e3f6;
-        line-height: 32rpx;
-        font-size: 24rpx;
-        // height:34rpx;
-        // line-height: 34rpx;
-    }
-    }
-    .titl{
-        font-size: 28rpx;
-        color: #fff;
-        margin-top:88rpx;
-        margin-bottom:40rpx; 
-    }
-    .txt{
-        font-size: 24rpx;
-        color: #fff;
-        margin-top: 77rpx;
-        margin-bottom: 50rpx;
-    }
-    .tab-wrap{
-        display: flex;
-        justify-content: space-between;
-        .item{
-            width: 122rpx;
-            height: 52rpx;
-            background-color: #496089;
-            color: #fff;
-            font-size: 24rpx;
-            line-height:  52rpx;
-            text-align: center;
-            box-shadow:inset 0px 0px 22rpx 10rpx #5180a9;
-        }
-        .item.active{
-             background-color: #243d65;
-             box-shadow: initial;
-        }
-    }
-    .sub-btn{
-       width: 397rpx;
-       border-radius: 0;
-       position: fixed;
-       bottom: 116rpx;
-       left: 0;
-       right: 0;
-       margin:0 auto;
+    .btm {
+      display: flex;
+      flex-direction: column;
+      color: #b7e3f6;
+      line-height: 32rpx;
+      font-size: 24rpx;
+      // height:34rpx;
+      // line-height: 34rpx;
     }
   }
+  .titl {
+    font-size: 28rpx;
+    color: #fff;
+    margin-top: 88rpx;
+    margin-bottom: 40rpx;
+  }
+  .txt {
+    font-size: 24rpx;
+    color: #fff;
+    margin-top: 77rpx;
+    margin-bottom: 50rpx;
+  }
+  .tab-wrap {
+    display: flex;
+    justify-content: space-between;
+    .item {
+      width: 122rpx;
+      height: 52rpx;
+      background-color: #496089;
+      color: #fff;
+      font-size: 24rpx;
+      line-height: 52rpx;
+      text-align: center;
+      box-shadow: inset 0px 0px 22rpx 10rpx #5180a9;
+    }
+    .item.active {
+      background-color: #243d65;
+      box-shadow: initial;
+    }
+  }
+  .sub-btn {
+    width: 397rpx;
+    border-radius: 0;
+    position: fixed;
+    bottom: 116rpx;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+  }
+}
 </style>
 <template>
   <view class="goods-detail-wrap">
@@ -118,55 +118,67 @@
 </template>
 
 <script>
-  import wepy from 'wepy'
-
-  export default class goodsDetail extends wepy.page {
-    config = {
-      navigationBarTitleText: '商品详情'
-    }
-    components = {
-
-    }
-    data = {
-    activeIndex:-1,
-     tabList:[{
-         t_name:"主管",
-     },{
-         t_name:"店长"
-     },{
-         t_name:"总监"
-     },{
-         t_name:"经理"
-     }]
-    }
-
-    computed = {
-      now () {
-        return +new Date()
+import wepy from 'wepy';
+import wxRequest from '../../util/wxRequest.js';
+export default class goodsDetail extends wepy.page {
+  config = {
+    navigationBarTitleText: '商品详情'
+  };
+  components = {};
+  data = {
+    activeIndex: -1,
+    tabList: [
+      {
+        t_name: '主管'
+      },
+      {
+        t_name: '店长'
+      },
+      {
+        t_name: '总监'
+      },
+      {
+        t_name: '经理'
       }
+    ]
+  };
+
+  computed = {
+    now() {
+      return +new Date();
     }
+  };
 
-    methods = {
-     handleClickTab(index){
-         this.activeIndex=index;
-     },
-     handleClickSubmit(){
-         wx.showLoading({
-           title: '加载中',
-        })
+  methods = {
+    handleClickTab(index) {
+      this.activeIndex = index;
+    },
+    handleClickSubmit() {
+      wx.showLoading({
+        title: '加载中'
+      });
 
-        setTimeout(()=>{
+      setTimeout(() => {
         wx.hideLoading();
-           this.$navigate("/pages/mall/success");
-        },2000)
-      
-     }
+        this.$navigate('/pages/mall/success');
+      }, 2000);
     }
+  };
 
-    events = {
-    }
+  events = {};
+  async getData() {
+    const that = this;
+    const res = await wxRequest({
+      query:{
+        opt: 'CheckCanApply',
+      }
+      },that.$parent.globalData.apiUrl);
+   if (res.data.retcode == -1) {
 
-    onLoad(params, data) {
+    }else {
+
     }
   }
+  onLoad() {}
+}
 </script>

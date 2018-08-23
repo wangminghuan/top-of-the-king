@@ -47,8 +47,7 @@ export default class loginMain extends wepy.page {
 
   events = {};
 
-  onLoad(params, data) {
-    console.log('list');
+  onLoad() {
   }
 }
 </script>

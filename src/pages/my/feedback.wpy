@@ -1,7 +1,7 @@
 <style lang="less">
-@import "../../static/style/loginComTitle.less";
-@import "../../static/style/userComBtn.less";
-.feed-back-wrap{
+@import '../../static/style/loginComTitle.less';
+@import '../../static/style/userComBtn.less';
+.feed-back-wrap {
   padding: 0 38rpx;
   position: absolute;
   top: 50%;
@@ -28,27 +28,25 @@
       margin-right: 35rpx;
     }
   }
-  .apply-input{
-      height: auto;
-      align-items: inherit;
-      padding: 24rpx 0;
-      textarea{
-          height:526rpx ;
-          width: 490rpx;
-          color: #fff;
-          margin-right: 35rpx;
-          line-height: 30rpx;
-      }
-  }
-  .up-img{
-      display: flex;
-      justify-content: flex-end;
-       padding:20rpx 0;
+  .apply-input {
+    height: auto;
+    align-items: inherit;
+    padding: 24rpx 0;
+    textarea {
+      height: 526rpx;
+      width: 490rpx;
+      color: #fff;
       margin-right: 35rpx;
-     
+      line-height: 30rpx;
+    }
+  }
+  .up-img {
+    display: flex;
+    justify-content: flex-end;
+    padding: 20rpx 0;
+    margin-right: 35rpx;
   }
 }
-
 </style>
 <template>
   <view class="feed-back-wrap" >
@@ -58,7 +56,7 @@
         <view class="user-input apply-input" >
             <text>内容：</text><textarea placeholder="请至少输入五个字" />
         </view>
-        <view class="up-img">
+        <view class="up-img" @tap="handleSelectImg">
             <image src="../../static/img/login/upimg.png" mode="aspectFit" style="width:39rpx;height:34rpx;"/>
         </view>
         </view>
@@ -69,28 +67,36 @@
 
 <script>
 import wepy from 'wepy';
-
+import wxRequest from "../../util/wxRequest.js";
 export default class feedBack extends wepy.page {
   config = {
     navigationBarTitleText: '意见反馈'
   };
   components = {};
-  data = {
-  };
+  data = {};
 
-  computed = {
-  };
+  computed = {};
 
   methods = {
-    handleSubmit(){
-       this.applyStatus=3;
+    handleSelectImg(){
+     wx.chooseImage({
+      count: 1, // 默认9
+      sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
+      sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
+      success: function (res) {
+        // 返回选定照片的本地文件路径列表，tempFilePath可以作为img标签的src属性显示图片
+        var tempFilePaths = res.tempFilePaths;
+        console.log(res)
+      }
+    })
+    },
+    handleSubmit() {
+      this.applyStatus = 3;
     }
   };
 
   events = {};
-
-  onLoad(params, data) {
-    console.log('list');
+  onLoad() {
   }
 }
 </script>

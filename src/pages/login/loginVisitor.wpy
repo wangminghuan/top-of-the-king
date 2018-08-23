@@ -61,7 +61,7 @@
 
 </style>
 <template>
-  <view class="login-apply-wrap" >
+  <view class="login-apply-wrap" style="display:{{isShow?'block':'none'}}">
     <view wx:if="{{applyStatus==1}}">
     <view class="login-com-title">登录申请</view>
     <view class="user-input"><text>请填写姓名：</text><input autoFocus bindinput="bindInputName" type="text" placeholder="" /></view>
@@ -78,7 +78,7 @@
       <button class="user-com-btn" style="margin-top:116rpx" @tap="handleJump">继续申请</button>
     </view>
     <view wx:else class="cont" style="width:220rpx">
-      <image src="../static/img/login/wait.png" mode="aspectFit" style="width:35rpx;height:35rpx;"/>
+      <image src="../../static/img/login/wait.png" mode="aspectFit" style="width:35rpx;height:35rpx;"/>
       <text>账号审核中</text>
     </view>
   </view>
@@ -88,13 +88,14 @@
 
 <script>
 import wepy from 'wepy';
-
-export default class loginTourist extends wepy.page {
+import wxRequest from "../../util/wxRequest.js";
+export default class LoginVisitor extends wepy.page {
   config = {
     navigationBarTitleText: '登录申请'
   };
   components = {};
   data = {
+    isShow:false,
     applyStatus:1,
     name: "",
     mobile: "",
@@ -102,9 +103,6 @@ export default class loginTourist extends wepy.page {
   };
 
   computed = {
-    now() {
-      // return +new Date()
-    }
   };
 
   methods = {
@@ -118,30 +116,17 @@ export default class loginTourist extends wepy.page {
       this.reason=e.detail.value;
     },
     handleSubmit(){
-    // this.applyStatus=3;
-    const that=this;
-    wx.request({
-      url: that.$parent.globalData.apiUrl,
-      data: {
-        opt: 'Login_Visitor',
-        sysid: that.$parent.globalData.sysId,
-        openid: that.$parent.globalData.openid,
-        name: that.name,
-        mobile: that.mobile,
-        reason: that.reason,
-        nickName: that.$parent.globalData.userInfo.nickName,
-        gender: that.$parent.globalData.userInfo.gender,
-        avatarUrl: that.$parent.globalData.userInfo.avatarUrl
-      },
-      header: {
-        'content-type': 'application/json'
-      },
-      success: function (res) {
-        if (res.data.retcode == 0) {
-          that.applyStatus=3;
-        }
+      if(typeof this.name=="string" && this.name.replace(/\s+/,'')==""){
+        this.$parent.showErrorMsg("提示", "姓名不能为空");
+        return;
+      }else if(typeof this.mobile=="string" && this.mobile.replace(/\s+/,'')==""){
+         this.$parent.showErrorMsg("提示", "电话不能为空");
+         return;
+      }else if(typeof this.reason=="string" && this.reason.replace(/\s+/,'')==""){
+         this.$parent.showErrorMsg("提示", "申请理由不能为空");
+         return;
       }
-    });
+       this.submit();
     },
     handleJump() {
       // this.applyStatus=1;
@@ -149,25 +134,45 @@ export default class loginTourist extends wepy.page {
   };
 
   events = {};
-
-  onLoad() {
-    const that=this;
-    wx.request({
-      url: that.$parent.globalData.apiUrl,
-      data: {
-        opt: 'CheckCanApply',
-        sysid: that.$parent.globalData.sysId,
-        openid: that.$parent.globalData.openid
-      },
-      header: {
-        'content-type': 'application/json'
-      },
-      success: function (res) {
-        if (res.data.retcode == -1) {
-            // that.applyStatus=3
-        }
+  async submit() {
+    const that = this;
+    const res = await wxRequest({
+      query:{
+        opt: 'Login_Visitor',
+        name: that.name,
+        mobile: that.mobile,
+        reason: that.reason,
+        nickName: that.$parent.globalData.userInfo.nickName,
+        gender: that.$parent.globalData.userInfo.gender,
+        avatarUrl: that.$parent.globalData.userInfo.avatarUrl
+      }async getData
+      },that.$parent.globalData.apiUrl);
+      if (res.data.retcode == 0) {
+          that.applyStatus=3; 
+      }else {
+          that.$parent.showErrorMsg("提示", res.data.msg);
       }
-    });  
+      that.$apply();
+   
+  }
+  async getData() {
+    const that = this;
+    const res = await wxRequest({
+      query:{async getData
+        opt: 'CheckCanApply'
+      }
+      },that.$parent.globalData.apiUrl);
+    if (res.data.retcode == -1) {async getData
+          that.applyStatus=3; 
+    }else {
+          that.applyStatus=2; 
+    }
+    that.isShow=true;
+    that.$apply();
+   
+  }async getData
+  onLoad() {
+   this.getState();
   }
 }
 </script>

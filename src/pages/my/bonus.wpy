@@ -1,61 +1,60 @@
 <style lang="less">
-@import "../../static/style/borderComLine.less";
-  .my-bonus-wrap{
-      padding: 0 38rpx;
-      position: relative;
-      .bouns-nums{
-          position: absolute;
-          line-height: 50rpx;
-          top:110rpx;
-          width: 100%;
-          text-align: center;
-          left:0;
-          right: 0;
-          margin:0 auto;
-          color: #fff;
-          font-size: 32rpx;
-      }
-      .bouns-info{
-          position: absolute;
-          top:27rpx;
-          width:40rpx;
-          height: 40rpx;
-          right: 72rpx;
-      }
-      .item{
-          display: flex;
-         flex-direction: column;
-         color: #f1f4ba;
-        //  align-items: center;
-      }
-     .item-txt{
-         height: 158rpx;
-         display: flex;
-         flex-direction: column;
-         
-        //  align-items: center;
-     }
-     .top{
-         display: flex;
-        //  width: 100%;
-        color: #fff;
-         justify-content: space-between;
-         align-items: center;
-         font-size: 26rpx;
-         line-height: 66rpx;
-         margin-top:30rpx;
-         
-        
-     }
-     .btm{
-         color: #cbe3f7;
-          font-size: 20rpx;
-     }
-     .top,.btm{
-         margin-left: 57rpx;
-         margin-right: 37rpx;
-     }
+@import '../../static/style/borderComLine.less';
+.my-bonus-wrap {
+  padding: 0 38rpx;
+  position: relative;
+  .bouns-nums {
+    position: absolute;
+    line-height: 50rpx;
+    top: 110rpx;
+    width: 100%;
+    text-align: center;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    color: #fff;
+    font-size: 32rpx;
   }
+  .bouns-info {
+    position: absolute;
+    top: 27rpx;
+    width: 40rpx;
+    height: 40rpx;
+    right: 72rpx;
+  }
+  .item {
+    display: flex;
+    flex-direction: column;
+    color: #f1f4ba;
+    //  align-items: center;
+  }
+  .item-txt {
+    height: 158rpx;
+    display: flex;
+    flex-direction: column;
+
+    //  align-items: center;
+  }
+  .top {
+    display: flex;
+    //  width: 100%;
+    color: #fff;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 26rpx;
+    line-height: 66rpx;
+    margin-top: 30rpx;
+  }
+  .btm {
+    color: #cbe3f7;
+    font-size: 20rpx;
+  }
+  .top,
+  .btm {
+    margin-left: 57rpx;
+    margin-right: 37rpx;
+  }
+}
 </style>
 <template>
   <view class="my-bonus-wrap">
@@ -77,99 +76,122 @@
 </template>
 
 <script>
-  import wepy from 'wepy'
-
-  export default class myBonus extends wepy.page {
-    config = {
-      navigationBarTitleText: '我的积分'
-    }
-    components = {
-
-    }
-    data = {
+import wepy from 'wepy';
+import wxRequest from "../../util/wxRequest.js";
+export default class myBonus extends wepy.page {
+  config = {
+    navigationBarTitleText: '我的积分'
+  };
+  components = {};
+  data = {
     scrollTop: 100,
-      listArr: [{
-          l_name:"员工",
-          l_score:"+1000",
-          l_time:"2018.06.09 12:00:00"
-      },{
-          l_name:"员工",
-          l_score:"+1000",
-          l_time:"2018.06.09 12:00:00"
-      },{
-          l_name:"员工",
-          l_score:"+1000",
-          l_time:"2018.06.09 12:00:00"
-      },{
-          l_name:"员工",
-          l_score:"+3000",
-          l_time:"2018.06.09 12:00:00"
-      },{
-          l_name:"员工",
-          l_score:"+1000",
-          l_time:"2018.06.09 12:00:00"
-      },{
-          l_name:"员工",
-          l_score:"+1000",
-          l_time:"2018.06.09 12:00:00"
-      },{
-          l_name:"员工",
-          l_score:"+1000",
-          l_time:"2018.06.09 12:00:00"
-      },{
-          l_name:"员工",
-          l_score:"+1000",
-          l_time:"2018.06.09 12:00:00"
-      },{
-          l_name:"员工",
-          l_score:"+1000",
-          l_time:"2018.06.09 12:00:00"
-      },{
-          l_name:"员工",
-          l_score:"+1000",
-          l_time:"2018.06.09 12:00:00"
-      },{
-          l_name:"员工",
-          l_score:"+1000",
-          l_time:"2018.06.09 12:00:00"
-      },{
-          l_name:"员工",
-          l_score:"+1000",
-          l_time:"2018.06.09 12:00:00"
-      },{
-          l_name:"员工",
-          l_score:"+1000",
-          l_time:"2018.06.09 12:00:00"
-      },{
-          l_name:"员工",
-          l_score:"+1000",
-          l_time:"2018.06.09 12:00:00"
-      }],
-    }
-
-    computed = {
-      now () {
-        return +new Date()
+    listArr: [
+      {
+        l_name: '员工',
+        l_score: '+1000',
+        l_time: '2018.06.09 12:00:00'
+      },
+      {
+        l_name: '员工',
+        l_score: '+1000',
+        l_time: '2018.06.09 12:00:00'
+      },
+      {
+        l_name: '员工',
+        l_score: '+1000',
+        l_time: '2018.06.09 12:00:00'
+      },
+      {
+        l_name: '员工',
+        l_score: '+3000',
+        l_time: '2018.06.09 12:00:00'
+      },
+      {
+        l_name: '员工',
+        l_score: '+1000',
+        l_time: '2018.06.09 12:00:00'
+      },
+      {
+        l_name: '员工',
+        l_score: '+1000',
+        l_time: '2018.06.09 12:00:00'
+      },
+      {
+        l_name: '员工',
+        l_score: '+1000',
+        l_time: '2018.06.09 12:00:00'
+      },
+      {
+        l_name: '员工',
+        l_score: '+1000',
+        l_time: '2018.06.09 12:00:00'
+      },
+      {
+        l_name: '员工',
+        l_score: '+1000',
+        l_time: '2018.06.09 12:00:00'
+      },
+      {
+        l_name: '员工',
+        l_score: '+1000',
+        l_time: '2018.06.09 12:00:00'
+      },
+      {
+        l_name: '员工',
+        l_score: '+1000',
+        l_time: '2018.06.09 12:00:00'
+      },
+      {
+        l_name: '员工',
+        l_score: '+1000',
+        l_time: '2018.06.09 12:00:00'
+      },
+      {
+        l_name: '员工',
+        l_score: '+1000',
+        l_time: '2018.06.09 12:00:00'
+      },
+      {
+        l_name: '员工',
+        l_score: '+1000',
+        l_time: '2018.06.09 12:00:00'
       }
-    }
+    ]
+  };
 
-    methods = {
-        handleShowQuestion(){
-                wx.showToast({
-                title: '点击展示',
-                icon: 'success',
-                duration: 2000
-                })
-        },
-       handleScroll() {
-       console.log("lower")
-       },
+  computed = {
+    now() {
+      return +new Date();
     }
-   
-    events = {
-    }
+  };
 
-    onLoad(params, data) {
+  methods = {
+    handleShowQuestion() {
+      wx.showToast({
+        title: '点击展示',
+        icon: 'success',
+        duration: 2000
+      });
+    },
+    handleScroll() {
+      console.log('lower');
+    }
+  };
+
+  events = {};
+  async getData() {
+    const that = this;
+    const res = await wxRequest({
+      query:{
+        opt: 'CheckCanApply',
+      }
+      },that.$parent.globalData.apiUrl);
+   if (res.data.retcode == -1) {
+
+    }else {
+
     }
   }
+  onLoad() {}
+}
 </script>

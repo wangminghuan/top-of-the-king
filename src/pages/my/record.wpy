@@ -1,23 +1,23 @@
 <style lang="less">
-@import "../../static/style/loginComTitle.less";
-  .my-record-wrap{
-    padding: 0 44rpx;
-    padding-top:40rpx;
-    .login-com-title{
-      margin-bottom: 62rpx;
-    }
-    .content{
-      border: 1px solid #85d1ea;
+@import '../../static/style/loginComTitle.less';
+.my-record-wrap {
+  padding: 0 44rpx;
+  padding-top: 40rpx;
+  .login-com-title {
+    margin-bottom: 62rpx;
+  }
+  .content {
+    border: 1px solid #85d1ea;
     padding-bottom: 60rpx;
     box-shadow: inset 0 0 10rpx 3rpx #405784;
     background-color: #475881;
-    
-    .row-wrap{
+
+    .row-wrap {
       display: flex;
       justify-content: space-around;
       align-items: center;
       height: 68rpx;
-        .item{
+      .item {
         width: 33.3%;
         color: #b7e3f6;
         font-size: 26rpx;
@@ -25,15 +25,15 @@
         text-align: center;
       }
     }
-    .row-title{
-      margin-top:57rpx;
-        .item{
+    .row-title {
+      margin-top: 57rpx;
+      .item {
         color: #f1f4ba;
         font-size: 30rpx;
       }
     }
-    }
   }
+}
 </style>
 <template>
   <view class="my-record-wrap">
@@ -60,97 +60,120 @@
 </template>
 
 <script>
-  import wepy from 'wepy'
-
-  export default class myRecord extends wepy.page {
-    config = {
-      navigationBarTitleText: '战绩'
-    }
-    components = {
-
-    }
-    data = {
-      contList:[{
-        c_event:"销售",
-        c_power:"获得888技能",
-        c_time:"09.30 08:00"
-      },{
-        c_event:"销售",
-        c_power:"获得888技能",
-        c_time:"09.30 08:00"
-      },{
-        c_event:"销售",
-        c_power:"获得888技能",
-        c_time:"09.30 08:00"
-      },{
-        c_event:"销售",
-        c_power:"获得888技能",
-        c_time:"09.30 08:00"
-      },{
-        c_event:"销售",
-        c_power:"获得888技能",
-        c_time:"09.30 08:00"
-      },{
-        c_event:"销售",
-        c_power:"获得888技能",
-        c_time:"09.30 08:00"
-      },{
-        c_event:"销售",
-        c_power:"获得888技能",
-        c_time:"09.30 08:00"
-      },{
-        c_event:"销售",
-        c_power:"获得888技能",
-        c_time:"09.30 08:00"
-      },{
-        c_event:"销售",
-        c_power:"获得888技能",
-        c_time:"09.30 08:00"
-      },{
-        c_event:"销售",
-        c_power:"获得888技能",
-        c_time:"09.30 08:00"
-      },{
-        c_event:"销售",
-        c_power:"获得888技能",
-        c_time:"09.30 08:00"
-      },{
-        c_event:"销售",
-        c_power:"获得888技能",
-        c_time:"09.30 08:00"
-      },{
-        c_event:"销售",
-        c_power:"获得888技能",
-        c_time:"09.30 08:00"
-      },{
-        c_event:"销售",
-        c_power:"获得888技能",
-        c_time:"09.30 08:00"
-      },{
-        c_event:"销售",
-        c_power:"获得888技能",
-        c_time:"09.30 08:00"
-      },{
-        c_event:"销售",
-        c_power:"获得888技能",
-        c_time:"09.30 08:00"
-      }]
-    }
-
-    computed = {
-      now () {
-        return +new Date()
+import wepy from 'wepy';
+import wxRequest from "../../util/wxRequest.js";
+export default class myRecord extends wepy.page {
+  config = {
+    navigationBarTitleText: '战绩'
+  };
+  components = {};
+  data = {
+    contList: [
+      {
+        c_event: '销售',
+        c_power: '获得888技能',
+        c_time: '09.30 08:00'
+      },
+      {
+        c_event: '销售',
+        c_power: '获得888技能',
+        c_time: '09.30 08:00'
+      },
+      {
+        c_event: '销售',
+        c_power: '获得888技能',
+        c_time: '09.30 08:00'
+      },
+      {
+        c_event: '销售',
+        c_power: '获得888技能',
+        c_time: '09.30 08:00'
+      },
+      {
+        c_event: '销售',
+        c_power: '获得888技能',
+        c_time: '09.30 08:00'
+      },
+      {
+        c_event: '销售',
+        c_power: '获得888技能',
+        c_time: '09.30 08:00'
+      },
+      {
+        c_event: '销售',
+        c_power: '获得888技能',
+        c_time: '09.30 08:00'
+      },
+      {
+        c_event: '销售',
+        c_power: '获得888技能',
+        c_time: '09.30 08:00'
+      },
+      {
+        c_event: '销售',
+        c_power: '获得888技能',
+        c_time: '09.30 08:00'
+      },
+      {
+        c_event: '销售',
+        c_power: '获得888技能',
+        c_time: '09.30 08:00'
+      },
+      {
+        c_event: '销售',
+        c_power: '获得888技能',
+        c_time: '09.30 08:00'
+      },
+      {
+        c_event: '销售',
+        c_power: '获得888技能',
+        c_time: '09.30 08:00'
+      },
+      {
+        c_event: '销售',
+        c_power: '获得888技能',
+        c_time: '09.30 08:00'
+      },
+      {
+        c_event: '销售',
+        c_power: '获得888技能',
+        c_time: '09.30 08:00'
+      },
+      {
+        c_event: '销售',
+        c_power: '获得888技能',
+        c_time: '09.30 08:00'
+      },
+      {
+        c_event: '销售',
+        c_power: '获得888技能',
+        c_time: '09.30 08:00'
       }
+    ]
+  };
+
+  computed = {
+    now() {
+      return +new Date();
     }
+  };
 
-    methods = {
+  methods = {};
+ 
+  events = {};
+  async getData() {
+    const that = this;
+    const res = await wxRequest({
+      query:{
+        opt: 'CheckCanApply',
+      }
+      },that.$parent.globalData.apiUrl);
+   if (res.data.retcode == -1) {
 
-    }
+    }else {
 
-    events = {
-    }
-
-    onLoad(params, data) {
     }
   }
+  onLoad() {}
+}
 </script>

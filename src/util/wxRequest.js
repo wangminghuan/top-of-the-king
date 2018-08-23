@@ -3,12 +3,11 @@ const wxRequest = async(params = {}, url) => {
     // tip.loading();
     wx.showLoading()
     let data = params.query || {};
-    // data.timestamp = (new Date()).getTime();
     let res = await wepy.request({
         url: url,
         method: params.method || 'GET',
         data: data,
-        header: { 'Content-Type': 'application/json' },
+        header: {'Content-Type': 'application/json'},
     });
     wx.hideLoading();
     return res;

@@ -1,6 +1,6 @@
 <style lang="less">
-@import "../static/style/soundComTips.less";
-@import "../static/style/comAvator.less";
+@import '../static/style/soundComTips.less';
+@import '../static/style/comAvator.less';
 .page-dynamics {
   padding: 0 40rpx 40rpx 40rpx;
   .special-title {
@@ -146,71 +146,72 @@
       }
     }
   }
-  .pop-shake{
-    .bg{
-        position: fixed;
-        top:0;
-        right: 0;
-        left:0;
-        bottom:0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.4);
-        z-index: 99;
-      }
-      .shake-bg{
-       position: fixed;
-        top:0;
-        right: 0;
-        left:0;
-        bottom:0;
-        width: 100%;
-        height: 100%;
-        z-index: 1000;
-      }
-      .pop-cont{
-        width: 640rpx;
-        height: 640rpx;
-        position: fixed;
-        margin:0 auto;
-        top:50%;
-        right: 0;
-        left:0;
-       transform: translateY(-50%);
-       z-index: 1001;
-       text{
+  .pop-shake {
+    .bg {
+      position: fixed;
+      top: 0;
+      right: 0;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.4);
+      z-index: 99;
+    }
+    .shake-bg {
+      position: fixed;
+      top: 0;
+      right: 0;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1000;
+    }
+    .pop-cont {
+      width: 640rpx;
+      height: 640rpx;
+      position: fixed;
+      margin: 0 auto;
+      top: 50%;
+      right: 0;
+      left: 0;
+      transform: translateY(-50%);
+      z-index: 1001;
+      text {
         //  height: 70rpx;
-         width: 420rpx;
-         white-space: nowrap;
-         overflow: hidden;
-         text-overflow: ellipsis;
-         position: absolute;
-         top:272rpx;
-         left: 0;
-         right: 0;
-         margin: 0 auto;
-         color: #fff;
-         font-size: 24rpx;
-         text-align: center;
-       }
-      }
-      .animate-bg,.gift-bg{
-        width: 640rpx;
-        height: 640rpx;
+        width: 420rpx;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
         position: absolute;
-        top:0;
-        left:0;
+        top: 272rpx;
+        left: 0;
+        right: 0;
+        margin: 0 auto;
+        color: #fff;
+        font-size: 24rpx;
+        text-align: center;
       }
-      .animate-bg{
-        animation:mymove 8s  linear infinite
-      }
+    }
+    .animate-bg,
+    .gift-bg {
+      width: 640rpx;
+      height: 640rpx;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+    .animate-bg {
+      animation: mymove 8s linear infinite;
+    }
   }
   @keyframes mymove {
-    0%{
-      transform: rotateZ(0)
+    0% {
+      transform: rotateZ(0);
     }
-     100%{
-      transform: rotateZ(360deg)
+    100% {
+      transform: rotateZ(360deg);
     }
   }
 }
@@ -275,14 +276,14 @@
 
 <script>
 import wepy from 'wepy';
-
+import wxRequest from '../util/wxRequest.js';
 export default class pageDynamics extends wepy.page {
   config = {
     navigationBarTitleText: '动态'
   };
   components = {};
   data = {
-    isShowPop:true,
+    isShowPop: false,
     scrollTop: 100,
     specialList: [
       {
@@ -334,31 +335,41 @@ export default class pageDynamics extends wepy.page {
   computed = {};
 
   methods = {
-    preventTouchMove(){
-
-    },
-    handleLike(){
+    preventTouchMove() {},
+    handleLike() {
       wx.showToast({
-      title: '点赞成功',
-      icon: 'success',
-      duration: 2000
-    })
+        title: '点赞成功',
+        icon: 'success',
+        duration: 2000
+      });
     },
     handleJumpDetail() {
-      this.$navigate("/pages/dynamics/detail");
+      this.$navigate('/pages/dynamics/detail');
     },
     handleJumpAdd() {
-      this.$navigate("/pages/dynamics/add");
-    } 
+      this.$navigate('/pages/dynamics/add');
+    }
   };
-  
-  events = {};
 
-  onLoad(params, data) {
-    setTimeout(() => {
-       this.isShowPop=false;
-       this.$apply()
-    }, 8000);
+  events = {};
+  async getData() {
+    const that = this;
+    const res = await wxRequest({
+      query:{
+        opt: 'CheckCanApply',
+      }
+      },that.$parent.globalData.apiUrl);
+   if (res.data.retcode == -1) {
+
+    }else {
+
+    }
+  }
+  onLoad() {
+    // setTimeout(() => {
+    //   this.isShowPop = false;
+    //   this.$apply();
+    // }, 8000);
   }
 }
 </script>

@@ -1,109 +1,108 @@
 <style lang="less">
-@import "../../static/style/borderComLine.less";
-@import "../../static/style/comAvator.less";
-  .dynamic-deatail{
-    padding: 0 34rpx 34rpx 34rpx;
-    color: #fff;
-    .ye{
-      color: #f1f4ba
-    }
-    .msg-title{
+@import '../../static/style/borderComLine.less';
+@import '../../static/style/comAvator.less';
+.dynamic-deatail {
+  padding: 0 34rpx 34rpx 34rpx;
+  color: #fff;
+  .ye {
+    color: #f1f4ba;
+  }
+  .msg-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 40rpx;
+    font-size: 28rpx;
+    height: 118rpx;
+  }
+  .com-avator {
+    margin-right: 30rpx;
+  }
+  .cont {
+    background-color: #4c6b94;
+    box-shadow: inset 0 0 24rpx 8rpx #9fa4a9;
+    border: 1rpx solid #232b4f;
+    .info,
+    .status {
       display: flex;
-      justify-content: space-between;
       align-items: center;
-      padding:0 40rpx;
-      font-size: 28rpx;
-      height:118rpx ;
     }
-    .com-avator{
-      margin-right: 30rpx;
+    .info {
+      height: 170rpx;
+      padding: 0 40rpx;
     }
-    .cont{
-      background-color: #4c6b94;
-      box-shadow: inset 0 0 24rpx 8rpx #9fa4a9;
-      border:1rpx solid #232b4f;
-      .info,.status{
+    .info-txt {
+      font-size: 30rpx;
+      view {
+        line-height: 48rpx;
+        font-size: 28rpx;
+      }
+      text {
+        line-height: 38rpx;
+        font-size: 22rpx;
+        color: #c5ddf1;
+      }
+    }
+    .titl {
+      font-size: 30rpx;
+      text-align: center;
+      padding: 30rpx 40rpx 20rpx 40rpx;
+      line-height: 50rpx;
+    }
+    .msg {
+      line-height: 30rpx;
+      font-size: 24rpx;
+      padding: 38rpx 40rpx 0;
+    }
+    .status {
+      // height: 40px;
+      padding: 0 40rpx;
+      // justify-content: space-between;
+      color: #cbe3f7;
+      font-size: 24rpx;
+      color: #cbe3f7;
+      view {
+        height: 40px;
         display: flex;
         align-items: center;
       }
-      .info{
-              height: 170rpx;
-               padding:0 40rpx;
+      .icon {
+        color: #f1f4ba;
+        padding-left: 40rpx;
+        margin-left: 68rpx;
+        background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAaCAMAAACaYWzBAAAAV1BMVEUAAADx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lp45tP4AAAAHHRSTlMAPEvhRAr6hfLqy5HV0Luaf1ktEt+ja2dBNC4bf/r0rgAAAIBJREFUKM91z0kOhDAMRFEHyEwz9dzt+5+TJCyQsOsv60lRTGdf7++kZBzzaBWYufRS4FZhkrt1FaKED9eChNxglC/FBl7Awq3tuq+u7XE4MuXSn8/zZvhS6Nr3OwHcU68DIwgIJgQLggGAswASAcgIVgR/AA8C8ETwLpAUSJZoB+O9KHScoGflAAAAAElFTkSuQmCC');
+        background-repeat: no-repeat;
+        background-size: 24rpx auto;
+        background-position-y: center;
+        background-position-x: 0;
       }
-      .info-txt{
-         font-size: 30rpx;
-         view{
-           line-height: 48rpx;
-           font-size: 28rpx;
-         }
-         text{
-           line-height: 38rpx;
-           font-size: 22rpx;
-           color: #c5ddf1;
-         }
-      }
-      .titl{
-         font-size: 30rpx;
-         text-align: center;
-          padding:30rpx 40rpx 20rpx 40rpx;
-           line-height: 50rpx;
-      }
-      .msg{
-        line-height: 30rpx;
-        font-size: 24rpx;
-         padding:38rpx 40rpx 0;
-        
-      }
-      .status{
-        // height: 40px;
-        padding:0 40rpx;
-        // justify-content: space-between;
-        color: #cbe3f7;
-        font-size: 24rpx;
-        color: #cbe3f7;
-        view{
-          height: 40px;
-          display: flex;
-          align-items: center;
-        }
-        .icon{
-         color: #f1f4ba;
-         padding-left:40rpx;
-         margin-left:68rpx;  
-         background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAaCAMAAACaYWzBAAAAV1BMVEUAAADx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lp45tP4AAAAHHRSTlMAPEvhRAr6hfLqy5HV0Luaf1ktEt+ja2dBNC4bf/r0rgAAAIBJREFUKM91z0kOhDAMRFEHyEwz9dzt+5+TJCyQsOsv60lRTGdf7++kZBzzaBWYufRS4FZhkrt1FaKED9eChNxglC/FBl7Awq3tuq+u7XE4MuXSn8/zZvhS6Nr3OwHcU68DIwgIJgQLggGAswASAcgIVgR/AA8C8ETwLpAUSJZoB+O9KHScoGflAAAAAElFTkSuQmCC");
-         background-repeat: no-repeat;
-         background-size: 24rpx auto;
-         background-position-y: center;
-         background-position-x: 0;
-        }
-      }
-    }
-    .item{
-       height: 198rpx;
-       display: flex;
-       align-items: center;
-       padding: 0 40rpx;
-       .rt{
-          flex-shrink: 1;
-         display: flex;
-         flex-direction: column;
-         view{
-           line-height: 48rpx;
-           font-size: 26rpx;
-
-         }
-         text{
-            color: #cbe3f7;
-           line-height: 30rpx;
-           font-size: 20rpx;
-           display: -webkit-box;
-          -webkit-box-orient: vertical;
-          -webkit-line-clamp: 2;
-          overflow: hidden;
-         }
-       }
     }
   }
+  .item {
+    height: 198rpx;
+    display: flex;
+    align-items: center;
+    padding: 0 40rpx;
+    .rt {
+      flex-shrink: 1;
+      display: flex;
+      flex-direction: column;
+      view {
+        line-height: 48rpx;
+        font-size: 26rpx;
+      }
+      text {
+        color: #cbe3f7;
+        line-height: 30rpx;
+        font-size: 20rpx;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+        overflow: hidden;
+      }
+    }
+  }
+}
 </style>
 <template>
   <view class="dynamic-deatail">
@@ -142,69 +141,100 @@
 </template>
 
 <script>
-  import wepy from 'wepy'
-
-  export default class dynamicDetail extends wepy.page {
-    config = {
-      navigationBarTitleText: '详情'
-    }
-    components = {
-
-    }
-    data = {
-      listArr:[{
-        d_avator:"http://img1.360buyimg.com/da/jfs/t25096/340/321933848/390630/985a448c/5b6bbefeNafcfc263.jpg",
-        d_name:"张三",
-        d_cont:"王者荣耀新赛季已经开启一段时间了，大家伙上王者没。上王者不仅是段位提升的一种激励王者荣耀新赛季已经开启一段时间了，大家伙上王者没。上王者不仅是段位提升的一种激励",
-      },{
-        d_avator:"http://img1.360buyimg.com/da/jfs/t25096/340/321933848/390630/985a448c/5b6bbefeNafcfc263.jpg",
-        d_name:"张三",
-        d_cont:"王者荣耀新赛季已经开启一段时间了，大家伙上王者没。上王者不仅是段位提升的一种激励王者荣耀新赛季已经开启一段时间了，大家伙上王者没。上王者不仅是段位提升的一种激励",
-      },{
-        d_avator:"http://img1.360buyimg.com/da/jfs/t25096/340/321933848/390630/985a448c/5b6bbefeNafcfc263.jpg",
-        d_name:"张三",
-        d_cont:"王者荣耀新赛季已经开启一段时间了，大家伙上王者没。上王者不仅是段位提升的一种激励王者荣耀新赛季已经开启一段时间了，大家伙上王者没。上王者不仅是段位提升的一种激励",
-      },{
-        d_avator:"http://img1.360buyimg.com/da/jfs/t25096/340/321933848/390630/985a448c/5b6bbefeNafcfc263.jpg",
-        d_name:"张三",
-        d_cont:"王者荣耀新赛季已经开启一段时间了，大家伙上王者没。上王者不仅是段位提升的一种激励王者荣耀新赛季已经开启一段时间了，大家伙上王者没。上王者不仅是段位提升的一种激励",
-      },{
-        d_avator:"http://img1.360buyimg.com/da/jfs/t25096/340/321933848/390630/985a448c/5b6bbefeNafcfc263.jpg",
-        d_name:"张三",
-        d_cont:"王者荣耀新赛季已经开启一段时间了，大家伙上王者没。上王者不仅是段位提升的一种激励王者荣耀新赛季已经开启一段时间了，大家伙上王者没。上王者不仅是段位提升的一种激励",
-      },{
-        d_avator:"http://img1.360buyimg.com/da/jfs/t25096/340/321933848/390630/985a448c/5b6bbefeNafcfc263.jpg",
-        d_name:"张三",
-        d_cont:"王者荣耀新赛季已经开启一段时间了，大家伙上王者没。上王者不仅是段位提升的一种激励王者荣耀新赛季已经开启一段时间了，大家伙上王者没。上王者不仅是段位提升的一种激励",
-      },{
-        d_avator:"http://img1.360buyimg.com/da/jfs/t25096/340/321933848/390630/985a448c/5b6bbefeNafcfc263.jpg",
-        d_name:"张三",
-        d_cont:"王者荣耀新赛季已经开启一段时间了，大家伙上王者没。上王者不仅是段位提升的一种激励王者荣耀新赛季已经开启一段时间了，大家伙上王者没。上王者不仅是段位提升的一种激励",
-      }]
-    }
-
-    computed = {
-      now () {
-        return +new Date()
-      }
-    }
-
-    methods = {
-      handleScroll(){
-        console.log("scroll")
+import wepy from 'wepy';
+import wxRequest from '../../util/wxRequest.js';
+export default class dynamicDetail extends wepy.page {
+  config = {
+    navigationBarTitleText: '详情'
+  };
+  components = {};
+  data = {
+    listArr: [
+      {
+        d_avator:
+          'http://img1.360buyimg.com/da/jfs/t25096/340/321933848/390630/985a448c/5b6bbefeNafcfc263.jpg',
+        d_name: '张三',
+        d_cont:
+          '王者荣耀新赛季已经开启一段时间了，大家伙上王者没。上王者不仅是段位提升的一种激励王者荣耀新赛季已经开启一段时间了，大家伙上王者没。上王者不仅是段位提升的一种激励'
       },
-      handleJumpAdd(){
-        this.$navigate("/pages/my/addMsg")
+      {
+        d_avator:
+          'http://img1.360buyimg.com/da/jfs/t25096/340/321933848/390630/985a448c/5b6bbefeNafcfc263.jpg',
+        d_name: '张三',
+        d_cont:
+          '王者荣耀新赛季已经开启一段时间了，大家伙上王者没。上王者不仅是段位提升的一种激励王者荣耀新赛季已经开启一段时间了，大家伙上王者没。上王者不仅是段位提升的一种激励'
       },
-      handleJumpDetail(){
-        this.$navigate("/pages/dynamics/leaveMsg")
+      {
+        d_avator:
+          'http://img1.360buyimg.com/da/jfs/t25096/340/321933848/390630/985a448c/5b6bbefeNafcfc263.jpg',
+        d_name: '张三',
+        d_cont:
+          '王者荣耀新赛季已经开启一段时间了，大家伙上王者没。上王者不仅是段位提升的一种激励王者荣耀新赛季已经开启一段时间了，大家伙上王者没。上王者不仅是段位提升的一种激励'
+      },
+      {
+        d_avator:
+          'http://img1.360buyimg.com/da/jfs/t25096/340/321933848/390630/985a448c/5b6bbefeNafcfc263.jpg',
+        d_name: '张三',
+        d_cont:
+          '王者荣耀新赛季已经开启一段时间了，大家伙上王者没。上王者不仅是段位提升的一种激励王者荣耀新赛季已经开启一段时间了，大家伙上王者没。上王者不仅是段位提升的一种激励'
+      },
+      {
+        d_avator:
+          'http://img1.360buyimg.com/da/jfs/t25096/340/321933848/390630/985a448c/5b6bbefeNafcfc263.jpg',
+        d_name: '张三',
+        d_cont:
+          '王者荣耀新赛季已经开启一段时间了，大家伙上王者没。上王者不仅是段位提升的一种激励王者荣耀新赛季已经开启一段时间了，大家伙上王者没。上王者不仅是段位提升的一种激励'
+      },
+      {
+        d_avator:
+          'http://img1.360buyimg.com/da/jfs/t25096/340/321933848/390630/985a448c/5b6bbefeNafcfc263.jpg',
+        d_name: '张三',
+        d_cont:
+          '王者荣耀新赛季已经开启一段时间了，大家伙上王者没。上王者不仅是段位提升的一种激励王者荣耀新赛季已经开启一段时间了，大家伙上王者没。上王者不仅是段位提升的一种激励'
+      },
+      {
+        d_avator:
+          'http://img1.360buyimg.com/da/jfs/t25096/340/321933848/390630/985a448c/5b6bbefeNafcfc263.jpg',
+        d_name: '张三',
+        d_cont:
+          '王者荣耀新赛季已经开启一段时间了，大家伙上王者没。上王者不仅是段位提升的一种激励王者荣耀新赛季已经开启一段时间了，大家伙上王者没。上王者不仅是段位提升的一种激励'
       }
-    }
+    ]
+  };
 
-    events = {
+  computed = {
+    now() {
+      return +new Date();
     }
+  };
 
-    onLoad(params, data) {
+  methods = {
+    handleScroll() {
+      console.log('scroll');
+    },
+    handleJumpAdd() {
+      this.$navigate('/pages/my/addMsg');
+    },
+    handleJumpDetail() {
+      this.$navigate('/pages/dynamics/leaveMsg');
+    }
+  };
+
+  events = {};
+  async getData() {
+    const that = this;
+    const res = await wxRequest(
+      {
+        query: {
+          opt: 'CheckCanApply'
+        }
+      },
+      that.$parent.globalData.apiUrl
+    );
+    if (res.data.retcode == -1) {
+    } else {
     }
   }
+  onLoad() {}
+}
 </script>

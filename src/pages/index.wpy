@@ -17,7 +17,7 @@ export default class index extends wepy.page {
   };
  
 // getHeroInfo
-  onLoad(params, data) {
+  onLoad() {
       this.$parent.checklogin()
   }
 }

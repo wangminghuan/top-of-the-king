@@ -92,7 +92,7 @@
       color: #b7e3f6;
       font-size: 24rpx;
     }
-    .rt-btm{
+    .rt-btm {
       position: relative;
     }
     .btm-box {
@@ -105,31 +105,31 @@
       font-size: 20rpx;
       color: #b7e3f6;
     }
-    .my-title{
-     position: absolute;
-     right:0 ;
-     bottom: 0;
-     height:46rpx;
-     line-height: 46rpx;
-     color: #b7e3f6;
-     font-size: 24rpx;
-     padding-right: 25rpx;
-     &::after{
-       content: "";
-       position: absolute;
-       width:15rpx;
-       height: 15rpx;
-       border-top: 1rpx solid #b7e3f6;
-       border-right: 1rpx solid #b7e3f6;
-       transform: rotateZ(45deg);
-       right: 0;
-       top:15rpx;
-     }
-    }
-    .up-level{
+    .my-title {
       position: absolute;
       right: 0;
-      top:15rpx;
+      bottom: 0;
+      height: 46rpx;
+      line-height: 46rpx;
+      color: #b7e3f6;
+      font-size: 24rpx;
+      padding-right: 25rpx;
+      &::after {
+        content: '';
+        position: absolute;
+        width: 15rpx;
+        height: 15rpx;
+        border-top: 1rpx solid #b7e3f6;
+        border-right: 1rpx solid #b7e3f6;
+        transform: rotateZ(45deg);
+        right: 0;
+        top: 15rpx;
+      }
+    }
+    .up-level {
+      position: absolute;
+      right: 0;
+      top: 15rpx;
       padding: 15rpx;
     }
   }
@@ -147,47 +147,43 @@
       padding: 56rpx 66rpx;
     }
   }
-  .score-pop-wrap{
-   
-
-
-    .bg{
-        position: fixed;
-        top:0;
-        right: 0;
-        left:0;
-        bottom:0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.4);
-        z-index: 99;
-      }
-      .pop-cont{
-        position: fixed;
-        top:50%;
-        transform: translateY(-50%);
-        left: 0;
-        right: 0;
-        margin:0 auto;
-        width: 500rpx;
-        height: 600rpx;
-        background-color: #4b98ec;
-        z-index: 100;
-      
-      }
-        .close{
-          position: absolute;
-          right: 0;
-          top:0;
-          width: 52rpx;
-          height: 52rpx;
-        }
-.row-wrap{
+  .score-pop-wrap {
+    .bg {
+      position: fixed;
+      top: 0;
+      right: 0;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.4);
+      z-index: 99;
+    }
+    .pop-cont {
+      position: fixed;
+      top: 50%;
+      transform: translateY(-50%);
+      left: 0;
+      right: 0;
+      margin: 0 auto;
+      width: 500rpx;
+      height: 600rpx;
+      background-color: #4b98ec;
+      z-index: 100;
+    }
+    .close {
+      position: absolute;
+      right: 0;
+      top: 0;
+      width: 52rpx;
+      height: 52rpx;
+    }
+    .row-wrap {
       display: flex;
       justify-content: space-around;
       align-items: center;
       height: 50rpx;
-        .item{
+      .item {
         width: 33.3%;
         color: #b7e3f6;
         font-size: 24rpx;
@@ -195,19 +191,19 @@
         text-align: center;
       }
     }
-    .row-title{
-      margin-top:38rpx;
-        .item{
+    .row-title {
+      margin-top: 38rpx;
+      .item {
         color: #f1f4ba;
         font-size: 24rpx;
       }
     }
-    .more{
-       color: #f1f4ba;
-        font-size: 24rpx;
-        text-align: center;
-        line-height: 80rpx;
-        margin-top:10rpx;
+    .more {
+      color: #f1f4ba;
+      font-size: 24rpx;
+      text-align: center;
+      line-height: 80rpx;
+      margin-top: 10rpx;
     }
   }
 }
@@ -314,12 +310,12 @@
           </view>
           
       </view>
-     <button wx:if="{{canIUse}}" open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo">授权登录</button>
   </view>
 </template>
 
 <script>
 import wepy from 'wepy';
+import wxRequest from '../util/wxRequest.js';
 export default class pageMy extends wepy.page {
   config = {
     navigationBarTitleText: '我的'
@@ -327,10 +323,10 @@ export default class pageMy extends wepy.page {
   components = {};
   data = {
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
-    isShowPop:false,
-    isEditName:false,
-    bindKeyInput:"",
-    myAvator:"",
+    isShowPop: false,
+    isEditName: false,
+    bindKeyInput: '',
+    myAvator: '',
     tabArr: [
       { t_name: '全部', t_value: '0', t_active: 1 },
       { t_name: '已使用', t_value: '1', t_active: 0 },
@@ -354,108 +350,121 @@ export default class pageMy extends wepy.page {
         c_score: '7000'
       }
     ],
-    scoreList:[{
-        c_event:"销售",
-        c_power:"获得888技能",
-        c_time:"09.30 08:00"
-      },{
-        c_event:"销售",
-        c_power:"获得888技能",
-        c_time:"09.30 08:00"
-      },{
-        c_event:"销售",
-        c_power:"获得888技能",
-        c_time:"09.30 08:00"
-      },{
-        c_event:"销售",
-        c_power:"获得888技能",
-        c_time:"09.30 08:00"
-      },{
-        c_event:"销售",
-        c_power:"获得888技能",
-        c_time:"09.30 08:00"
-      },{
-        c_event:"销售",
-        c_power:"获得888技能",
-        c_time:"09.30 08:00"
-      },{
-        c_event:"销售",
-        c_power:"获得888技能",
-        c_time:"09.30 08:00"
-      },{
-        c_event:"销售",
-        c_power:"获得888技能",
-        c_time:"09.30 08:00"
-      },{
-        c_event:"销售",
-        c_power:"获得888技能",
-        c_time:"09.30 08:00"
-      },{
-        c_event:"销售",
-        c_power:"获得888技能",
-        c_time:"09.30 08:00"
-      },{
-        c_event:"销售",
-        c_power:"获得888技能",
-        c_time:"09.30 08:00"
-      },{
-        c_event:"销售",
-        c_power:"获得888技能",
-        c_time:"09.30 08:00"
-      },{
-        c_event:"销售",
-        c_power:"获得888技能",
-        c_time:"09.30 08:00"
-      },{
-        c_event:"销售",
-        c_power:"获得888技能",
-        c_time:"09.30 08:00"
-      },{
-        c_event:"销售",
-        c_power:"获得888技能",
-        c_time:"09.30 08:00"
-      },{
-        c_event:"销售",
-        c_power:"获得888技能",
-        c_time:"09.30 08:00"
-      }]
+    scoreList: [
+      {
+        c_event: '销售',
+        c_power: '获得888技能',
+        c_time: '09.30 08:00'
+      },
+      {
+        c_event: '销售',
+        c_power: '获得888技能',
+        c_time: '09.30 08:00'
+      },
+      {
+        c_event: '销售',
+        c_power: '获得888技能',
+        c_time: '09.30 08:00'
+      },
+      {
+        c_event: '销售',
+        c_power: '获得888技能',
+        c_time: '09.30 08:00'
+      },
+      {
+        c_event: '销售',
+        c_power: '获得888技能',
+        c_time: '09.30 08:00'
+      },
+      {
+        c_event: '销售',
+        c_power: '获得888技能',
+        c_time: '09.30 08:00'
+      },
+      {
+        c_event: '销售',
+        c_power: '获得888技能',
+        c_time: '09.30 08:00'
+      },
+      {
+        c_event: '销售',
+        c_power: '获得888技能',
+        c_time: '09.30 08:00'
+      },
+      {
+        c_event: '销售',
+        c_power: '获得888技能',
+        c_time: '09.30 08:00'
+      },
+      {
+        c_event: '销售',
+        c_power: '获得888技能',
+        c_time: '09.30 08:00'
+      },
+      {
+        c_event: '销售',
+        c_power: '获得888技能',
+        c_time: '09.30 08:00'
+      },
+      {
+        c_event: '销售',
+        c_power: '获得888技能',
+        c_time: '09.30 08:00'
+      },
+      {
+        c_event: '销售',
+        c_power: '获得888技能',
+        c_time: '09.30 08:00'
+      },
+      {
+        c_event: '销售',
+        c_power: '获得888技能',
+        c_time: '09.30 08:00'
+      },
+      {
+        c_event: '销售',
+        c_power: '获得888技能',
+        c_time: '09.30 08:00'
+      },
+      {
+        c_event: '销售',
+        c_power: '获得888技能',
+        c_time: '09.30 08:00'
+      }
+    ]
   };
 
   computed = {};
 
   methods = {
-    bindGetUserInfo(){
-
+    handleBlur(ev) {
+      console.log(ev.detail);
+      wx.showLoading({
+        title: '加载中'
+      });
+      setTimeout(() => {
+        wx.hideLoading();
+        this.isEditName = false;
+        this.bindKeyInput = ev.detail.value;
+        this.$apply();
+        wx.showToast({
+          title: '修改成功',
+          icon: 'success',
+          duration: 2000
+        });
+      }, 2000);
     },
-    handleBlur(ev){
-      console.log(ev.detail)
-     wx.showLoading({
-      title: '加载中',
-    })
-    setTimeout(()=>{
-      wx.hideLoading();
-      this.isEditName=false;
-      this.bindKeyInput=ev.detail.value;
-      this.$apply();
-      wx.showToast({
-      title: '修改成功',
-      icon: 'success',
-      duration: 2000
-    })
-
-    },2000)
+    handleEditName() {
+      this.isEditName = true;
     },
-    handleEditName(){
-      this.isEditName=true;
+    handleShowPop() {
+      this.isShowPop = true;
     },
-    handleShowPop(){
-      this.isShowPop=true;
+    handleClose() {
+      this.isShowPop = false;
     },
-    handleClose(){
-         this.isShowPop=false;
-    },
-    handleJumpRecord(){
-       this.$navigate("/pages/my/record");
+    handleJumpRecord() {
+      this.$navigate('/pages/my/record');
     },
     handleClickTab(inx) {
       this.tabArr.map((item, index) => {
@@ -473,42 +482,20 @@ export default class pageMy extends wepy.page {
   };
 
   events = {};
-  // getUserInfo(cb) {
-  //     const that = this
-  //     // if (this.globalData.userInfo) {
-  //     //   return this.globalData.userInfo
-  //     // }
-  //     wepy.getUserInfo({
-  //       success (res) {
-  //         // that.globalData.userInfo = res.userInfo
-  //         cb && cb(res.userInfo)
-  //       }
-  //     })
-  //   }
-  onLoad(params, data) {
-    console.log(this.canIUse)
-    const that =this;
-     wx.getSetting({
-      success: function(res){
-        if (res.authSetting['scope.userInfo']) {
-          // 已经授权，可以直接调用 getUserInfo 获取头像昵称
-          wx.getUserInfo({
-            success: function(res) {
-                  var info=(res.userInfo)
-                  console.log(info)
-                  that.bindKeyInput=info.nickName;
-                  that.myAvator=info.avatarUrl
-                  that.$apply();
-            }
-          })
-        }
+  async getData() {
+    const that = this;
+    const res = await wxRequest({
+      query:{
+        opt: 'CheckCanApply',
       }
-    })
-    // this.getUserInfo((res)=>{
-    //   console.log(2,res)
-    //     this.bindKeyInput=res.nickName;
-    //     this.$apply();
-    // })
+      },that.$parent.globalData.apiUrl);
+   if (res.data.retcode == -1) {
+
+    }else {
+
+    }
+  }
+  onLoad() {
   }
 }
 </script>

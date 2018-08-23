@@ -1,6 +1,7 @@
 <style lang="less">
 .my-up-level {
   padding: 0 32rpx;
+  height: 100%;
   .my-info {
     display: flex;
     // justify-content: space-between;
@@ -27,149 +28,145 @@
       }
     }
     .rt {
-    //   width: 454rpx;
-    margin-left: 38rpx;
-    .rt-name{
+      //   width: 454rpx;
+      margin-left: 38rpx;
+      .rt-name {
         line-height: 50rpx;
         font-size: 28rpx;
         color: #f1f4ba;
-
-    }
-    .rt-tip{
+      }
+      .rt-tip {
         line-height: 60rpx;
         font-size: 20rpx;
         color: #f1f4ba;
-    }
-    .rt-mid{
+      }
+      .rt-mid {
         width: 330rpx;
-        height: 22rpx;;
+        height: 22rpx;
         background-color: #38587f;
         border-radius: 32rpx;
-        padding:5rpx;
+        padding: 5rpx;
         position: relative;
         display: flex;
-        margin-top:5rpx;
+        margin-top: 5rpx;
         box-shadow: inset 0 0 6rpx 6rpx #68add2;
-        .progress{
-            background-color: #fff;
-            height: 20rpx;
-            border-radius: 20rpx;
-            // position: absolute;
-            // top:5rpx;
-            // left: 0;
+        .progress {
+          background-color: #fff;
+          height: 20rpx;
+          border-radius: 20rpx;
+          // position: absolute;
+          // top:5rpx;
+          // left: 0;
         }
-    }
-    .rt-btm{
-       display: flex;
-       justify-content: space-between;
+      }
+      .rt-btm {
+        display: flex;
+        justify-content: space-between;
         width: 340rpx;
         font-size: 20rpx;
         color: #cbe3f7;
-        margin-top:20rpx;
-        .now,.next{
-            display: flex;
-            align-items: center;
-            flex-direction: column;
-            justify-content: space-around;
-            width: 100rpx;
-            text{
-                line-height:28rpx; 
-            }
+        margin-top: 20rpx;
+        .now,
+        .next {
+          display: flex;
+          align-items: center;
+          flex-direction: column;
+          justify-content: space-around;
+          width: 100rpx;
+          text {
+            line-height: 28rpx;
+          }
         }
-    }
+      }
     }
   }
 
-
-  .l-title{
-  width:681rpx;
-  height:114rpx;
-  margin:0 auto;
-  display: block;
-  margin-bottom: 85rpx;
-  margin-top: 62rpx;
+  .l-title {
+    width: 681rpx;
+    height: 114rpx;
+    margin: 0 auto;
+    display: block;
+    margin-bottom: 85rpx;
+    margin-top: 62rpx;
   }
-  .level-item{
-      position: relative;
+  .level-item {
+    position: relative;
     //   width: 156rpx;
-      height: 250rpx;
-      &::after{
-          content: "";
-          position: absolute;
-          width:28rpx;
-          height: 45rpx;
-          bottom:26rpx;
-          left:0;
-          right: 0;
-          margin:0 auto;
-          background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAtCAMAAACK9fuuAAABNVBMVEUAAAAmeMrysCrJpEvJpEsze8BCgLRUhaZujJF+kIaMlHrkrDX3sSa/oVPYqT+pnGPZqT2lm2bXqD/Fo03eqjrury33sSbFo03krDXury33sSatnWG0nlu7oFXSp0PbqTzFo03Sp0MpecctesU6frpLgq1eh55kiZmXl3KemWytnWG0nlu7oFXColDIpEvPpkapnGPmrDO7oFXPpkbVqEHmrDO0nlvPpka/oVKemWylm2bIpEutnWG0nlu7oFXhqzjhqzj8siKemWylm2aXl3ImeMrhqzi0nlu7oFXColDIpEvPpkbVqEHbqTzmrDOtnWHrri/wrywrecalm2b2sCcxe8E1fL46fro/f7ZFgLJLgq1RhKhXhaNeh55kiZlri5RyjY56j4mBkYOIk32PlXeXl3KemWzqRcl6AAAARXRSTlMAlgoVCJaWlpaWlhUVCgoIu5eW0tLS0ry8vLy6uri3np2dlpaWlpaWlpaWlpaWlpZi9dLS0tLQvLq4uLednZ2dl5WCggWeXWvjAAABRUlEQVQ4y+XJB1ICQRAF0FHJigKKogSVnMGcs7jZVZac8/2PYA/LUixUn8BfNVP9/yOLWSsU1hb7v8RgsRhEMVQshlA0lstGHCsVHMPVahhFU61mwrFexzHSaERQNDebZhxbLRyj7XYUxVinE0PR0u1acOz1cLT2+1YcBwMcbcOhDcfRaBk/51d8PI7r7f1uRzsTk0lCZx+Kcq+pU1Gcc3DmCfHKsuydaVKWk5o9ynKe2H0Mw/hUTTFMamZPsF4TYvezLOs30CXNsmnVnmE73yCgBxzH3VLNcFxmaiew7FKjyvP8A2iW57NTgw6mZvtGEISAgeQEIQf1FNoFmKYOURQDBpcousDgvgRbUEmSHMeS5CLwSXubGqjq+Zrm9QU+MH3WPd80Z/CuwJb18EeNm9qq/tK4t1aJ6lGpVNoHQxQ30Ded/QH5Xz/ndBQzlAAAAABJRU5ErkJggg==");
-          background-size: cover;
-         
-      }
-      &:last-child:after{
-         display: none;
-      }
-    //   width: 
-  }
-  .level-rt-tip,.level-lf-tip{
-    position: absolute;
-      top:16rpx;
+    height: 250rpx;
+    &::after {
+      content: '';
+      position: absolute;
+      width: 28rpx;
+      height: 45rpx;
+      bottom: 26rpx;
+      left: 0;
       right: 0;
-      display: flex;
-      flex-direction: column;
-      width: 234rpx;
-      .l-name{
+      margin: 0 auto;
+      background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAtCAMAAACK9fuuAAABNVBMVEUAAAAmeMrysCrJpEvJpEsze8BCgLRUhaZujJF+kIaMlHrkrDX3sSa/oVPYqT+pnGPZqT2lm2bXqD/Fo03eqjrury33sSbFo03krDXury33sSatnWG0nlu7oFXSp0PbqTzFo03Sp0MpecctesU6frpLgq1eh55kiZmXl3KemWytnWG0nlu7oFXColDIpEvPpkapnGPmrDO7oFXPpkbVqEHmrDO0nlvPpka/oVKemWylm2bIpEutnWG0nlu7oFXhqzjhqzj8siKemWylm2aXl3ImeMrhqzi0nlu7oFXColDIpEvPpkbVqEHbqTzmrDOtnWHrri/wrywrecalm2b2sCcxe8E1fL46fro/f7ZFgLJLgq1RhKhXhaNeh55kiZlri5RyjY56j4mBkYOIk32PlXeXl3KemWzqRcl6AAAARXRSTlMAlgoVCJaWlpaWlhUVCgoIu5eW0tLS0ry8vLy6uri3np2dlpaWlpaWlpaWlpaWlpZi9dLS0tLQvLq4uLednZ2dl5WCggWeXWvjAAABRUlEQVQ4y+XJB1ICQRAF0FHJigKKogSVnMGcs7jZVZac8/2PYA/LUixUn8BfNVP9/yOLWSsU1hb7v8RgsRhEMVQshlA0lstGHCsVHMPVahhFU61mwrFexzHSaERQNDebZhxbLRyj7XYUxVinE0PR0u1acOz1cLT2+1YcBwMcbcOhDcfRaBk/51d8PI7r7f1uRzsTk0lCZx+Kcq+pU1Gcc3DmCfHKsuydaVKWk5o9ynKe2H0Mw/hUTTFMamZPsF4TYvezLOs30CXNsmnVnmE73yCgBxzH3VLNcFxmaiew7FKjyvP8A2iW57NTgw6mZvtGEISAgeQEIQf1FNoFmKYOURQDBpcousDgvgRbUEmSHMeS5CLwSXubGqjq+Zrm9QU+MH3WPd80Z/CuwJb18EeNm9qq/tK4t1aJ6lGpVNoHQxQ30Ded/QH5Xz/ndBQzlAAAAABJRU5ErkJggg==');
+      background-size: cover;
+    }
+    &:last-child:after {
+      display: none;
+    }
+    //   width:
+  }
+  .level-rt-tip,
+  .level-lf-tip {
+    position: absolute;
+    top: 16rpx;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    width: 234rpx;
+    .l-name {
       color: #fbffc1;
       font-size: 28rpx;
       line-height: 52rpx;
-      }
-      .l-value{
-       color: #fbffc1;
-       font-size: 24rpx;
-       line-height: 44rpx;
-       color: #cbe3f7
-      }
+    }
+    .l-value {
+      color: #fbffc1;
+      font-size: 24rpx;
+      line-height: 44rpx;
+      color: #cbe3f7;
+    }
   }
-  .level-rt-tip{
-      right: 0;
-    
+  .level-rt-tip {
+    right: 0;
   }
-  .level-lf-tip{
-       left: 0;
-       text-align: right;
-
+  .level-lf-tip {
+    left: 0;
+    text-align: right;
   }
-  .level-bg{
-      background-size: cover;
+  .level-bg {
+    background-size: cover;
+    width: 156rpx;
+    height: 156rpx;
+    border-radius: 50%;
+    overflow: hidden;
+    margin: 0 auto;
+    image {
       width: 156rpx;
       height: 156rpx;
-      border-radius: 50%;
-      overflow: hidden;
-      margin:0 auto;
-      image{
-          width: 156rpx;
-          height: 156rpx;
-      }
+    }
   }
-  .level-1{
-      background-image: url('http://s29.9956.cn/res/zhushou/danye/topking/level_1.png');
+  .level-1 {
+    background-image: url('http://s29.9956.cn/res/zhushou/danye/topking/level_1.png');
   }
-  .level-2{
-      background-image: url('http://s29.9956.cn/res/zhushou/danye/topking/level_2.png');
+  .level-2 {
+    background-image: url('http://s29.9956.cn/res/zhushou/danye/topking/level_2.png');
   }
-  .level-3{
-      background-image: url('http://s29.9956.cn/res/zhushou/danye/topking/level_3.png');
+  .level-3 {
+    background-image: url('http://s29.9956.cn/res/zhushou/danye/topking/level_3.png');
   }
-  .level-4{
-      background-image: url('http://s29.9956.cn/res/zhushou/danye/topking/level_4.png');
+  .level-4 {
+    background-image: url('http://s29.9956.cn/res/zhushou/danye/topking/level_4.png');
   }
-  .level-5{
-      background-image: url('http://s29.9956.cn/res/zhushou/danye/topking/level_5.png');
+  .level-5 {
+    background-image: url('http://s29.9956.cn/res/zhushou/danye/topking/level_5.png');
   }
-  .level-6{
-      background-image: url('http://s29.9956.cn/res/zhushou/danye/topking/level_6.png');
+  .level-6 {
+    background-image: url('http://s29.9956.cn/res/zhushou/danye/topking/level_6.png');
   }
-
 }
 </style>
 <template>
@@ -218,41 +215,61 @@
 
 <script>
 import wepy from 'wepy';
+import wxRequest from "../../util/wxRequest.js";
 export default class myUpLevel extends wepy.page {
   config = {
     navigationBarTitleText: '怎么进级'
   };
   components = {};
   data = {
-      listArr:{
-          shushi:[{
-              name:"战士1",
-              val:"20w"
-          },{
-              name:"战士2",
-              val:"20w"
-          },{
-              name:"战士3",
-              val:"20w"
-          },{
-              name:"战士4",
-              val:"20w"
-          },{
-              name:"战士5",
-              val:"20w"
-          },{
-              name:"战士6",
-              val:"20w"
-          }]
-      }
+    listArr: {
+      shushi: [
+        {
+          name: '战士1',
+          val: '20w'
+        },
+        {
+          name: '战士2',
+          val: '20w'
+        },
+        {
+          name: '战士3',
+          val: '20w'
+        },
+        {
+          name: '战士4',
+          val: '20w'
+        },
+        {
+          name: '战士5',
+          val: '20w'
+        },
+        {
+          name: '战士6',
+          val: '20w'
+        }
+      ]
+    }
   };
 
   computed = {};
 
-  methods = {
-  };
+  methods = {};
 
   events = {};
-  onLoad(params, data) {}
+  async getData() {
+    const that = this;
+    const res = await wxRequest({
+      query:{
+        opt: 'CheckCanApply',
+      }
+      },that.$parent.globalData.apiUrl);
+   if (res.data.retcode == -1) {
+
+    }else {
+
+    }
+  }
+  onLoad() {}
 }
 </script>

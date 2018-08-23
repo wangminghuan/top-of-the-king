@@ -1,64 +1,67 @@
 <style lang="less">
-@import "../../static/style/userComBtn.less";
-@import "../../static/style/borderComLine.less";
-@import "../../static/style/comAvator.less";
-  .my-npc-wrap{
-      padding: 0 38rpx;
-      height: 100%;
-      .item{
-         
-         height: 161rpx;
- display: flex;
-         justify-content: space-between;
-         align-items: center;
-         width: 100%;
-      }
-      // .icon{
-      //     width:100rpx;
-      //     height: 100rpx;
-      //     border-radius: 50%;
-      //     border:1rpx solid red; 
-      // }
-     .txt{
-         display: flex;
-         flex-direction: column;
-         width: 470rpx;
-         margin-left:30rpx;
-         justify-content: flex-start;
-        //  align-items: center;
-     }
-     .top{
-         display: flex;
-         
-        //  width: 100%;
-         justify-content: space-between;
-         align-items: center;
-         font-size: 26rpx;
-         line-height: 66rpx;
-        //  margin-top:30rpx;
-         
-        
-     }
-     .btm{
-         color: #cbe3f7;
-          font-size: 24rpx;
-     }
-     .btm-fix{
-           color: #fff;
-            width:100%;
-            height: 96rpx;
-            color: #fff;
-            font-size:34rpx;
-            line-height:94rpx;
-            text-align: center; 
-            background: -webkit-gradient(linear,0% 0%,0% 100%,from(#f9d98a),to(#efa821));
-            box-shadow: inset 0 -7rpx 16rpx 0 #f6c747;
-            border: 1rpx solid #ab8c2c;
-            position: fixed;
-            bottom:0;
-            left:0;
-     }
+@import '../../static/style/userComBtn.less';
+@import '../../static/style/borderComLine.less';
+@import '../../static/style/comAvator.less';
+.my-npc-wrap {
+  padding: 0 38rpx;
+  height: 100%;
+  .item {
+    height: 161rpx;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
   }
+  // .icon{
+  //     width:100rpx;
+  //     height: 100rpx;
+  //     border-radius: 50%;
+  //     border:1rpx solid red;
+  // }
+  .txt {
+    display: flex;
+    flex-direction: column;
+    width: 470rpx;
+    margin-left: 30rpx;
+    justify-content: flex-start;
+    //  align-items: center;
+  }
+  .top {
+    display: flex;
+
+    //  width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 26rpx;
+    line-height: 66rpx;
+    //  margin-top:30rpx;
+  }
+  .btm {
+    color: #cbe3f7;
+    font-size: 24rpx;
+  }
+  .btm-fix {
+    color: #fff;
+    width: 100%;
+    height: 96rpx;
+    color: #fff;
+    font-size: 34rpx;
+    line-height: 94rpx;
+    text-align: center;
+    background: -webkit-gradient(
+      linear,
+      0% 0%,
+      0% 100%,
+      from(#f9d98a),
+      to(#efa821)
+    );
+    box-shadow: inset 0 -7rpx 16rpx 0 #f6c747;
+    border: 1rpx solid #ab8c2c;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+  }
+}
 </style>
 <template>
   <view class="my-npc-wrap">
@@ -82,46 +85,57 @@
 </template>
 
 <script>
-  import wepy from 'wepy'
-
-  export default class myNpc extends wepy.page {
-    config = {
-      navigationBarTitleText: '我的积分'
-    }
-    components = {
-
-    }
-    data = {
-      listArr: [{
-          l_name:"兑换消息",
-          l_cont:"恭喜您获得一个小熊猫",
-          l_time:"12:00:00"
-      },{
-          l_name:"受理提醒",
-          l_cont:"恭喜您获得一个小熊猫",
-          l_time:"12:00:00"
-      }],
-    }
-
-    computed = {
-      now () {
-        return +new Date()
-      }
-    }
-
-    methods = {
-      handleScroll(){
-        console.log("scroll")
+import wepy from 'wepy';
+import wxRequest from '../../util/wxRequest.js';
+export default class myNpc extends wepy.page {
+  config = {
+    navigationBarTitleText: '我的积分'
+  };
+  components = {};
+  data = {
+    listArr: [
+      {
+        l_name: '兑换消息',
+        l_cont: '恭喜您获得一个小熊猫',
+        l_time: '12:00:00'
       },
-     handleJump(){
-         this.$navigate("/pages/my/feedback");
-     }
-    }
+      {
+        l_name: '受理提醒',
+        l_cont: '恭喜您获得一个小熊猫',
+        l_time: '12:00:00'
+      }
+    ]
+  };
 
-    events = {
+  computed = {
+    now() {
+      return +new Date();
     }
+  };
 
-    onLoad(params, data) {
+  methods = {
+    handleScroll() {
+      console.log('scroll');
+    },
+    handleJump() {
+      this.$navigate('/pages/my/feedback');
+    }
+  };
+
+  events = {};
+  async getData() {
+    const that = this;
+    const res = await wxRequest({
+      query:{
+        opt: 'CheckCanApply',
+      }
+      },that.$parent.globalData.apiUrl);
+   if (res.data.retcode == -1) {
+
+    }else {
+
     }
   }
+  onLoad() {}
+}
 </script>

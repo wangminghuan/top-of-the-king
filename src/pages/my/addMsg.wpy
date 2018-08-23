@@ -1,7 +1,7 @@
 <style lang="less">
-@import "../../static/style/loginComTitle.less";
-@import "../../static/style/userComBtn.less";
-.msg-add-wrap{
+@import '../../static/style/loginComTitle.less';
+@import '../../static/style/userComBtn.less';
+.msg-add-wrap {
   padding: 0 38rpx;
   position: absolute;
   top: 50%;
@@ -28,20 +28,19 @@
       margin-right: 35rpx;
     }
   }
-  .apply-input{
-      height: auto;
-      align-items: inherit;
-      padding: 24rpx 0;
-      textarea{
-          height:608rpx ;
-          width: 490rpx;
-          color: #fff;
-          margin-right: 35rpx;
-          line-height: 30rpx;
-      }
+  .apply-input {
+    height: auto;
+    align-items: inherit;
+    padding: 24rpx 0;
+    textarea {
+      height: 608rpx;
+      width: 490rpx;
+      color: #fff;
+      margin-right: 35rpx;
+      line-height: 30rpx;
+    }
   }
 }
-
 </style>
 <template>
 <!-- 暂时无用-->
@@ -56,28 +55,37 @@
 
 <script>
 import wepy from 'wepy';
-
+import wxRequest from '../../util/wxRequest.js';
 export default class msgAdd extends wepy.page {
   config = {
     navigationBarTitleText: '写留言'
   };
   components = {};
-  data = {
-  };
+  data = {};
 
-  computed = {
-  };
+  computed = {};
 
   methods = {
-    handleSubmit(){
-       this.applyStatus=3;
+    handleSubmit() {
+      this.applyStatus = 3;
     }
   };
 
   events = {};
+  async getData() {
+    const that = this;
+    const res = await wxRequest({
+      query:{
+        opt: 'CheckCanApply',
+      }
+      },that.$parent.globalData.apiUrl);
+   if (res.data.retcode == -1) {
 
-  onLoad(params, data) {
-    console.log('list');
+    }else {
+
+    }
+  }
+  onLoad() {
   }
 }
 </script>

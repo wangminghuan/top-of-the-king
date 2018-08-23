@@ -111,9 +111,9 @@ export default class extends wepy.app {
       // 发出请求时的回调函数
       config(p) {
         // 对所有request请求中的OBJECT参数对象统一附加时间戳属性
-        p.data.timestamp = new Date().getTime();
-        // 必须返回OBJECT参数对象，否则无法发送请求到服务端
-        console.log(p);
+        // p.data.timestamp = new Date().getTime();
+        p.data.sysid = this.globalData.sysId;
+        p.data.openid = this.globalData.openid;
         return p;
       },
 
@@ -163,7 +163,7 @@ export default class extends wepy.app {
       console.error('The SDK is too old to support wx.getUpdateManager()');
     }
   }
- checklogin() {
+  checklogin() {
     var that = this;
     var openid = wx.getStorageSync('openid');
     //var userid = wx.getStorageSync("userId");
@@ -206,7 +206,6 @@ export default class extends wepy.app {
             if (res.data.retcode == 0) {
               that.globalData.openid = res.data.result.openid;
               wx.setStorageSync('openid', that.globalData.openid);
-              //{"session_key":"5O38nUDJFW0UyVdEaJr4ew==","openid":"o1F_T5BhX_9vyMIWlfsju2lCFuPM"}
               that.getUserInfo();
             } else {
               that.showErrorMsg('错误提示', res.data.msg);
@@ -215,7 +214,7 @@ export default class extends wepy.app {
         });
       },
       fail: function(t) {
-        console.info('app.login() failed', t);
+        that.showErrorMsg('错误提示', '登录失败，请稍候重试');
       },
       complete: function(t) {
         console.info('app.login() complete', t);
@@ -260,7 +259,7 @@ export default class extends wepy.app {
       data: {
         opt: 'getUserInfo',
         sysid: that.globalData.sysId,
-        openid:that.globalData.openid
+        openid: that.globalData.openid
       },
       header: {
         'content-type': 'application/json'
@@ -279,7 +278,6 @@ export default class extends wepy.app {
             icon: 'none',
             duration: 2000
           });
-
           setTimeout(function() {
             that.navigateLogin();
           }, 2000);
@@ -289,29 +287,15 @@ export default class extends wepy.app {
   }
   navigateLogin() {
     wx.redirectTo({
-      url: '/pages/login/login',
-      success: function(t) {},
-      fail: function(t) {},
-      complete: function(t) {}
+      url: '/pages/login/login'
     });
   }
   navigateRank() {
-    wx.redirectTo({
-      url: '/pages/rank',
-      success: function(t) {},
-      fail: function(t) {},
-      complete: function(t) {}
+    wx.switchTab({
+      url: '/pages/rank'
     });
   }
-  showtips(e) {
-    this.globalData.tips = e;
-    wx.redirectTo({
-      url: '/pages/tips/tips',
-      success: function(t) {},
-      fail: function(t) {},
-      complete: function(t) {}
-    });
-  }
+
   showErrorMsg(title, txt) {
     wx.showModal({
       title: title,
@@ -329,7 +313,6 @@ export default class extends wepy.app {
       success: function(o) {
         (app.globalData.isIpx = !(o.model.indexOf('iPhone X') < 0)),
           (app.globalData.systemInfo = o);
-          console.log(o)
       },
       fail: function(app) {},
       complete: function(app) {}

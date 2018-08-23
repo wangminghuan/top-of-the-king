@@ -1,47 +1,47 @@
 <style lang="less">
-@import "../../static/style/loginComTitle.less";
-  .change-tips-wrap{
-    padding: 0 44rpx;
-    .login-com-title{
-        margin-top:38rpx;
-        margin-bottom: 64rpx;
-    }
-    .cont{
-     border: 1px solid #85d1ea;
+@import '../../static/style/loginComTitle.less';
+.change-tips-wrap {
+  padding: 0 44rpx;
+  .login-com-title {
+    margin-top: 38rpx;
+    margin-bottom: 64rpx;
+  }
+  .cont {
+    border: 1px solid #85d1ea;
     height: 454rpx;
     box-shadow: inset 0 0 10rpx 3rpx #405784;
     background-color: #475881;
     padding: 0 52rpx;
-    .top{
-         font-size: 32rpx;
-         color: #f1f4ba;
-         line-height: 160rpx;
-         text-align: center;
+    .top {
+      font-size: 32rpx;
+      color: #f1f4ba;
+      line-height: 160rpx;
+      text-align: center;
     }
-    .mid{
-        width: 172rpx;
-        height:175rpx;
-        background-color: red;
-        margin:0 auto;
-        margin-bottom: 44rpx;
+    .mid {
+      width: 172rpx;
+      height: 175rpx;
+      background-color: red;
+      margin: 0 auto;
+      margin-bottom: 44rpx;
     }
-    .btm{
-        display: flex;
-        justify-content: space-between;
-        color: #f1f4ba;
-        font-size: 24rpx;
-        height:34rpx;
-        line-height: 34rpx;
-        .icon{
-            padding-left: 46rpx;
-            background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACIAAAAiCAYAAAA6RwvCAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoV2luZG93cykiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6OUY1NzdBNDVBMTQzMTFFOEE3RUJDODM3RUU1NDBDRDAiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6OUY1NzdBNDZBMTQzMTFFOEE3RUJDODM3RUU1NDBDRDAiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo5RjU3N0E0M0ExNDMxMUU4QTdFQkM4MzdFRTU0MENEMCIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo5RjU3N0E0NEExNDMxMUU4QTdFQkM4MzdFRTU0MENEMCIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/Pn3MPwIAAAKZSURBVHjazJhPSBVBHMfnSWFpSf+8FIW3oEMWESVRWfAswUMHqeiPh6wkDx6icx5UOihRkKilSIVpXQr6S3SIVFKkP1SHOmhBJYQHSSwjnr6+A9+FadrZNzv7FvrBh8fb3dn57MzOb2Y28X36sYgQq8Eq8Bb8cL1JQX5S5DiWTYBm8Ak85+/uKE/kIrII9IAzSvkV4AGochWZl+F8ISubA0WgAtSyYj1ywVWe7wTPwARYzN8ZF5FCPnXS4eG2EDV+gSbQGLZrzjtKmGIBaADlYUUqRDwRSkT26ZKYRNaEEUmK+GI7WGgrUhejyDJw1EZkP9gp4o16jkqjiOySbhF/rAT3dRlP5DR4BPKyVNln8DDg/GbwCqxXRYpBi2O6N0mUgn3gbsB1crK8poqUcBLLpsQY+A0qwb2A62Uj5HsiHy0ruQH6MkjsooQXUiZonTHhLR/kXPMEDPvMD2r0ajPrQYPEqHa8BlwMuG+T2jWznDFNcZNjf5Yc4TEvvgRItAV0+ztwSR81L8GIoYBM9/OV/1LmMLhFiVIfiZMZJGR08V7/5JFBQ4E94DZnUFXmENhqkGi3GAADpoQ2HlBor0Hmq3bdCUsJoZfN0dYMwkIm13BeSnSESAV5JpGNFoWlzB0fmeMhJWRsMomstbyB3jLV4LJDUlxnEhkLudKSMqfAFcfM/OGv/YmywdoA+rldiDsGOexTfhus12yus+BNDJWn+H4d42YsZWoRPWQ2beUaNmq8YEZ+77LlvA7KwM+IEkNgh0nCdss5FHENO8V1ScaHsVkMdfP9cYlz4Fs29r6C+95qriuWK0O9h809yXXoNnBAyZhPwQXrzwshvo8UcMhNcYM953PNUr4Pk0wFadvvI4l0Oi3+h/gjwAAEhI4edthwJwAAAABJRU5ErkJggg==");
-            background-size: 34rpx 34rpx;
-            background-repeat: no-repeat;
-            background-position: 0 0;
-        }
-    }
+    .btm {
+      display: flex;
+      justify-content: space-between;
+      color: #f1f4ba;
+      font-size: 24rpx;
+      height: 34rpx;
+      line-height: 34rpx;
+      .icon {
+        padding-left: 46rpx;
+        background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACIAAAAiCAYAAAA6RwvCAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoV2luZG93cykiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6OUY1NzdBNDVBMTQzMTFFOEE3RUJDODM3RUU1NDBDRDAiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6OUY1NzdBNDZBMTQzMTFFOEE3RUJDODM3RUU1NDBDRDAiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo5RjU3N0E0M0ExNDMxMUU4QTdFQkM4MzdFRTU0MENEMCIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo5RjU3N0E0NEExNDMxMUU4QTdFQkM4MzdFRTU0MENEMCIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/Pn3MPwIAAAKZSURBVHjazJhPSBVBHMfnSWFpSf+8FIW3oEMWESVRWfAswUMHqeiPh6wkDx6icx5UOihRkKilSIVpXQr6S3SIVFKkP1SHOmhBJYQHSSwjnr6+A9+FadrZNzv7FvrBh8fb3dn57MzOb2Y28X36sYgQq8Eq8Bb8cL1JQX5S5DiWTYBm8Ak85+/uKE/kIrII9IAzSvkV4AGochWZl+F8ISubA0WgAtSyYj1ywVWe7wTPwARYzN8ZF5FCPnXS4eG2EDV+gSbQGLZrzjtKmGIBaADlYUUqRDwRSkT26ZKYRNaEEUmK+GI7WGgrUhejyDJw1EZkP9gp4o16jkqjiOySbhF/rAT3dRlP5DR4BPKyVNln8DDg/GbwCqxXRYpBi2O6N0mUgn3gbsB1crK8poqUcBLLpsQY+A0qwb2A62Uj5HsiHy0ruQH6MkjsooQXUiZonTHhLR/kXPMEDPvMD2r0ajPrQYPEqHa8BlwMuG+T2jWznDFNcZNjf5Yc4TEvvgRItAV0+ztwSR81L8GIoYBM9/OV/1LmMLhFiVIfiZMZJGR08V7/5JFBQ4E94DZnUFXmENhqkGi3GAADpoQ2HlBor0Hmq3bdCUsJoZfN0dYMwkIm13BeSnSESAV5JpGNFoWlzB0fmeMhJWRsMomstbyB3jLV4LJDUlxnEhkLudKSMqfAFcfM/OGv/YmywdoA+rldiDsGOexTfhus12yus+BNDJWn+H4d42YsZWoRPWQ2beUaNmq8YEZ+77LlvA7KwM+IEkNgh0nCdss5FHENO8V1ScaHsVkMdfP9cYlz4Fs29r6C+95qriuWK0O9h809yXXoNnBAyZhPwQXrzwshvo8UcMhNcYM953PNUr4Pk0wFadvvI4l0Oi3+h/gjwAAEhI4edthwJwAAAABJRU5ErkJggg==');
+        background-size: 34rpx 34rpx;
+        background-repeat: no-repeat;
+        background-position: 0 0;
+      }
     }
   }
+}
 </style>
 <template>
   <view class="change-tips-wrap">
@@ -58,33 +58,37 @@
 </template>
 
 <script>
-  import wepy from 'wepy'
+import wepy from 'wepy';
+import wxRequest from "../../util/wxRequest.js";
+export default class changeTips extends wepy.page {
+  config = {
+    navigationBarTitleText: '兑换提醒'
+  };
+  components = {};
+  data = {};
 
-  export default class changeTips extends wepy.page {
-    config = {
-      navigationBarTitleText: '兑换提醒'
+  computed = {
+    now() {
+      return +new Date();
     }
-    components = {
+  };
 
-    }
-    data = {
-     
-    }
+  methods = {};
 
-    computed = {
-      now () {
-        return +new Date()
+  events = {};
+ async getData() {
+    const that = this;
+    const res = await wxRequest({
+      query:{
+        opt: 'CheckCanApply',
       }
-    }
+      },that.$parent.globalData.apiUrl);
+   if (res.data.retcode == -1) {
 
-    methods = {
+    }else {
 
-    }
-
-    events = {
-    }
-
-    onLoad(params, data) {
     }
   }
+  onLoad() {}
+}
 </script>

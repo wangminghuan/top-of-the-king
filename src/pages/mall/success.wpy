@@ -1,5 +1,5 @@
 <style lang="less">
-@import "../../static/style/userComBtn.less";
+@import '../../static/style/userComBtn.less';
 .mall-success-wrap {
   padding: 0 38rpx;
   position: absolute;
@@ -8,9 +8,9 @@
   left: 0;
   right: 0;
   margin: 0 auto;
-  image{
-      margin:0 auto;
-      display: block;
+  image {
+    margin: 0 auto;
+    display: block;
   }
   .tourist {
     background: -webkit-gradient(
@@ -24,23 +24,23 @@
     border: 1rpx solid #ab8c2c;
     margin-top: 70rpx;
   }
-  .tips{
-      color: #cbe3f7;
-      font-size: 34rpx;
-      text-align: center;
-      line-height: 40rpx;
-      margin:70rpx 0 98rpx 0;
+  .tips {
+    color: #cbe3f7;
+    font-size: 34rpx;
+    text-align: center;
+    line-height: 40rpx;
+    margin: 70rpx 0 98rpx 0;
   }
-  .btm{
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      width: 482rpx;
-      margin:0 auto;
-      .user-com-btn{
-          width:200rpx; 
-          margin:0;
-      }
+  .btm {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 482rpx;
+    margin: 0 auto;
+    .user-com-btn {
+      width: 200rpx;
+      margin: 0;
+    }
   }
 }
 </style>
@@ -57,7 +57,7 @@
 
 <script>
 import wepy from 'wepy';
-
+import wxRequest from "../../util/wxRequest.js";
 export default class pageMallSuccess extends wepy.page {
   config = {
     navigationBarTitleText: '兑换成功'
@@ -65,11 +65,13 @@ export default class pageMallSuccess extends wepy.page {
 
   methods = {
     handleJump(type) {
-     type==1? wx.switchTab({
-        url: '/pages/mall'
-    }):wx.switchTab({
-        url: '/pages/my'
-    })
+      type == 1
+        ? wx.switchTab({
+            url: '/pages/mall'
+          })
+        : wx.switchTab({
+            url: '/pages/my'
+          });
     }
   };
 

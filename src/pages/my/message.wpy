@@ -1,68 +1,68 @@
 <style lang="less">
-@import "../../static/style/borderComLine.less";
-@import "../../static/style/tabCom.less";
-@import "../../static/style/comAvator.less";
-@import "../../static/style/userComBtn.less";
-  .my-message-wrap{
-    padding: 0 75rpx;
-    .top-wrap{
-      height: 264rpx;position: relative;
-    }
-    .tab-com{
-      width: 474rpx;
-      margin:0 auto;
-      position: absolute;
-      top:50%;
-      transform: translateY(-50%);
-      left:0;
-      right: 0;
-      view{
-        width: 50%;
-      }
-    }
-    
-    .com-avator{
-      margin-right: 30rpx;
-    }
-    
-    .item{
-       height: 198rpx;
-       display: flex;
-       align-items: center;
-       padding: 0 40rpx;
-       .rt{
-          flex-shrink: 1;
-         display: flex;
-         flex-direction: column;
-         view{
-           line-height: 48rpx;
-           font-size: 26rpx;
-
-         }
-         text.txt{
-            color: #cbe3f7;
-           line-height: 30rpx;
-           font-size: 20rpx;
-           display: -webkit-box;
-          -webkit-box-orient: vertical;
-          -webkit-line-clamp: 2;
-          overflow: hidden;
-         }
-       }
-       .name-top{
-         display: flex;
-         justify-content: space-between;
-         font-size: 24rpx;
-         text{
-           color: #cbe3f7
-         }
-       }
-    }
-    .btm-btn{
-      width: 394rpx;
-      margin-top:100rpx;
+@import '../../static/style/borderComLine.less';
+@import '../../static/style/tabCom.less';
+@import '../../static/style/comAvator.less';
+@import '../../static/style/userComBtn.less';
+.my-message-wrap {
+  padding: 0 75rpx;
+  .top-wrap {
+    height: 264rpx;
+    position: relative;
+  }
+  .tab-com {
+    width: 474rpx;
+    margin: 0 auto;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 0;
+    right: 0;
+    view {
+      width: 50%;
     }
   }
+
+  .com-avator {
+    margin-right: 30rpx;
+  }
+
+  .item {
+    height: 198rpx;
+    display: flex;
+    align-items: center;
+    padding: 0 40rpx;
+    .rt {
+      flex-shrink: 1;
+      display: flex;
+      flex-direction: column;
+      view {
+        line-height: 48rpx;
+        font-size: 26rpx;
+      }
+      text.txt {
+        color: #cbe3f7;
+        line-height: 30rpx;
+        font-size: 20rpx;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+        overflow: hidden;
+      }
+    }
+    .name-top {
+      display: flex;
+      justify-content: space-between;
+      font-size: 24rpx;
+      text {
+        color: #cbe3f7;
+      }
+    }
+  }
+  .btm-btn {
+    width: 394rpx;
+    margin-top: 100rpx;
+  }
+}
 </style>
 <template>
   <view class="my-message-wrap">
@@ -89,76 +89,106 @@
 </template>
 
 <script>
-  import wepy from 'wepy'
-
-  export default class myMessage extends wepy.page {
-    config = {
-      navigationBarTitleText: '留言'
-    }
-    components = {
-
-    }
-    data = {
-      listArr:[{
-        d_avator:"http://img1.360buyimg.com/da/jfs/t25096/340/321933848/390630/985a448c/5b6bbefeNafcfc263.jpg",
-        d_name:"张三",
-         d_time:"09:09",
-        d_cont:"王者荣耀新赛季已经开启一段时间了，大家伙上王者没。上王者不仅是段位提升的一种激励王者荣耀新赛季已经开启一段时间了，大家伙上王者没。上王者不仅是段位提升的一种激励",
-      },{
-        d_avator:"http://img1.360buyimg.com/da/jfs/t25096/340/321933848/390630/985a448c/5b6bbefeNafcfc263.jpg",
-        d_name:"张三",
-        d_time:"09:09",
-        d_cont:"王者荣耀新赛季已经开启一段时间了，大家伙上王者没。上王者不仅是段位提升的一种激励王者荣耀新赛季已经开启一段时间了，大家伙上王者没。上王者不仅是段位提升的一种激励",
-      },{
-        d_avator:"http://img1.360buyimg.com/da/jfs/t25096/340/321933848/390630/985a448c/5b6bbefeNafcfc263.jpg",
-        d_name:"张三",
-        d_time:"09:09",
-        d_cont:"王者荣耀新赛季已经开启一段时间了，大家伙上王者没。上王者不仅是段位提升的一种激励王者荣耀新赛季已经开启一段时间了，大家伙上王者没。上王者不仅是段位提升的一种激励",
-      },{
-        d_avator:"http://img1.360buyimg.com/da/jfs/t25096/340/321933848/390630/985a448c/5b6bbefeNafcfc263.jpg",
-        d_name:"张三",
-        d_time:"09:09",
-        d_cont:"王者荣耀新赛季已经开启一段时间了，大家伙上王者没。上王者不仅是段位提升的一种激励王者荣耀新赛季已经开启一段时间了，大家伙上王者没。上王者不仅是段位提升的一种激励",
-      },{
-        d_avator:"http://img1.360buyimg.com/da/jfs/t25096/340/321933848/390630/985a448c/5b6bbefeNafcfc263.jpg",
-        d_name:"张三",
-        d_time:"09:09",
-        d_cont:"王者荣耀新赛季已经开启一段时间了，大家伙上王者没。上王者不仅是段位提升的一种激励王者荣耀新赛季已经开启一段时间了，大家伙上王者没。上王者不仅是段位提升的一种激励",
-      },{
-        d_avator:"http://img1.360buyimg.com/da/jfs/t25096/340/321933848/390630/985a448c/5b6bbefeNafcfc263.jpg",
-        d_name:"张三",
-        d_time:"09:09",
-        d_cont:"王者荣耀新赛季已经开启一段时间了，大家伙上王者没。上王者不仅是段位提升的一种激励王者荣耀新赛季已经开启一段时间了，大家伙上王者没。上王者不仅是段位提升的一种激励",
-      },{
-        d_avator:"http://img1.360buyimg.com/da/jfs/t25096/340/321933848/390630/985a448c/5b6bbefeNafcfc263.jpg",
-        d_name:"张三",
-        d_time:"09:09",
-        d_cont:"王者荣耀新赛季已经开启一段时间了，大家伙上王者没。上王者不仅是段位提升的一种激励王者荣耀新赛季已经开启一段时间了，大家伙上王者没。上王者不仅是段位提升的一种激励",
-      }]
-    }
-
-    computed = {
-      now () {
-        return +new Date()
-      }
-    }
-
-    methods = {
-      handleScroll(){
-        console.log("scroll")
+import wepy from 'wepy';
+import wxRequest from "../../util/wxRequest.js";
+export default class myMessage extends wepy.page {
+  config = {
+    navigationBarTitleText: '留言'
+  };
+  components = {};
+  data = {
+    listArr: [
+      {
+        d_avator:
+          'http://img1.360buyimg.com/da/jfs/t25096/340/321933848/390630/985a448c/5b6bbefeNafcfc263.jpg',
+        d_name: '张三',
+        d_time: '09:09',
+        d_cont:
+          '王者荣耀新赛季已经开启一段时间了，大家伙上王者没。上王者不仅是段位提升的一种激励王者荣耀新赛季已经开启一段时间了，大家伙上王者没。上王者不仅是段位提升的一种激励'
       },
-      handleJumpAdd(){
-        this.$navigate("/pages/my/addMsg")
+      {
+        d_avator:
+          'http://img1.360buyimg.com/da/jfs/t25096/340/321933848/390630/985a448c/5b6bbefeNafcfc263.jpg',
+        d_name: '张三',
+        d_time: '09:09',
+        d_cont:
+          '王者荣耀新赛季已经开启一段时间了，大家伙上王者没。上王者不仅是段位提升的一种激励王者荣耀新赛季已经开启一段时间了，大家伙上王者没。上王者不仅是段位提升的一种激励'
       },
-      handleJumpDetail(){
-        this.$navigate("/pages/dynamics/leaveMsg")
+      {
+        d_avator:
+          'http://img1.360buyimg.com/da/jfs/t25096/340/321933848/390630/985a448c/5b6bbefeNafcfc263.jpg',
+        d_name: '张三',
+        d_time: '09:09',
+        d_cont:
+          '王者荣耀新赛季已经开启一段时间了，大家伙上王者没。上王者不仅是段位提升的一种激励王者荣耀新赛季已经开启一段时间了，大家伙上王者没。上王者不仅是段位提升的一种激励'
+      },
+      {
+        d_avator:
+          'http://img1.360buyimg.com/da/jfs/t25096/340/321933848/390630/985a448c/5b6bbefeNafcfc263.jpg',
+        d_name: '张三',
+        d_time: '09:09',
+        d_cont:
+          '王者荣耀新赛季已经开启一段时间了，大家伙上王者没。上王者不仅是段位提升的一种激励王者荣耀新赛季已经开启一段时间了，大家伙上王者没。上王者不仅是段位提升的一种激励'
+      },
+      {
+        d_avator:
+          'http://img1.360buyimg.com/da/jfs/t25096/340/321933848/390630/985a448c/5b6bbefeNafcfc263.jpg',
+        d_name: '张三',
+        d_time: '09:09',
+        d_cont:
+          '王者荣耀新赛季已经开启一段时间了，大家伙上王者没。上王者不仅是段位提升的一种激励王者荣耀新赛季已经开启一段时间了，大家伙上王者没。上王者不仅是段位提升的一种激励'
+      },
+      {
+        d_avator:
+          'http://img1.360buyimg.com/da/jfs/t25096/340/321933848/390630/985a448c/5b6bbefeNafcfc263.jpg',
+        d_name: '张三',
+        d_time: '09:09',
+        d_cont:
+          '王者荣耀新赛季已经开启一段时间了，大家伙上王者没。上王者不仅是段位提升的一种激励王者荣耀新赛季已经开启一段时间了，大家伙上王者没。上王者不仅是段位提升的一种激励'
+      },
+      {
+        d_avator:
+          'http://img1.360buyimg.com/da/jfs/t25096/340/321933848/390630/985a448c/5b6bbefeNafcfc263.jpg',
+        d_name: '张三',
+        d_time: '09:09',
+        d_cont:
+          '王者荣耀新赛季已经开启一段时间了，大家伙上王者没。上王者不仅是段位提升的一种激励王者荣耀新赛季已经开启一段时间了，大家伙上王者没。上王者不仅是段位提升的一种激励'
       }
-    }
+    ]
+  };
 
-    events = {
+  computed = {
+    now() {
+      return +new Date();
     }
+  };
 
-    onLoad(params, data) {
+  methods = {
+    handleScroll() {
+      console.log('scroll');
+    },
+    handleJumpAdd() {
+      this.$navigate('/pages/my/addMsg');
+    },
+    handleJumpDetail() {
+      this.$navigate('/pages/dynamics/leaveMsg');
+    }
+  };
+
+  events = {};
+  async getData() {
+    const that = this;
+    const res = await wxRequest({
+      query:{
+        opt: 'CheckCanApply',
+      }
+      },that.$parent.globalData.apiUrl);
+   if (res.data.retcode == -1) {
+
+    }else {
+
     }
   }
+  onLoad() {}
+}
 </script>
