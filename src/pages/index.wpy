@@ -1,0 +1,24 @@
+<template>
+    <view></view>
+</template>
+
+<script>
+import wepy from 'wepy';
+export default class index extends wepy.page {
+  config = {
+    navigationBarTitleText: '加载中'
+  };
+  components = {};
+  data = {};
+
+  computed = {};
+
+  methods = {
+  };
+ 
+// getHeroInfo
+  onLoad(params, data) {
+      this.$parent.checklogin()
+  }
+}
+</script>

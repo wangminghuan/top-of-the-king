@@ -1,0 +1,66 @@
+<style lang="less">
+.user-info-btn{
+    position: absolute;
+    top:50%;
+    transform: translateY(-50%);
+    left:0;
+    right: 0;
+    margin:0 auto;
+    width: 50%;
+}
+</style>
+<template>
+<view>
+    <button class="user-info-btn" wx:if="{{canIUse}}" type="primary" open-type="getUserInfo" lang="zh_CN"  bindgetuserinfo="bindGetUserInfo">微信身份授权</button>
+     <view wx:else>请升级微信版本</view>
+  </view>
+</template>
+<script>
+import wepy from 'wepy';
+export default class getUserInfo extends wepy.page {
+  config = {
+    navigationBarTitleText: '授权'
+  };
+  data={
+      canIUse: wx.canIUse('button.open-type.getUserInfo')
+  }
+  components = {};
+  methods = {
+    bindGetUserInfo(e) {
+    var that = this;
+    if (e.detail.errMsg == 'getUserInfo:ok')
+    {
+      var user = e.detail.userInfo;
+      user.encryptedData = e.detail.encryptedData;
+      user.iv = e.detail.iv;
+
+      that.$parent.globalData.userInfo = user;
+      that.$parent.getHeroInfo();
+    }
+    else
+    {
+      that.$parent.showErrorMsg("系统提示", "英雄榜需要获得您的公开信息（头像，昵称等）,请进行授权。谢谢合作！");
+    }
+  }
+  }
+   onLoad() {
+       const that=this;
+    if (this.data.canIUse) {
+      // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
+      // 所以此处加入 callback 以防止这种情况
+         that.$parent.userInfoReadyCallback = function (res) {
+         that.$parent.globalData.userInfo = user;
+         that.$parent.getHeroInfo();
+      };
+    } else {
+      // 在没有 open-type=getUserInfo 版本的兼容处理
+      wx.getUserInfo({
+        success: function success(res) {
+         that.$parent.globalData.userInfo = user;
+         that.$parent.getHeroInfo();
+        }
+      });
+    }
+  }
+}
+</script>

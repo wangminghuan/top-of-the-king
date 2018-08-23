@@ -64,9 +64,9 @@
   <view class="login-apply-wrap" >
     <view wx:if="{{applyStatus==1}}">
     <view class="login-com-title">登录申请</view>
-    <view class="user-input"><text>请填写姓名：</text><input type="text" placeholder="" /></view>
-    <view class="user-input" style="margin-top:47rpx"><text>请填写电话：</text><input type="number" placeholder="" /></view>
-    <view class="user-input apply-input" style="margin-top:47rpx;margin-bottom:64rpx"><text>申请理由：</text><textarea /></view>
+    <view class="user-input"><text>请填写姓名：</text><input autoFocus bindinput="bindInputName" type="text" placeholder="" /></view>
+    <view class="user-input" style="margin-top:47rpx"><text>请填写电话：</text><input type="number" bindinput="bindInputMobile" placeholder="" /></view>
+    <view class="user-input apply-input" style="margin-top:47rpx;margin-bottom:64rpx"><text>申请理由：</text><textarea bindinput="bindInputReason" /></view>
     <button class="user-com-btn" @tap="handleSubmit">申请</button>
     </view>
     <view wx:else class="result">
@@ -95,7 +95,10 @@ export default class loginTourist extends wepy.page {
   };
   components = {};
   data = {
-    applyStatus:2
+    applyStatus:1,
+    name: "",
+    mobile: "",
+    reason:""
   };
 
   computed = {
@@ -105,18 +108,66 @@ export default class loginTourist extends wepy.page {
   };
 
   methods = {
+    bindInputName(e) {
+       this.name= e.detail.value;
+    },
+    bindInputMobile(e) {
+      this.mobile=e.detail.value;
+    },
+    bindInputReason(e) {
+      this.reason=e.detail.value;
+    },
     handleSubmit(){
-       this.applyStatus=3;
+    // this.applyStatus=3;
+    const that=this;
+    wx.request({
+      url: that.$parent.globalData.apiUrl,
+      data: {
+        opt: 'Login_Visitor',
+        sysid: that.$parent.globalData.sysId,
+        openid: that.$parent.globalData.openid,
+        name: that.name,
+        mobile: that.mobile,
+        reason: that.reason,
+        nickName: that.$parent.globalData.userInfo.nickName,
+        gender: that.$parent.globalData.userInfo.gender,
+        avatarUrl: that.$parent.globalData.userInfo.avatarUrl
+      },
+      header: {
+        'content-type': 'application/json'
+      },
+      success: function (res) {
+        if (res.data.retcode == 0) {
+          that.applyStatus=3;
+        }
+      }
+    });
     },
     handleJump() {
-      this.applyStatus=1;
+      // this.applyStatus=1;
     }
   };
 
   events = {};
 
-  onLoad(params, data) {
-    console.log('list');
+  onLoad() {
+    const that=this;
+    wx.request({
+      url: that.$parent.globalData.apiUrl,
+      data: {
+        opt: 'CheckCanApply',
+        sysid: that.$parent.globalData.sysId,
+        openid: that.$parent.globalData.openid
+      },
+      header: {
+        'content-type': 'application/json'
+      },
+      success: function (res) {
+        if (res.data.retcode == -1) {
+            // that.applyStatus=3
+        }
+      }
+    });  
   }
 }
 </script>

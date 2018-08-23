@@ -1,21 +1,21 @@
 <style lang="less">
-page{
+page {
   height: 100%;
   width: 100%;
-  background-image: url("http://s29.9956.cn/res/zhushou/danye/topking/bg.png");
+  background-image: url('http://s29.9956.cn/res/zhushou/danye/topking/bg.png');
   background-size: cover;
 }
 </style>
 
 <script>
-import wepy from 'wepy'
-import 'wepy-async-function'
-
+import wepy from 'wepy';
+import 'wepy-async-function';
 
 export default class extends wepy.app {
   config = {
     pages: [
-      //tabar //排行 //商城  //动态 // 我的 
+      //tabar //排行 //商城  //动态 // 我的
+      'pages/index',
       'pages/rank',
       'pages/dynamics',
       'pages/mall',
@@ -39,8 +39,9 @@ export default class extends wepy.app {
       'pages/dynamics/detail',
       'pages/dynamics/leaveMsg',
       'pages/login/login',
-      'pages/login/loginTourist',
-      'pages/login/loginUser'
+      'pages/login/loginPlayer',
+      'pages/login/loginVisitor',
+      'pages/getUserInfo'
     ],
     window: {
       backgroundTextStyle: 'light',
@@ -49,99 +50,290 @@ export default class extends wepy.app {
       navigationBarTextStyle: 'white'
     },
     tabBar: {
-        color: '#fff',
-        selectedColor: '#5eddfe',
-        backgroundColor: '#203d79',
-        borderStyle: 'black',
-        list: [{
+      color: '#fff',
+      selectedColor: '#5eddfe',
+      backgroundColor: '#203d79',
+      borderStyle: 'black',
+      list: [
+        {
           pagePath: 'pages/rank',
           selectedIconPath: './static/img/my/rank-active.png',
           iconPath: './static/img/my/rank.png',
           text: '排行'
-        }, {
+        },
+        {
           pagePath: 'pages/mall',
           selectedIconPath: './static/img/my/mall-active.png',
           iconPath: './static/img/my/mall.png',
           text: '商城'
-        }, {
+        },
+        {
           pagePath: 'pages/dynamics',
-           selectedIconPath: './static/img/my/dynamics-active.png',
+          selectedIconPath: './static/img/my/dynamics-active.png',
           iconPath: './static/img/my/dynamics.png',
           text: '动态'
-        }, {
+        },
+        {
           pagePath: 'pages/my',
           selectedIconPath: './static/img/my/my-active.png',
           iconPath: './static/img/my/my.png',
           text: '我的'
-        }]
-      },
-      networkTimeout: {
-        request: 5000,
-        downloadFile: 10000
-      },
-  }
+        }
+      ]
+    },
+    networkTimeout: {
+      request: 5000,
+      downloadFile: 10000
+    }
+  };
 
   globalData = {
-    userInfo: null
-  }
+    userInfo: null,
+    code: '',
+    openid: '',
+    userId: '',
+    token: '',
+    HeroInfo: null,
+    sysId: 1, //后台系统ID
+    apiUrl: 'https://hero.52wdy.cn/Hero/wxapi.aspx',
+    isIpx: false,
+    systemInfo: {},
+    tips: '' //传参：提示信息
+  };
 
-  constructor () {
-    super()
+  constructor() {
+    super();
     //这两个是引入promise,还有修复微信原生同时发送多个请求可能会出现错误的bug
     this.use('requestfix');
     this.use('promisify');
-  // 拦截request请求
-        this.intercept('request', {
-            // 发出请求时的回调函数
-            config (p) {
-              
-                // 对所有request请求中的OBJECT参数对象统一附加时间戳属性
-                p.data.timestamp = new Date().getTime();
-                // 必须返回OBJECT参数对象，否则无法发送请求到服务端
-                console.log(p)
-                return p;
-            },
+    // 拦截request请求
+    this.intercept('request', {
+      // 发出请求时的回调函数
+      config(p) {
+        // 对所有request请求中的OBJECT参数对象统一附加时间戳属性
+        p.data.timestamp = new Date().getTime();
+        // 必须返回OBJECT参数对象，否则无法发送请求到服务端
+        console.log(p);
+        return p;
+      },
 
-            // 请求成功后的回调函数
-            success (p) {
-                // 可以在这里对收到的响应数据对象进行加工处理
-                console.log('request success: ', p);
-                // 必须返回响应数据对象，否则后续无法对响应数据进行处理
-                return p;
-            },
+      // 请求成功后的回调函数
+      success(p) {
+        // 可以在这里对收到的响应数据对象进行加工处理
+        console.log('request success: ', p);
+        // 必须返回响应数据对象，否则后续无法对响应数据进行处理
+        return p;
+      },
 
-            //请求失败后的回调函数
-            fail (p) {
-                console.log('request fail: ', p);
-                wx.showToast({
-                  title: '请求失败',
-                  icon:"none",
-                  duration: 2000
-                })
-                // 必须返回响应数据对象，否则后续无法对响应数据进行处理
-                return p;
-            },
+      //请求失败后的回调函数
+      fail(p) {
+        console.log('request fail: ', p);
+        wx.showToast({
+          title: '请求失败',
+          icon: 'none',
+          duration: 2000
+        });
+        // 必须返回响应数据对象，否则后续无法对响应数据进行处理
+        return p;
+      },
 
-            // 请求完成时的回调函数(请求成功或失败都会被执行)
-            complete (p) {
-                // console.log('request complete: ', p);
+      // 请求完成时的回调函数(请求成功或失败都会被执行)
+      complete(p) {
+        // console.log('request complete: ', p);
+      }
+    });
+  }
+  //检查更新
+  checkUpdate() {
+    if (wx.getUpdateManager) {
+      var t = wx.getUpdateManager();
+      t.onCheckForUpdate(function(t) {
+        console.log(t.hasUpdate);
+      });
+      t.onUpdateReady(function() {
+        wx.showModal({
+          title: '更新提示',
+          content: '新版本已经准备好，是否重启应用？',
+          success: function(o) {
+            o.confirm && t.applyUpdate();
+          }
+        });
+      });
+    } else {
+      console.error('The SDK is too old to support wx.getUpdateManager()');
+    }
+  }
+ checklogin() {
+    var that = this;
+    var openid = wx.getStorageSync('openid');
+    //var userid = wx.getStorageSync("userId");
+
+    if (openid) {
+      that.globalData.openid = openid;
+      wx.checkSession({
+        success: function() {
+          //session_key 未过期，并且在本生命周期一直有效
+          if (!that.globalData.userInfo) {
+            that.getUserInfo();
+          } else if (!that.globalData.HeroInfo) {
+            that.getHeroInfo();
+          }
+        },
+        fail: function() {
+          // session_key 已经失效，需要重新执行登录流程
+          //重新登录
+          that.getOpenid();
+        }
+      });
+    } else this.getOpenid();
+  }
+  getOpenid(t) {
+    var that = this;
+    wx.login({
+      success: function(e) {
+        that.globalData.code = e.code;
+        wx.request({
+          url: that.globalData.apiUrl,
+          data: {
+            opt: 'getOpenID',
+            code: e.code,
+            sysid: that.globalData.sysId
+          },
+          header: {
+            'content-type': 'application/json'
+          },
+          success: function(res) {
+            if (res.data.retcode == 0) {
+              that.globalData.openid = res.data.result.openid;
+              wx.setStorageSync('openid', that.globalData.openid);
+              //{"session_key":"5O38nUDJFW0UyVdEaJr4ew==","openid":"o1F_T5BhX_9vyMIWlfsju2lCFuPM"}
+              that.getUserInfo();
+            } else {
+              that.showErrorMsg('错误提示', res.data.msg);
             }
-        });  
+          }
+        });
+      },
+      fail: function(t) {
+        console.info('app.login() failed', t);
+      },
+      complete: function(t) {
+        console.info('app.login() complete', t);
+      }
+    });
   }
-  // getUserInfo(cb) {
-  //   const that = this
-  //   if (this.globalData.userInfo) {
-  //     return this.globalData.userInfo
-  //   }
-  //   wepy.getUserInfo({
-  //     success (res) {
-  //       that.globalData.userInfo = res.userInfo
-  //       cb && cb(res.userInfo)
-  //     }
-  //   })
-  // }
+  getUserInfo() {
+    var that = this;
+    // 获取用户信息
+    wx.getSetting({
+      success: function(resSetting) {
+        if (resSetting.authSetting['scope.userInfo']) {
+          // 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
+          wx.getUserInfo({
+            lang: 'zh_CN',
+            success: function(resUserinfo) {
+              // 可以将 res 发送给后台解码出 unionId
+              that.globalData.userInfo = resUserinfo.userInfo;
+              that.getHeroInfo();
+              // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
+              // 所以此处加入 callback 以防止这种情况
+              if (that.userInfoReadyCallback) {
+                that.userInfoReadyCallback(resUserinfo);
+              }
+            }
+          });
+        } else {
+          wx.redirectTo({
+            url: '/pages/getUserInfo',
+            success: function(t) {},
+            fail: function(t) {},
+            complete: function(t) {}
+          });
+        }
+      }
+    });
+  }
+  getHeroInfo() {
+    var that = this;
+    wx.request({
+      url: that.globalData.apiUrl,
+      data: {
+        opt: 'getUserInfo',
+        sysid: that.globalData.sysId,
+        openid:that.globalData.openid
+      },
+      header: {
+        'content-type': 'application/json'
+      },
+      success: function(res) {
+        if (res.data.retcode == 0) {
+          that.globalData.HeroInfo = res.data.result;
+          if (!that.globalData.userId) {
+            that.globalData.userId = res.data.result.Id;
+            that.navigateRank();
+          }
+        } else {
+          //that.showErrorMsg("系统提示", res.data.msg);
+          wx.showToast({
+            title: res.data.msg,
+            icon: 'none',
+            duration: 2000
+          });
+
+          setTimeout(function() {
+            that.navigateLogin();
+          }, 2000);
+        }
+      }
+    });
+  }
+  navigateLogin() {
+    wx.redirectTo({
+      url: '/pages/login/login',
+      success: function(t) {},
+      fail: function(t) {},
+      complete: function(t) {}
+    });
+  }
+  navigateRank() {
+    wx.redirectTo({
+      url: '/pages/rank',
+      success: function(t) {},
+      fail: function(t) {},
+      complete: function(t) {}
+    });
+  }
+  showtips(e) {
+    this.globalData.tips = e;
+    wx.redirectTo({
+      url: '/pages/tips/tips',
+      success: function(t) {},
+      fail: function(t) {},
+      complete: function(t) {}
+    });
+  }
+  showErrorMsg(title, txt) {
+    wx.showModal({
+      title: title,
+      content: txt || '',
+      showCancel: false,
+      confirmText: '知道了'
+    });
+  }
   onLaunch() {
+    var app = this;
+    //检查小程序更新
+    this.checkUpdate();
+    //获取系统信息，并保存到全局变量中
+    wx.getSystemInfo({
+      success: function(o) {
+        (app.globalData.isIpx = !(o.model.indexOf('iPhone X') < 0)),
+          (app.globalData.systemInfo = o);
+          console.log(o)
+      },
+      fail: function(app) {},
+      complete: function(app) {}
+    });
   }
-  
 }
 </script>

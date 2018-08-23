@@ -41,7 +41,7 @@ export default class loginMain extends wepy.page {
 
   methods = {
     handleJump(type) {
-     type==1? this.$navigate('/pages/loginUser'):this.$navigate('/pages/loginTourist');
+     type==1? this.$navigate('/pages/login/loginPlayer'):this.$navigate('/pages/login/loginVisitor');
     }
   };
 
