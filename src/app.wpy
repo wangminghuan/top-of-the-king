@@ -185,7 +185,7 @@ export default class extends wepy.app {
           that.getOpenid();
         }
       });
-    } else this.getOpenid();
+    } else that.getOpenid();
   }
   getOpenid(t) {
     var that = this;

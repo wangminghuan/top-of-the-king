@@ -202,7 +202,7 @@
             </repeat>
       </view>
       <view class="my-rank">
-          <view class="item"><text style="padding-left:117rpx">我的：</text><text style="color:#fff">术士</text></view>
+          <view class="item"><text style="padding-left:117rpx">我的：</text><text style="color:#fff">{{heroInfo.Vocation}}</text></view>
           <view class="item"><text style="padding-left:117rpx">战力：</text><text style="color:#fff">78名</text></view>
       </view>
       <image class="mid" src="../static/img/rank/01.png" mode="widthFix" style="display:block;width:681rpx;height:87rpx"/>
@@ -251,6 +251,7 @@ export default class pageRank extends wepy.page {
   };
   components = {};
   data = {
+    heroInfo:{},
     userArr: [
       {
         u_avator:
@@ -419,6 +420,7 @@ export default class pageRank extends wepy.page {
     }
   }
    onLoad() {
+     this.heroInfo=this.$parent.globalData.HeroInfo;
   }
 }
 </script>

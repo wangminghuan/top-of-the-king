@@ -145,7 +145,7 @@ export default class LoginVisitor extends wepy.page {
         nickName: that.$parent.globalData.userInfo.nickName,
         gender: that.$parent.globalData.userInfo.gender,
         avatarUrl: that.$parent.globalData.userInfo.avatarUrl
-      }async getData
+      }
       },that.$parent.globalData.apiUrl);
       if (res.data.retcode == 0) {
           that.applyStatus=3; 
@@ -158,11 +158,11 @@ export default class LoginVisitor extends wepy.page {
   async getData() {
     const that = this;
     const res = await wxRequest({
-      query:{async getData
+      query:{
         opt: 'CheckCanApply'
       }
       },that.$parent.globalData.apiUrl);
-    if (res.data.retcode == -1) {async getData
+    if (res.data.retcode == -1) {
           that.applyStatus=3; 
     }else {
           that.applyStatus=2; 
@@ -170,7 +170,7 @@ export default class LoginVisitor extends wepy.page {
     that.isShow=true;
     that.$apply();
    
-  }async getData
+  }
   onLoad() {
    this.getState();
   }

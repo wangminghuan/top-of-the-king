@@ -283,7 +283,7 @@ export default class pageDynamics extends wepy.page {
   };
   components = {};
   data = {
-    isShowPop: false,
+    isShowPop: true,
     scrollTop: 100,
     specialList: [
       {

@@ -99,7 +99,7 @@ export default class LoginPlayer extends wepy.page {
       }
       },that.$parent.globalData.apiUrl);
     if (res.data.retcode == 0) {
-        that.globalData.HeroInfo = res.data.result;    
+        that.$parent.globalData.HeroInfo = res.data.result;    
         that.$parent.navigateRank()
     }else {
       // that.$parent.showErrorMsg("系统提示", res.data.msg);

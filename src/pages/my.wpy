@@ -212,15 +212,15 @@
   <view class="page-my">
        <view class="my-info">
           <view class="lf">
-            <image src="{{myAvator}}" mode="scaleToFill" />
+            <image src="{{heroInfo.HeadImg}}" mode="scaleToFill" />
           <view class="name-box">段位：白金</view>          
           </view>
           <view class="rt">
             <view class="rt-top">
             <view class="top-lf">
-            <input  wx:if="{{isEditName}}" bindblur="handleBlur" value="{{bindKeyInput}}" focus="focus" placeholder="输入用户名"/>
+            <input  wx:if="{{isEditName}}" bindblur="handleBlur" value="{{heroInfo.UserName}}" focus="focus" placeholder="输入用户名"/>
             <view wx:else>
-            <text>{{bindKeyInput}}</text>
+            <text>{{heroInfo.UserName}}</text>
             <image @tap="handleEditName" src="../static/img/my/edit.png" mode="aspectFit" style="width:30rpx;height:30rpx;margin-left:30rpx;"/>
             </view>
             </view>
@@ -230,11 +230,11 @@
             <view class="rt-btm" >
               <view @tap="handleJump('/pages/my/bonus')" class="btm-box" style="margin-top:20rpx;margin-bottom:24rpx">
                  <image src="../static/img/my/11.png" mode="aspectFit" style="width:30rpx;height:30rpx;margin:0 15rpx 0 20rpx;"/>
-                <view>积分：87585</view>
+                <view>积分：{{heroInfo.Point}}</view>
                 </view>
               <view class="btm-box">
                  <image src="../static/img/my/12.png" mode="aspectFit" style="width:30rpx;height:30rpx;margin:0 15rpx 0 20rpx;"/>
-                <view>战斗值：888</view>
+                <view>战斗值：{{heroInfo.Power}}</view>
                 </view>
               <view class="my-title" @tap="handleJump('/pages/my/title')">查看我的称号</view>
             </view>
@@ -316,6 +316,7 @@
 <script>
 import wepy from 'wepy';
 import wxRequest from '../util/wxRequest.js';
+
 export default class pageMy extends wepy.page {
   config = {
     navigationBarTitleText: '我的'
@@ -323,10 +324,9 @@ export default class pageMy extends wepy.page {
   components = {};
   data = {
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
+    heroInfo:{},
     isShowPop: false,
     isEditName: false,
-    bindKeyInput: '',
-    myAvator: '',
     tabArr: [
       { t_name: '全部', t_value: '0', t_active: 1 },
       { t_name: '已使用', t_value: '1', t_active: 0 },
@@ -434,11 +434,12 @@ export default class pageMy extends wepy.page {
     ]
   };
 
-  computed = {};
+  computed = {
+
+  };
 
   methods = {
     handleBlur(ev) {
-      console.log(ev.detail);
       wx.showLoading({
         title: '加载中'
       });
@@ -495,7 +496,11 @@ export default class pageMy extends wepy.page {
 
     }
   }
+  onReady() {
+  }
   onLoad() {
+    this.heroInfo=this.$parent.globalData.HeroInfo;
+
   }
 }
 </script>
