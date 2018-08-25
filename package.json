@@ -1,5 +1,5 @@
 {
-  "name": "top-of-the-king",
+  "name": "myproject",
   "version": "0.0.2",
   "description": "A WePY project",
   "main": "dist/app.js",
@@ -17,7 +17,7 @@
   "author": "wangminghuan <m.h.wang@foxmail.com>",
   "license": "MIT",
   "dependencies": {
-    "wepy": "^1.6.0",
+    "wepy": "^1.7.2",
     "wepy-async-function": "^1.4.4",
     "wepy-com-toast": "^1.0.2"
   },
@@ -30,8 +30,6 @@
     "babel-preset-env": "^1.6.1",
     "cross-env": "^5.1.3",
     "wepy-compiler-babel": "^1.5.1",
-    "wepy-compiler-less": "^1.3.10",
-    "wepy-plugin-imagemin": "^1.5.3",
-    "wepy-plugin-uglifyjs": "^1.3.7"
+    "wepy-compiler-less": "^1.3.10"
   }
 }

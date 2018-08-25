@@ -239,7 +239,7 @@
      <view class="special-title" wx:if="{{specialList.length>0}}"><text>专题栏</text></view>
      <scroll-view scroll-y style="height: 568rpx;margin-bottom:20rpx;" wx:if="{{specialList.length>0}}">
      <repeat for="{{specialList}}" key="index" index="index" item="item">
-        <view class="special-item">
+        <view class="special-item" @tap="handleJumpArticle(item.Id)">
            <image src="{{imgHost+item.Pic}}" mode="widthFix" />
            <view class="btm"><text>{{item.Title}}</text></view>
         </view>
@@ -373,6 +373,9 @@ export default class pageDynamics extends wepy.page {
         duration: 2000
       });
     },
+    handleJumpArticle(id){
+       this.$navigate('/pages/articleDetail?id='+(id?id:1));
+    },
     handleJumpDetail() {
       this.$navigate('/pages/dynamics/detail');
     },
@@ -454,10 +457,27 @@ export default class pageDynamics extends wepy.page {
       },that.$parent.globalData.apiUrl);
    if (res.data.retcode == 0) {
         this.specialList=res.data.result;
+    }else{
+      this.specialList=[{},{}]
     }
     this.$apply();
   }
-  
+  //获取帖子列表
+  async getPostAllInfo() {
+    const that = this;
+    const res = await wxRequest({
+      query:{
+        opt: 'getPostAllInfo',
+        num:99
+      }
+      },that.$parent.globalData.apiUrl);
+   if (res.data.retcode == 0) {
+        this.specialList=res.data.result;
+    }else{
+      this.specialList=[{},{}]
+    }
+    this.$apply();
+  }
   onLoad() {
    this.getMessage();
    this.getArticle();

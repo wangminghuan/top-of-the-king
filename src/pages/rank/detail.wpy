@@ -376,7 +376,7 @@ export default class rankDeatail extends wepy.page {
     handleJumpAdd() {
       // console.log('/pages/my/addMsg?toId='+this.touserid+'&toName='+"张三"+'&formId='+this.heroInfo.Id)
       // return;
-      this.$navigate('/pages/my/addMsg?toId='+this.playerData.Id+'&fromId='+this.heroInfo.Id+'&toName='+this.playerData.NickName);
+      this.$navigate('/pages/my/addMsg?type=1&toId='+this.playerData.Id+'&fromId='+this.heroInfo.Id+'&toName='+this.playerData.NickName);
     },
     handleJumpDetail() {
       this.$navigate('/pages/dynamics/leaveMsg');

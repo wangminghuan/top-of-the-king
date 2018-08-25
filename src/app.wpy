@@ -15,9 +15,11 @@ export default class extends wepy.app {
   config = {
     pages: [
       //tabar //排行 //商城  //动态 // 我的
+      // 
+      'pages/dynamics',
       'pages/index',
       'pages/rank',
-      'pages/dynamics',
+      
       'pages/mall',
       'pages/my',
       'pages/my/feedbackTips',
@@ -28,7 +30,6 @@ export default class extends wepy.app {
       'pages/my/uplevel',
       'pages/my/npc',
       'pages/my/bonus',
-      'pages/my/bags',
       'pages/my/feedback',
       'pages/my/message',
       'pages/my/gift',
@@ -37,6 +38,7 @@ export default class extends wepy.app {
       'pages/mall/success',
       'pages/dynamics/add',
       'pages/dynamics/detail',
+      'pages/articleDetail',
       'pages/dynamics/leaveMsg',
       'pages/login/login',
       'pages/login/loginPlayer',

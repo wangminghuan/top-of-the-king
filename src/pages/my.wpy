@@ -438,6 +438,7 @@ export default class pageMy extends wepy.page {
 
   computed = {
     heroInfo(){
+      console.log(this.$parent.globalData.HeroInfo)
       return  this.$parent.globalData.HeroInfo;
     }
   };
@@ -487,11 +488,12 @@ export default class pageMy extends wepy.page {
   };
 
   events = {};
-  async getData() {
+  async getUserProduct() {
     const that = this;
     const res = await wxRequest({
       query:{
-        opt: 'CheckCanApply',
+        opt: 'getUserProduct',
+        userid:that.heroInfo.Id
       }
       },that.$parent.globalData.apiUrl);
    if (res.data.retcode == -1) {
@@ -502,6 +504,7 @@ export default class pageMy extends wepy.page {
   }
 
   onLoad() {
+    this.getUserProduct()
   }
 }
 </script>

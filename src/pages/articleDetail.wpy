@@ -1,0 +1,279 @@
+<style lang="less">
+@import '../wxparse/wxParse.wxss';
+@import '../static/style/borderComLine.less';
+@import '../static/style/comAvator.less';
+.article-deatail {
+  padding: 0 34rpx 34rpx 34rpx;
+  color: #fff;
+  .ye {
+    color: #f1f4ba;
+  }
+  .msg-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 40rpx;
+    font-size: 28rpx;
+    height: 118rpx;
+  }
+  .com-avator {
+    margin-right: 30rpx;
+  }
+  .cont {
+    background-color: #4c6b94;
+    box-shadow: inset 0 0 24rpx 8rpx #9fa4a9;
+    border: 1rpx solid #232b4f;
+    .info,
+    .status {
+      display: flex;
+      align-items: center;
+    }
+    .info {
+      height: 170rpx;
+      padding: 0 40rpx;
+    }
+    .info-txt {
+      font-size: 30rpx;
+      view {
+        line-height: 48rpx;
+        font-size: 28rpx;
+      }
+      text {
+        line-height: 38rpx;
+        font-size: 22rpx;
+        color: #c5ddf1;
+      }
+    }
+    .msg {
+      padding: 38rpx 40rpx 0;
+    }
+    .status {
+      // height: 40px;
+      padding: 0 40rpx;
+      // justify-content: space-between;
+      color: #cbe3f7;
+      font-size: 24rpx;
+      color: #cbe3f7;
+      view {
+        height: 40px;
+        display: flex;
+        align-items: center;
+      }
+      .icon {
+        color: #f1f4ba;
+        padding-left: 40rpx;
+        margin-left: 68rpx;
+       background-repeat: no-repeat;
+        background-size: 24rpx auto;
+        background-position-y: center;
+        background-position-x: 0;
+      }
+      .icon.unlike{
+        background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAaCAMAAACaYWzBAAAAWlBMVEUAAAD///////////////////////////////////////////////////////////////////////////////////////////////////////////////////9ZMre9AAAAHXRSTlMAPEvhQ/qF8suR6tXQmn9ZLRgOCwfpu7qja2c0LhjJOAkAAAB/SURBVCjPdc5JEoMwDERRGc8QZjJH979msFlQhdR/2W/TdPYNYSYl45m7TYGe994K3Ao85L75Aq0Ex6UoIVfoxL7eKwQBA9em6z76urfuyCxEv5D7yfCl2NT7jQC2ZHVgBBHBE8GAwAHwK4BEADKCEcEMwBKAF4LPDkmBtBD9AVlWKeEhiYqBAAAAAElFTkSuQmCC');
+      }
+      .icon.like{
+         background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAaCAMAAACaYWzBAAAAV1BMVEUAAADx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lp45tP4AAAAHHRSTlMAPEvhRAr6hfLqy5HV0Luaf1ktEt+ja2dBNC4bf/r0rgAAAIBJREFUKM91z0kOhDAMRFEHyEwz9dzt+5+TJCyQsOsv60lRTGdf7++kZBzzaBWYufRS4FZhkrt1FaKED9eChNxglC/FBl7Awq3tuq+u7XE4MuXSn8/zZvhS6Nr3OwHcU68DIwgIJgQLggGAswASAcgIVgR/AA8C8ETwLpAUSJZoB+O9KHScoGflAAAAAElFTkSuQmCC');
+      }
+    }
+  }
+  .item {
+    height: 198rpx;
+    display: flex;
+    align-items: center;
+    padding: 0 40rpx;
+    .rt {
+      flex-shrink: 1;
+      display: flex;
+      flex-direction: column;
+      view {
+        line-height: 48rpx;
+        font-size: 26rpx;
+      }
+      text {
+        color: #cbe3f7;
+        line-height: 30rpx;
+        font-size: 20rpx;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+        overflow: hidden;
+      }
+    }
+  }
+}
+</style>
+<template>
+  <view class="article-deatail">
+  <view class="cont">
+      <view class="content msg">
+        <html2wxml :parserName="name" :parserContent.sync="textContent"></html2wxml>
+      </view>
+      <view class="status">
+        <view >阅读：{{articleObj.ReadCount}}</view>
+        <view class="icon {{hasClickLike?'like':'unlike'}}" @tap="handleClickLike">点赞：{{articleObj.LikeCount}}</view>
+      </view>
+    </view>
+    <view class="msg-title border-com-line">
+      <text>留言区</text>
+     <image @tap="handleJumpAdd" src="../../static/img/dynamics/msg-add.png" mode="aspectFit" style="width:36rpx;height:45rpx;"/>
+    </view>
+    <scroll-view scroll-y style="height: 560rpx;">
+        <repeat for="{{listArr}}" key="index" index="index" item="item">
+          <!-- 只展示已核审的 -->
+          <view class="item border-com-line" wx:if="{{item.Status==1}}">
+            <view class="com-avator"><image src="{{item.HeadImg?item.HeadImg:'../static/img/my/logo-def.png'}}" mode="scaleToFill" /></view>
+            <view class="rt" @tap="handleJumpDetail">
+              <view class="ye">{{item.NickName}}</view>
+              <text>{{item.ReviewTxt}}</text>
+            </view>
+            </view>
+        </repeat>
+    </scroll-view>
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+  import html2wxml from '../components/html2wxml'
+  import wxRequest from '../util/wxRequest.js';
+  export default class articlDetail extends wepy.page {
+        config = {
+          navigationBarTitleText: '详情'
+        };
+
+    components = {
+      html2wxml: html2wxml,
+    }
+
+    data = {
+      hasClickLike:false,//是否点赞
+      articleObj:{},
+      name: 'myHtmlParserKiner',
+      textContent: '',
+      mock: "<p>JavaScript 是世界上最流行的脚本语言。</p><p>JavaScript 是属于 web 的语言，它适用于 PC、笔记本电脑、平板电脑和移动电话。</p><p>JavaScript 被设计为向 HTML 页面增加交互性。</p><p>许多 HTML 开发者都不是<span style='color: red;'>程序员</span>，但是 JavaScript 却拥有非常简单的语法。几乎每个人都有能力将小的 JavaScript 片段添加到网页中。</p>",
+      artid:0,
+      listArr:[],
+    }
+    computed = {
+    heroInfo(){
+      return  this.$parent.globalData.HeroInfo;
+    },
+    imgHost(){
+        return this.$parent.globalData.imgHost
+    }
+  };
+    methods = {
+      handleClickLike(){
+        if(this.hasClickLike){
+          wx.showToast({
+          title: '您已经点过赞了',
+          icon: 'none',
+          duration: 2000
+          });
+          return;
+        }
+        this.addArticleLike();
+      },
+      handleJumpAdd() {
+        this.$navigate('/pages/my/addMsg?type=2&toId='+this.artid+'&fromId='+this.heroInfo.Id+'&toName='+this.articleObj.Title);
+      },
+      handleJumpDetail() {
+        this.$navigate('/pages/dynamics/leaveMsg');
+      }
+    };
+    
+    //专题相关
+    async getArticleByID() {
+      const that = this;
+      const res = await wxRequest({
+          query: {
+            opt: 'getArticleByID',
+            artid: that.artid,
+          }
+        },that.$parent.globalData.apiUrl);
+        if (res.data.retcode == 0) {
+            this.textContent = res.data.result.RichInfo;
+            this.articleObj = res.data.result;
+        } else {
+            this.$parent.showErrorMsg("错误提示", res.data.msg);
+        }
+        this.$apply();
+        //调用通知接口通知组件更新数据
+        this.$invoke('html2wxml', 'htmlParserNotice')
+       
+    }
+    //评论列表
+    async getArticleReView() {
+      const that = this;
+      const res = await wxRequest({
+          query: {
+            opt: 'getArticleReView',
+            artid: that.artid,
+          }
+        },that.$parent.globalData.apiUrl);
+        if (res.data.retcode == 0) {
+            this.listArr = res.data.result;
+        } 
+        this.$apply();
+    }
+    //浏览专题
+    async addArticleRead() {
+      const that = this;
+      const res = await wxRequest({
+          query: {
+            opt: 'addArticleRead',
+            artid: that.artid,
+            userid:that.heroInfo.Id
+          }
+        },that.$parent.globalData.apiUrl);
+        if (res.data.retcode == 0) {
+            this.listArr = res.data.result;
+        } 
+        this.$apply();
+    }
+    //检测是否点赞
+    async checkArticleLike() {
+      const that = this;
+      const res = await wxRequest({
+          query: {
+            opt: 'checkArticleLike',
+            artid: that.artid,
+            userid:that.heroInfo.Id
+          }
+        },that.$parent.globalData.apiUrl);
+        if (res.data.retcode == 0) {
+            this.hasClickLike = true;
+        }
+        this.$apply();
+    }
+    //点赞 
+    async addArticleLike() {
+      const that = this;
+      const res = await wxRequest({
+          query: {
+            opt: 'addArticleLike',
+            artid: that.artid,
+            userid:that.heroInfo.Id
+          }
+        },that.$parent.globalData.apiUrl);
+       if (res.data.retcode == 0) {
+          wx.showToast({
+            title: '点赞成功',
+            icon: 'success',
+            duration: 2000
+          });
+          this.hasClickLike=true;
+      }else {
+        this.$parent.showErrorMsg("错误提示", res.data.msg);
+      }
+      this.$apply();
+    }
+    onLoad(params) {
+      this.artid=params.id;
+      this.getArticleByID();//获取专题
+      this.getArticleReView();
+      this.addArticleRead();
+      this.checkArticleLike();
+    }
+  }
+</script>
