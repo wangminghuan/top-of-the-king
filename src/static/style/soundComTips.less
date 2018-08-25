@@ -19,10 +19,22 @@
       justify-content: space-around;
       align-items: center;
       margin-right: 28rpx;
+      flex-shrink: 0;
     }
-    text {
-      font-size: 24rpx;
-      color: #b7e3f6;
-      margin-right: 26rpx;
+    .msg-wrap{
+      height:40rpx;
+      overflow: hidden;
+    }
+    .msg-cont{
+      text{
+        font-size: 24rpx;
+        width:508rpx; 
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        color: #b7e3f6;
+        display: block;
+        line-height: 40rpx;
+      }
     }
   }

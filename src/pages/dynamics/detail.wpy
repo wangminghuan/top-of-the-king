@@ -129,10 +129,10 @@
         
         <repeat for="{{listArr}}" key="index" index="index" item="item">
           <view class="item border-com-line">
-            <view class="com-avator"><image src="{{item.d_avator}}" mode="scaleToFill" /></view>
+            <view class="com-avator"><image src="{{item.FromHeadImg}}" mode="scaleToFill" /></view>
             <view class="rt" @tap="handleJumpDetail">
-              <view class="ye">{{item.d_name}}</view>
-              <text>{{item.d_cont}}</text>
+              <view class="ye">{{item.FromName}}</view>
+              <text>{{item.LeaveWord}}</text>
             </view>
             </view>
         </repeat>
@@ -149,6 +149,7 @@ export default class dynamicDetail extends wepy.page {
   };
   components = {};
   data = {
+    artid:0,
     listArr: [
       {
         d_avator:
@@ -221,20 +222,24 @@ export default class dynamicDetail extends wepy.page {
   };
 
   events = {};
-  async getData() {
+  async getArticleByID() {
     const that = this;
     const res = await wxRequest(
       {
         query: {
-          opt: 'CheckCanApply'
+          opt: 'getArticleByID',
+          artid: that.artid,
         }
       },
       that.$parent.globalData.apiUrl
     );
-    if (res.data.retcode == -1) {
+    if (res.data.retcode == 0) {
     } else {
     }
   }
-  onLoad() {}
+  onLoad(params) {
+    this.artid=params.id;
+    this.getArticleByID();//获取专题
+  }
 }
 </script>

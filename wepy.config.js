@@ -55,9 +55,9 @@ module.exports = {
   // 压缩js
   module.exports.plugins = {
     uglifyjs: {
-      // filter: /\.js$/,
-      // config: {
-      // }
+      filter: /\.js$/,
+      config: {
+      }
     },
     imagemin: {
       filter: /\.(jpg|png|jpeg)$/,

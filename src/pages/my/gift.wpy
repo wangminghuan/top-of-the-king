@@ -163,11 +163,11 @@ export default class myGift extends wepy.page {
   };
 
   events = {};
-  async getData() {
+  async getGift() {
     const that = this;
     const res = await wxRequest({
       query:{
-        opt: 'CheckCanApply',
+        opt: 'getGift',
       }
       },that.$parent.globalData.apiUrl);
    if (res.data.retcode == -1) {
@@ -176,6 +176,8 @@ export default class myGift extends wepy.page {
 
     }
   }
-  onLoad() {}
+  onLoad() {
+    this.getGift();
+  }
 }
 </script>

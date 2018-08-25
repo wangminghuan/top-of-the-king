@@ -155,16 +155,24 @@ export default class LoginVisitor extends wepy.page {
       that.$apply();
    
   }
-  async getData() {
+  async CheckCanApply() {
     const that = this;
     const res = await wxRequest({
       query:{
         opt: 'CheckCanApply'
       }
       },that.$parent.globalData.apiUrl);
-    if (res.data.retcode == -1) {
+      // retcode: int类型，0未申请，可申请，1待审核，2审核通过，3审核不通过
+    if (res.data.retcode == 0) {
+         //正常申请
+          that.applyStatus=1; 
+    }else if (res.data.retcode == 1) {
+          //核审中
           that.applyStatus=3; 
-    }else {
+    }else if (res.data.retcode == 2) {
+          // that.applyStatus=3; 
+    }else if(res.data.retcode == 3){
+         //不通过
           that.applyStatus=2; 
     }
     that.isShow=true;
@@ -172,7 +180,7 @@ export default class LoginVisitor extends wepy.page {
    
   }
   onLoad() {
-   this.getState();
+   this.CheckCanApply();
   }
 }
 </script>

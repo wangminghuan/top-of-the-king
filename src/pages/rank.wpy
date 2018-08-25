@@ -190,20 +190,26 @@
   <view class="page-rank">
      <view class="sound-com-tips">
       <view class="sound">快讯</view>
-      <text>我是左右滚动的</text>
+      <view class="msg-wrap">
+      <view class="msg-cont" style="transform: translateY(-{{marqueeDistance}}px);transition: transform {{transitionTime}}ms;">
+      <repeat for="{{msgList}}" key="index" index="index" item="item">
+            <text>{{item.MsgInfo}}</text>
+      </repeat>
+      </view>
+      </view>
       </view>
       <view class="user-wrap">
            <repeat for="{{userArr}}" key="index" index="index" item="item">
-             <view class="user-item"  @tap="handleJumpDetail">
-               <image src="{{item.u_avator}}" mode="scaleToFill" />
-               <view style="color:#b7e3f6">{{item.u_type}}</view>
-               <view style="color:#f1f4ba">{{item.u_name}}</view>
+             <view class="user-item"  @tap="handleJumpDetail({{item}})">
+               <image src="{{item.HeadImg?item.HeadImg:'../static/img/my/logo-def.png'}}" mode="scaleToFill" />
+               <view style="color:#b7e3f6">{{item.UserTitle}}</view>
+               <view style="color:#f1f4ba">{{item.NickName}}</view>
                </view>
             </repeat>
       </view>
       <view class="my-rank">
-          <view class="item"><text style="padding-left:117rpx">我的：</text><text style="color:#fff">{{heroInfo.Vocation}}</text></view>
-          <view class="item"><text style="padding-left:117rpx">战力：</text><text style="color:#fff">78名</text></view>
+          <view class="item"><text style="padding-left:50rpx">我的职业：</text><text style="color:#fff">{{heroInfo.Vocation}}</text></view>
+          <view class="item"><text style="padding-left:50rpx">年度战力：</text><text style="color:#fff">{{heroInfo.Power}}</text></view>
       </view>
       <image class="mid" src="../static/img/rank/01.png" mode="widthFix" style="display:block;width:681rpx;height:87rpx"/>
       <view class="rank-list">
@@ -218,20 +224,20 @@
              <view class="{{item.l_active==1?'active lf-item':'lf-item'}}" @tap="handleClickTabLf('{{index}}')">{{item.l_name}}</view>
             </repeat>
           </view>
-          <scroll-view scroll-y style="height: 560rpx;" lower-threshold="50" bindscrolltolower="handleScroll" class="rt">
+          <scroll-view scroll-y="true" style="height: 560rpx;" class="rt" scroll-top="{{scrollTop}}">
               <repeat for="{{rtArr}}" key="index" index="index" item="item">
-               <view class="rt-item">
-                 <view class="item-1">{{index+1}}</view>
-                  <image class="item-2" src="{{item.r_avator}}" mode="scaleToFill" />
+               <view class="rt-item" @tap="handleJumpDetail({{item}})">
+                 <view class="item-1">{{item.RankID}}</view>
+                  <image class="item-2" src="{{item.HeadImg?item.HeadImg:'../static/img/my/logo-def.png'}}" mode="scaleToFill" />
                  <view class="item-3">
                    <view class="top-3">
-                       <view>{{item.r_name}}</view>
+                       <view>{{item.NickName}}</view>
                        <view class="icon">
                          <!-- <image class="mid" src="../static/img/rank/01.png" mode="widthFix" style="display:block;width:681rpx;height:87rpx"/> -->
-                         <text>{{item.r_nums}}</text>
+                         <text>{{item.Power}}</text>
                          </view>
                    </view>
-                   <text>{{item.r_type}}</text>
+                   <text>{{item.Vocation}}</text>
                  </view>
 
                </view>
@@ -251,176 +257,136 @@ export default class pageRank extends wepy.page {
   };
   components = {};
   data = {
-    heroInfo:{},
-    userArr: [
-      {
-        u_avator:
-          'http://img1.360buyimg.com/da/jfs/t25096/340/321933848/390630/985a448c/5b6bbefeNafcfc263.jpg',
-        u_name: '张三地',
-        u_type: '最强战士'
-      },
-      {
-        u_avator:
-          'http://img1.360buyimg.com/da/jfs/t25096/340/321933848/390630/985a448c/5b6bbefeNafcfc263.jpg',
-        u_name: '张三地',
-        u_type: '最强战士'
-      },{
-        u_avator:
-          'http://img1.360buyimg.com/da/jfs/t25096/340/321933848/390630/985a448c/5b6bbefeNafcfc263.jpg',
-        u_name: '张三地',
-        u_type: '最强战士'
-      },
-      {
-        u_avator:
-          'http://img1.360buyimg.com/da/jfs/t25096/340/321933848/390630/985a448c/5b6bbefeNafcfc263.jpg',
-        u_name: '张三地',
-        u_type: '最强战士'
-      },{
-        u_avator:
-          'http://img1.360buyimg.com/da/jfs/t25096/340/321933848/390630/985a448c/5b6bbefeNafcfc263.jpg',
-        u_name: '张三地',
-        u_type: '最强战士'
-      },
-      {
-        u_avator:
-          'http://img1.360buyimg.com/da/jfs/t25096/340/321933848/390630/985a448c/5b6bbefeNafcfc263.jpg',
-        u_name: '张三地',
-        u_type: '最强战士'
-      },
-    ],
-    contList: [
-      {
-        c_name: '深造卡',
-        c_score: '1000'
-      },
-      {
-        c_name: '主力体验',
-        c_score: '8000'
-      },
-      {
-        c_name: '岗位体验',
-        c_score: '4000'
-      },
-      {
-        c_name: '拜师卡',
-        c_score: '7000'
-      }
-    ],
+    timeOut:null,
+    interval:null,
+    transitionTime:300,
+    marqueeDistance:0,
+    scrollTop:0,
+    userArr: [],
+    rankType:"D",
+    vocation:"战士",
+    msgList:[],
      tabArr: [
-      { t_name: '战士', t_value: '0', t_active: 1 },
-      { t_name: '射手', t_value: '1', t_active: 0 },
-      { t_name: '法师', t_value: '2', t_active: 0 },
-      { t_name: '术士', t_value: '3', t_active: 0 },
-      { t_name: '修士', t_value: '4', t_active: 0 },
-      { t_name: '骑士', t_value: '6', t_active: 0 }
+      { t_name: '战士',t_active: 1 },
+      { t_name: '射手',t_active: 0 },
+      { t_name: '法师',t_active: 0 },
+      { t_name: '术士',t_active: 0 },
+      { t_name: '修士',t_active: 0 },
+      { t_name: '骑士',t_active: 0 }
     ],
     lfArr:[
-      { l_name: '日榜', l_value: '0', l_active: 1 },
-      { l_name: '周榜', l_value: '1', l_active: 0 },
-      { l_name: '月榜', l_value: '2', l_active: 0 },
-      { l_name: '季榜', l_value: '3', l_active: 0 },
-      { l_name: '年榜', l_value: '4', l_active: 0 },
-      { l_name: '减损榜', l_value: '5', l_active: 0 },
-      { l_name: '团队榜', l_value: '6', l_active: 0 },
+      { l_name: '日榜', l_value: 'D', l_active: 1 },
+      { l_name: '周榜', l_value: 'W', l_active: 0 },
+      { l_name: '月榜', l_value: 'M', l_active: 0 },
+      { l_name: '季榜', l_value: 'Q', l_active: 0 },
+      { l_name: '年榜', l_value: 'Y', l_active: 0 },
+      { l_name: '减损榜', l_value: 'R', l_active: 0 },
+      { l_name: '团队榜', l_value: 'T', l_active: 0 },
     ],
-    rtArr:[
-       {
-        r_avator:
-          'http://img1.360buyimg.com/da/jfs/t25096/340/321933848/390630/985a448c/5b6bbefeNafcfc263.jpg',
-        r_name: '张三',
-        r_type: '最强战士',
-        r_nums: '5555'
-      },
-      {
-        r_avator:
-          'http://img1.360buyimg.com/da/jfs/t25096/340/321933848/390630/985a448c/5b6bbefeNafcfc263.jpg',
-        r_name: '张三',
-        r_type: '最强战士',
-        r_nums: '5555'
-      },
-      {
-        r_avator:
-          'http://img1.360buyimg.com/da/jfs/t25096/340/321933848/390630/985a448c/5b6bbefeNafcfc263.jpg',
-        r_name: '张三',
-        r_type: '最强战士',
-        r_nums: '5555'
-      },
-      {
-        r_avator:
-          'http://img1.360buyimg.com/da/jfs/t25096/340/321933848/390630/985a448c/5b6bbefeNafcfc263.jpg',
-        r_name: '张三',
-        r_type: '最强战士',
-        r_nums: '5555'
-      },
-      {
-        r_avator:
-          'http://img1.360buyimg.com/da/jfs/t25096/340/321933848/390630/985a448c/5b6bbefeNafcfc263.jpg',
-        r_name: '张三',
-        r_type: '最强战士',
-        r_nums: '5555'
-      },
-      {
-        r_avator:
-          'http://img1.360buyimg.com/da/jfs/t25096/340/321933848/390630/985a448c/5b6bbefeNafcfc263.jpg',
-        r_name: '张三',
-        r_type: '最强战士',
-        r_nums: '5555'
-      }
-    ]
+    rtArr:[]
+  };
+  computed = {
+    heroInfo(){
+        return this.$parent.globalData.HeroInfo
+    }
   };
 
-  computed = {};
-
   methods = {
-     handleScroll(){
-        console.log("scroll")
-      },
-      handleJumpDetail(){
-        this.$navigate('/pages/rank/detail');
-      },
+    handleJumpDetail(item){
+        this.$navigate('/pages/rank/detail?data='+JSON.stringify(item));
+    },
     handleClickTab(inx) {
       this.tabArr.map((item, index) => {
         index == inx ? (item.t_active = 1) : (item.t_active = 0);
       });
+      this.vocation=this.tabArr[inx].t_name;
+      this.getUserRank();
     },
     handleClickTabLf(inx) {
       this.lfArr.map((item, index) => {
         index == inx ? (item.l_active = 1) : (item.l_active = 0);
       });
+      this.rankType=this.lfArr[inx].l_value;
+      this.getUserRank();
     },
-    handleClick() {
-      const that = this;
-      wx.showModal({
-        title: '提示',
-        content: '确定兑换？',
-        success: function(res) {
-          if (res.confirm) {
-            that.$navigate('/pages/mall/success');
-          }
-        }
-      });
-    },
+    // handleClick() {
+    //   const that = this;
+    //   wx.showModal({
+    //     title: '提示',
+    //     content: '确定兑换？',
+    //     success: function(res) {
+    //       if (res.confirm) {
+    //         that.$navigate('/pages/mall/success');
+    //       }
+    //     }
+    //   });
+    // },
     handleClickJump(path) {
       this.$navigate(path);
     }
   };
 
   events = {};
-  async getData() {
+  scrollTxtY(){
+    const winWidth=(this.$parent.globalData.systemInfo.windowWidth);
+    const pixel=winWidth/750;
+    const lens=this.msgList.length;
+    const dis=parseInt(40*pixel);
+    let i=0;
+    if(lens==0) this.msgList.push({MsgInfo:"暂无消息"});
+    if(lens<2) return; //小于两条不执行
+    clearInterval(this.interval);
+    this.interval = setInterval(()=>{
+         i++;
+         this.transitionTime=300;
+         this.marqueeDistance=dis*i;
+         if(i==lens-1){
+          clearTimeout(this.timeOut);
+           this.timeOut=setTimeout(()=>{
+             i=0;
+             this.transitionTime=0;
+             this.marqueeDistance=0;
+             this.$apply();
+           },300)
+         }
+         this.$apply();
+    },5000)
+  }
+  async getMaxUser() {
     const that = this;
     const res = await wxRequest({
       query:{
-        opt: 'CheckCanApply',
+        opt: 'getMaxUser',
       }
       },that.$parent.globalData.apiUrl);
-   if (res.data.retcode == -1) {
-
-    }else {
-
+   if (res.data.retcode == 0) {
+        that.userArr=res.data.result;
     }
+    
+    this.$apply();
+  }
+  async getUserRank() {
+    const that = this;
+    const res = await wxRequest({
+      query:{
+        opt: 'getUserRank',
+        Ranktype:that.rankType,
+        Vocation:that.vocation,
+        nums:30
+      }
+      },that.$parent.globalData.apiUrl);
+   if (res.data.retcode == 0) {
+      that.setData({
+          scrollTop: 0
+        })
+        that.rtArr=res.data.result;
+    }
+    this.$apply();
   }
    onLoad() {
-     this.heroInfo=this.$parent.globalData.HeroInfo;
+     this.getMaxUser();
+     this.getUserRank();
+     this.scrollTxtY();
   }
 }
 </script>

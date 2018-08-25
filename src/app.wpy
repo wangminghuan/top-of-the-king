@@ -47,7 +47,8 @@ export default class extends wepy.app {
       backgroundTextStyle: 'light',
       navigationBarBackgroundColor: '#242d56',
       navigationBarTitleText: 'WeChat',
-      navigationBarTextStyle: 'white'
+      navigationBarTextStyle: 'white',
+      // enablePullDownRefresh:true
     },
     tabBar: {
       color: '#fff',
@@ -96,6 +97,7 @@ export default class extends wepy.app {
     HeroInfo: null,
     sysId: 1, //后台系统ID
     apiUrl: 'https://hero.52wdy.cn/Hero/wxapi.aspx',
+    imgHost:"https://hero.52wdy.cn",//图片域名
     isIpx: false,
     systemInfo: {},
     tips: '' //传参：提示信息

@@ -34,7 +34,7 @@
     }
   }
   .special-item {
-    width: 100%;
+    width: 99%;
     height: 270rpx;
     overflow: hidden;
     border: 2rpx solid #50baf2;
@@ -178,6 +178,14 @@
       left: 0;
       transform: translateY(-50%);
       z-index: 1001;
+      .close{
+        position: absolute;
+        width: 40rpx;
+        height: 40rpx;
+        right:0;
+        top:0;
+        z-index: 99999;
+      }
       text {
         //  height: 70rpx;
         width: 420rpx;
@@ -220,14 +228,23 @@
   <view class="page-dynamics">
     <view class="sound-com-tips">
       <view class="sound"><image src="../static/img/dynamics/sound.png" mode="aspectFit" style="width:30rpx;height:27rpx;"/></view>
-      <text>我是左右滚动的</text></view>
-     <view class="special-title"><text>专题栏</text></view>
+      <view class="msg-wrap">
+      <view class="msg-cont" style="transform: translateY(-{{marqueeDistance}}px);transition: transform {{transitionTime}}ms;">
+      <repeat for="{{msgList}}" key="index" index="index" item="item">
+            <text>{{item.MsgInfo}}</text>
+      </repeat>
+      </view>
+      </view>
+      </view>
+     <view class="special-title" wx:if="{{specialList.length>0}}"><text>专题栏</text></view>
+     <scroll-view scroll-y style="height: 568rpx;margin-bottom:20rpx;" wx:if="{{specialList.length>0}}">
      <repeat for="{{specialList}}" key="index" index="index" item="item">
         <view class="special-item">
-           <image src="{{item.l_img}}" mode="widthFix" />
-           <view class="btm"><text>{{item.l_text}}</text></view>
+           <image src="{{imgHost+item.Pic}}" mode="widthFix" />
+           <view class="btm"><text>{{item.Title}}</text></view>
         </view>
     </repeat>
+    </scroll-view>
     <view class="post-item-wrap">
        <view class="title">
          <text>帖子</text>
@@ -262,13 +279,14 @@
         </view>
         </repeat>
     </view>
-    <view class="pop-shake" catchtouchmove="preventTouchMove" style="display:{{isShowPop?'block':'none'}}">
+    <view class="pop-shake" catchtouchmove="preventTouchMove" wx:if="{{isShowPop}}">
        <view class="bg"></view>
-        <image class="shake-bg" src="../static/img/dynamics/shake.gif" mode="scaleToFill" />
-       <view class="pop-cont">
+        <image class="shake-bg" src="../static/img/dynamics/shake2.gif" mode="scaleToFill" />
+         <view class="pop-cont">
+         <image class="close" src="../static/img/dynamics/close.png" mode="scaleToFill" @tap="handleClosePop" />
          <image class="animate-bg" src="../static/img/dynamics/light-ani.png" mode="scaleToFill" />
          <image class="gift-bg" src="../static/img/dynamics/zhanli.png" mode="scaleToFill" />
-         <text>恭喜李童鞋获得1000战斗值</text>
+         <text>{{popArr[0].MsgInfo}}</text>
        </view>
     </view>
   </view>
@@ -283,20 +301,15 @@ export default class pageDynamics extends wepy.page {
   };
   components = {};
   data = {
-    isShowPop: true,
+    timeOut:null,
+    interval:null,
+    transitionTime:300,
+    marqueeDistance:0,
+    isShowPop: false,
     scrollTop: 100,
-    specialList: [
-      {
-        l_img:
-          'http://img1.360buyimg.com/da/jfs/t25096/340/321933848/390630/985a448c/5b6bbefeNafcfc263.jpg',
-        l_text: '1111李白被削弱的真相竟然是啊是大叔大叔的'
-      },
-      {
-        l_img:
-          'http://img1.360buyimg.com/da/jfs/t25096/340/321933848/390630/985a448c/5b6bbefeNafcfc263.jpg',
-        l_text: '2222李白被削弱的真相竟然是啊是大叔大叔的'
-      }
-    ],
+    msgList:[],
+    popArr:[], //需要弹窗队列
+    specialList: [],
     postList: [
       {
         s_avator:
@@ -332,9 +345,26 @@ export default class pageDynamics extends wepy.page {
     ]
   };
 
-  computed = {};
+ computed = {
+    heroInfo(){
+        return this.$parent.globalData.HeroInfo
+    },
+    imgHost(){
+        return this.$parent.globalData.imgHost
+    }
+  };
 
   methods = {
+    //关闭弹窗
+    handleClosePop(){
+       this.isShowPop=false;
+       if(this.popArr.length==0) return;
+       setTimeout(()=>{
+          this.popArr.splice(0,1)
+          this.isShowPop=true;
+          this.$apply();
+        },5000)
+    },
     preventTouchMove() {},
     handleLike() {
       wx.showToast({
@@ -352,24 +382,85 @@ export default class pageDynamics extends wepy.page {
   };
 
   events = {};
-  async getData() {
+   scrollTxtY(){
+    const winWidth=(this.$parent.globalData.systemInfo.windowWidth);
+    const pixel=winWidth/750;
+    const lens=this.msgList.length;
+    const dis=parseInt(40*pixel);
+    let i=0;
+    if(lens<2) return; //小于两条不执行
+    clearInterval(this.interval);
+    this.interval = setInterval(()=>{
+         i++;
+         this.transitionTime=300;
+         this.marqueeDistance=dis*i;
+         if(i==lens-1){
+          clearTimeout(this.timeOut);
+           this.timeOut=setTimeout(()=>{
+             i=0;
+             this.transitionTime=0;
+             this.marqueeDistance=0;
+             this.$apply();
+           },300)
+         }
+         this.$apply();
+    },5000)
+  }
+  getPopArr(arr){
+     let popArr=[];
+     arr.map((item)=>{
+         if(item.ShowType!=0){
+           popArr.push(item)
+         }
+     })
+     this.popArr=popArr;
+  }
+  //去顶部动态消息
+  async getMessage() {
     const that = this;
     const res = await wxRequest({
       query:{
-        opt: 'CheckCanApply',
+        opt: 'getMessage',
+        userid:that.$parent.globalData.HeroInfo.Id,
+        num:6,
       }
       },that.$parent.globalData.apiUrl);
-   if (res.data.retcode == -1) {
-
-    }else {
-
+   if (res.data.retcode == 0) {
+        const arr=res.data.result;
+        if(arr instanceof Array && arr.length>0){
+               that.msgList=arr.concat(arr[0]);
+               that.getPopArr(arr);
+               if(that.popArr.length>0){
+                 setTimeout(()=>{
+                   that.isShowPop=true;
+                 },5000)
+               }
+        }else{
+           that.msgList=[{
+             MsgInfo:"暂无最新动态"
+           }];
+        }
+        that.scrollTxtY();
     }
+    this.$apply();
   }
+  //获取专题
+  async getArticle() {
+    const that = this;
+    const res = await wxRequest({
+      query:{
+        opt: 'getArticle'
+      }
+      },that.$parent.globalData.apiUrl);
+   if (res.data.retcode == 0) {
+        this.specialList=res.data.result;
+    }
+    this.$apply();
+  }
+  
   onLoad() {
-    // setTimeout(() => {
-    //   this.isShowPop = false;
-    //   this.$apply();
-    // }, 8000);
+   this.getMessage();
+   this.getArticle();
   }
 }
 </script>

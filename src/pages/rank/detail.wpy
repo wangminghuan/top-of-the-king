@@ -59,6 +59,10 @@
     .btn-item {
       width: 25%;
       height: 198rpx;
+      .btn-bg{
+         height: 198rpx; 
+          width: 187rpx;
+      }
     }
   }
   .info-wrap {
@@ -249,23 +253,24 @@
 <template>
   <view class="rank-deatail">
     <view class="top-wrap mrg40">
-      <image class="avator" src="http://img1.360buyimg.com/da/jfs/t25096/340/321933848/390630/985a448c/5b6bbefeNafcfc263.jpg" mode="scaleToFill" style="margin:0" />
-      <view class="t-name">李晓明</view>
-      <view class="t-part"><text>所属部门：xxx</text><text>姓名：xxx</text></view>
-      <view class="lf-top btn-2">本月最强</view>
-      <view class="lf-btm btn-1">段位:铂金</view>
-      <view class="rt-top btn-2">战斗值：12000</view>
-      <view class="rt-btm btn-2">战士</view>
+      <image class="avator" src="{{item.HeadImg?item.HeadImg:'../../static/img/my/logo-def.png'}}" mode="scaleToFill" style="margin:0" />
+      <view class="t-name">{{playerData.NickName}}</view>
+      <view class="t-part"><text>所属部门：xxx </text><text> 姓名：{{playerData.NickName}}</text></view>
+      <view class="lf-top btn-2">{{playerData.UserTitle}}</view>
+      <view class="lf-btm btn-1">段位:{{playerData.Level}}</view>
+      <view class="rt-top btn-2">战斗值：{{playerData.Power}}</view>
+      <view class="rt-btm btn-2">{{playerData.Vocation}}</view>
     </view>
     <view class="info-wrap mrg40">
       <image class="titl" src="../../static/img/rank/intro.png"  mode="scaleToFill" />
       <view>安卓系统，QQ微信都可以，人好，心肠好，不演不挂机不骂人不扣分，每天都时间多，活跃，要求是段位无所谓，铭文两套以上，英雄多一点</view>
     </view>
      <view class="gift-wrap">
-        <image  src="../../static/img/rank/gift.png"  mode="scaleToFill" style="height:198rpx;width:100%" />
-        <view class="gift-btn">
+       <view class="gift-btn">
           <repeat for="{{giftArr}}" key="index" index="index" item="item">
-            <view class="btn-item" @tap="handleShowPop({{item.g_value}})"></view>
+            <view class="btn-item" @tap="handleShowPop({{item}})">
+               <image class="btn-bg" src="{{item.Id==1?'../../static/img/rank/gift-big-3.png':item.Id==6?'../../static/img/rank/gift-big-2.png':item.Id==7?'../../static/img/rank/gift-big-4.png':'../../static/img/rank/gift-big-1.png'}}" mode="scaleToFill" />
+            </view>
           </repeat>
         </view>
      </view>
@@ -274,14 +279,13 @@
       <text>留言区</text>
      <image @tap="handleJumpAdd" src="../../static/img/dynamics/msg-add.png" mode="aspectFit" style="width:36rpx;height:45rpx;"/>
     </view>
-    <scroll-view scroll-y style="height: 560rpx;" lower-threshold="50" bindscrolltolower="handleScroll">
-        
+    <scroll-view scroll-y style="height: 560rpx;" lower-threshold="50" bindscrolltolower="handleScroll" wx:if="{{listArr.length>0}}">
         <repeat for="{{listArr}}" key="index" index="index" item="item">
           <view class="item btm-line">
-            <image class="avator" src="{{item.d_avator}}" mode="scaleToFill" />
+            <image class="avator" src="{{imgHost + item.FromHeadImg}}" mode="scaleToFill" />
             <view class="rt" @tap="handleJumpDetail">
-              <view class="ye">{{item.d_name}}</view>
-              <text>{{item.d_cont}}</text>
+              <view class="ye">{{item.FromName}}</view>
+              <text>{{item.LeaveWord}}</text>
             </view>
             </view>
         </repeat>
@@ -291,27 +295,12 @@
         <view class="bg"></view>
         <view class="pop-cont">
           <image  src="../../static/img/rank/pop-title.png" mode="scaleToFill" style="width:500rpx;height:62rpx;"/>
-           <view wx:if="{{popIndex==0}}">
-           <image class="avator" src="../../static/img/rank/gift-1.png" mode="scaleToFill" style="margin:0 auto;display:block" />
-           <view style="color:#fffd78;font-size:26rpx;line-height:84rpx">名称：蛋糕</view>
-           <view style="line-height:44rpx">消耗积分：500</view>
+           <view >
+              <image class="avator" src="{{imgHost+popItem.Pic}}" />
+              <view style="color:#fffd78;font-size:26rpx;line-height:84rpx">名称：{{popItem.GiftName}}</view>
+              <view style="line-height:44rpx">消耗积分：{{popItem.Point}}</view>
            </view>
-           <view wx:if="{{popIndex==1}}">
-           <image class="avator" src="../../static/img/rank/gift-2.png" mode="scaleToFill" style="margin:0 auto;display:block" />
-           <view style="color:#fffd78;font-size:26rpx;line-height:84rpx">名称：跑车</view>
-           <view style="line-height:44rpx">消耗积分：500</view>
-           </view>
-           <view wx:if="{{popIndex==2}}">
-           <image class="avator" src="../../static/img/rank/gift-3.png" mode="scaleToFill" style="margin:0 auto;display:block" />
-           <view style="color:#fffd78;font-size:26rpx;line-height:84rpx">名称：玫瑰</view>
-           <view style="line-height:44rpx">消耗积分：500</view>
-           </view>
-           <view wx:if="{{popIndex==3}}">
-           <image class="avator" src="../../static/img/rank/gift-4.png" mode="scaleToFill" style="margin:0 auto;display:block" />
-           <view style="color:#fffd78;font-size:26rpx;line-height:84rpx">名称：星星</view>
-           <view style="line-height:44rpx">消耗积分：500</view>
-           </view>
-           <view style="width:174rpx;line-height:44rpx"><text style="display:block;text-align:left;padding-left:8rpx;">打赏数量</text></view>
+            <view style="width:174rpx;line-height:44rpx"><text style="display:block;text-align:left;padding-left:8rpx;">打赏数量</text></view>
            <view class="nums-cal">
              <view class="n-lf" @tap="handleClickSub">-</view>
              <view class="n-mid">{{giftNums}}</view>
@@ -337,112 +326,57 @@ export default class rankDeatail extends wepy.page {
   components = {};
   data = {
     isShowPop: false,
-    popIndex: 0, //弹窗索引
+    playerData:{},//玩家数据
+    popItem: {}, //弹窗内容
     giftNums: 1,
-    giftArr: [
-      {
-        g_value: '2'
-      },
-      {
-        g_value: '1'
-      },
-      {
-        g_value: '3'
-      },
-      {
-        g_value: '0'
-      }
-    ],
-    listArr: [
-      {
-        d_avator:
-          'http://img1.360buyimg.com/da/jfs/t25096/340/321933848/390630/985a448c/5b6bbefeNafcfc263.jpg',
-        d_name: '张三',
-        d_cont:
-          '王者荣耀新赛季已经开启一段时间了，大家伙上王者没。上王者不仅是段位提升的一种激励王者荣耀新赛季已经开启一段时间了，大家伙上王者没。上王者不仅是段位提升的一种激励'
-      },
-      {
-        d_avator:
-          'http://img1.360buyimg.com/da/jfs/t25096/340/321933848/390630/985a448c/5b6bbefeNafcfc263.jpg',
-        d_name: '张三',
-        d_cont:
-          '王者荣耀新赛季已经开启一段时间了，大家伙上王者没。上王者不仅是段位提升的一种激励王者荣耀新赛季已经开启一段时间了，大家伙上王者没。上王者不仅是段位提升的一种激励'
-      },
-      {
-        d_avator:
-          'http://img1.360buyimg.com/da/jfs/t25096/340/321933848/390630/985a448c/5b6bbefeNafcfc263.jpg',
-        d_name: '张三',
-        d_cont:
-          '王者荣耀新赛季已经开启一段时间了，大家伙上王者没。上王者不仅是段位提升的一种激励王者荣耀新赛季已经开启一段时间了，大家伙上王者没。上王者不仅是段位提升的一种激励'
-      },
-      {
-        d_avator:
-          'http://img1.360buyimg.com/da/jfs/t25096/340/321933848/390630/985a448c/5b6bbefeNafcfc263.jpg',
-        d_name: '张三',
-        d_cont:
-          '王者荣耀新赛季已经开启一段时间了，大家伙上王者没。上王者不仅是段位提升的一种激励王者荣耀新赛季已经开启一段时间了，大家伙上王者没。上王者不仅是段位提升的一种激励'
-      },
-      {
-        d_avator:
-          'http://img1.360buyimg.com/da/jfs/t25096/340/321933848/390630/985a448c/5b6bbefeNafcfc263.jpg',
-        d_name: '张三',
-        d_cont:
-          '王者荣耀新赛季已经开启一段时间了，大家伙上王者没。上王者不仅是段位提升的一种激励王者荣耀新赛季已经开启一段时间了，大家伙上王者没。上王者不仅是段位提升的一种激励'
-      },
-      {
-        d_avator:
-          'http://img1.360buyimg.com/da/jfs/t25096/340/321933848/390630/985a448c/5b6bbefeNafcfc263.jpg',
-        d_name: '张三',
-        d_cont:
-          '王者荣耀新赛季已经开启一段时间了，大家伙上王者没。上王者不仅是段位提升的一种激励王者荣耀新赛季已经开启一段时间了，大家伙上王者没。上王者不仅是段位提升的一种激励'
-      },
-      {
-        d_avator:
-          'http://img1.360buyimg.com/da/jfs/t25096/340/321933848/390630/985a448c/5b6bbefeNafcfc263.jpg',
-        d_name: '张三',
-        d_cont:
-          '王者荣耀新赛季已经开启一段时间了，大家伙上王者没。上王者不仅是段位提升的一种激励王者荣耀新赛季已经开启一段时间了，大家伙上王者没。上王者不仅是段位提升的一种激励'
-      }
-    ]
+    giftArr: [],
+    listArr: []
   };
 
-  computed = {};
+  computed = {
+    heroInfo(){
+      return  this.$parent.globalData.HeroInfo;
+    },
+    imgHost(){
+        return this.$parent.globalData.imgHost
+    }
+  };
 
   methods = {
     handleClickAdd() {
-      this.giftNums++;
+      if(this.popItem.isCount){
+         this.giftNums++;
+      }else{
+        this.$parent.showErrorMsg("提示", "数量不可选");
+      }
+      
     },
     handleClickSub() {
-      this.giftNums--;
+      if(this.popItem.isCount){
+          this.giftNums>2? this.giftNums--: this.giftNums=1;
+      }else{
+         this.$parent.showErrorMsg("提示", "数量不可选");
+      }
+     
     },
     closePop() {
       this.isShowPop = false;
     },
     handlePopConfirm() {
-      const that = this;
-      wx.showLoading({
-        title: '加载中'
-      });
-      setTimeout(() => {
-        wx.hideLoading();
-        this.isShowPop = false;
-        wx.showToast({
-          title: '打赏成功',
-          icon: 'success',
-          duration: 2000
-        });
-        this.$apply();
-      }, 2000);
+      this.addGift();
     },
-    handleShowPop(index) {
-      this.popIndex = index;
+    handleShowPop(item) {
+      this.popItem= item;
+      this.giftNums=1;
       this.isShowPop = true;
     },
     handleScroll() {
       console.log('scroll');
     },
     handleJumpAdd() {
-      this.$navigate('/pages/my/addMsg');
+      // console.log('/pages/my/addMsg?toId='+this.touserid+'&toName='+"张三"+'&formId='+this.heroInfo.Id)
+      // return;
+      this.$navigate('/pages/my/addMsg?toId='+this.playerData.Id+'&fromId='+this.heroInfo.Id+'&toName='+this.playerData.NickName);
     },
     handleJumpDetail() {
       this.$navigate('/pages/dynamics/leaveMsg');
@@ -450,19 +384,62 @@ export default class rankDeatail extends wepy.page {
   };
 
   events = {};
-  async getData() {
+  async getLeaveWord() {
     const that = this;
     const res = await wxRequest({
       query:{
-        opt: 'CheckCanApply',
+        opt: 'getLeaveWord',
+        touserid:that.playerData.Id,
+        fromuserid:that.heroInfo.Id,
       }
       },that.$parent.globalData.apiUrl);
-   if (res.data.retcode == -1) {
-
-    }else {
-
+     if (res.data.retcode == 0) {
+         this.listArr=res.data.result;
     }
+    this.$apply()
   }
-  onLoad() {}
+  //获取礼品
+  async getGift() {
+    const that = this;
+    const res = await wxRequest({
+      query:{
+        opt: 'getGift'
+      }
+      },that.$parent.globalData.apiUrl);
+   if (res.data.retcode == 0) {
+       that.giftArr=res.data.result;
+    }
+    this.$apply();
+  }
+  //打赏玩家
+  async addGift() {
+    const that = this;
+    const res = await wxRequest({
+      query:{
+        opt: 'addGift',
+        giftid:that.popItem.Id,
+        touserid:that.playerData.Id,
+        fromuserid:that.heroInfo.Id,
+        giftcount:that.giftNums
+      }
+      },that.$parent.globalData.apiUrl);
+   if (res.data.retcode == 0) {
+        this.isShowPop = false;
+          wx.showToast({
+            title: '打赏成功',
+            icon: 'success',
+            duration: 2000
+          });
+    }else {
+       this.$parent.showErrorMsg("错误提示", res.data.msg);
+    }
+    this.$apply();
+  }
+  
+  onLoad(data) {
+    this.playerData=JSON.parse(data.data);
+    this.getGift();
+    this.getLeaveWord();
+  }
 }
 </script>

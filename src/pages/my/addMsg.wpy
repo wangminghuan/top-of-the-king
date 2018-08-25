@@ -28,6 +28,9 @@
       margin-right: 35rpx;
     }
   }
+  .input-name{
+    justify-content: flex-start;
+  }
   .apply-input {
     height: auto;
     align-items: inherit;
@@ -46,8 +49,8 @@
 <!-- 暂时无用-->
   <view class="msg-add-wrap" >
     <view class="login-com-title" style="margin-bottom:52rpx;">写留言</view>
-    <view class="user-input"><text>对象：</text><input type="text" placeholder="" /></view>
-    <view class="user-input apply-input" style="margin-top:36rpx;margin-bottom:86rpx"><text>内容：</text><textarea placeholder="请至少输入五个字" /></view>
+    <view class="user-input input-name"><text>对象：</text><text class="name">{{inputToName}}</text></view>
+    <view class="user-input apply-input" style="margin-top:36rpx;margin-bottom:86rpx"><text>内容：</text><textarea autoFocus bindinput="bindInputMsg" placeholder="请至少输入五个字" /></view>
     <button class="user-com-btn" @tap="handleSubmit" style="width:394rpx">发送</button>
   </view>
   
@@ -61,31 +64,63 @@ export default class msgAdd extends wepy.page {
     navigationBarTitleText: '写留言'
   };
   components = {};
-  data = {};
+  data = {
+    inputMsg:"",
+    toId:0,
+    fromId:0,
+    inputToName:""
+  };
 
   computed = {};
 
   methods = {
+    bindInputMsg(e) {
+      this.inputMsg= e.detail.value;
+    },
     handleSubmit() {
-      this.applyStatus = 3;
+      if(this.inputMsg.replace(/\s+/g,'').length<6){
+         wx.showToast({
+            title: "留言内容过短，请重新输入",
+            icon: 'none',
+            duration: 2000
+          });
+        return ;
+      }
+      this.addLeaveWord();
     }
   };
 
   events = {};
-  async getData() {
+  async addLeaveWord() {
     const that = this;
     const res = await wxRequest({
       query:{
-        opt: 'CheckCanApply',
+        opt: 'addLeaveWord',
+        touserid:that.toId,  //留言对象ID（玩家ID）
+        fromuserid:that.fromId, //留言人ID（玩家ID）
+        leaveword:that.inputMsg, //留言内容
       }
       },that.$parent.globalData.apiUrl);
-   if (res.data.retcode == -1) {
-
+    if (res.data.retcode == 0) {
+          wx.showToast({
+            title: '留言成功',
+            icon: 'success',
+            duration: 2000
+          });
+          setTimeout(() => {
+            //返回上一页
+            wx.navigateBack({
+                delta: 1
+              })
+          }, 2000);
     }else {
-
+       this.$parent.showErrorMsg("错误提示", res.data.msg);
     }
   }
-  onLoad() {
+  onLoad(params) {
+    this.inputToName=params.toName;
+    this.fromId=params.fromId;
+    this.toId=params.toId;
   }
 }
 </script>
