@@ -111,7 +111,7 @@ export default class msgAdd extends wepy.page {
       },that.$parent.globalData.apiUrl);
     if (res.data.retcode == 0) {
           wx.showToast({
-            title: '留言成功',
+            title: '留言成功，请耐心等待核审',
             icon: 'success',
             duration: 2000
           });

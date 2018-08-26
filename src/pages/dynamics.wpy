@@ -79,6 +79,24 @@
     .post-item {
       display: flex;
       justify-content: space-between;
+      border-bottom: 1rpx solid #3b8dc5;
+      &:last-child{
+        border-bottom: none;
+      }
+      .imglist{
+        display: flex;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+        image{
+          width: 144rpx;
+          height: 144rpx;
+          margin-top:10rpx;
+        }
+        image.mids{
+          margin-left:10rpx;
+          margin-right:10rpx;
+        }
+      }
       .rt {
         width: 456rpx;
         .name {
@@ -100,7 +118,48 @@
           align-items: center;
           font-size: 22rpx;
           margin-bottom: 10rpx;
+          position: relative;
+          // .t-lf, .t-rt{
+          //     position: absolute;
+          //     top:50%;
+          //     transform: translateY(-50%);
+          //     left:0;
+
+          // }
+          .t-rt{
+            width: 50rpx;
+            height: 46rpx;
+            position: relative;
+            image{
+              position: absolute;
+              right: 0;
+              top:50%;
+              display: block;
+              left:0;
+              right: 0;
+              margin:0 auto;
+              transform: translateY(-50%);
+            }
+            .t-pop{
+              position: absolute;
+              top:50%;
+              transform: translateY(-50%);
+              left:-172rpx;
+              padding:0 10rpx;
+              background-color: #000;
+              height:46rpx ;
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              transition: width 1s;
+              width:0;
+            }
+            .t-pop-show{
+               width:150rpx;
+            }
+          }
         }
+        
         .discuss {
           background-color: #3e76ab;
 
@@ -222,6 +281,27 @@
       transform: rotateZ(360deg);
     }
   }
+  .btm-input{
+    background-color: #eee;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    left:0;
+    height: 90rpx;
+    align-items: center;
+    font-size:28rpx; 
+    display: flex;
+    justify-content: space-between;
+    // padding: 0 20rpx;
+    input{
+      width: 550rpx;
+      padding-left: 20rpx;
+    }
+    button{
+      margin:0;
+      margin-right: 20rpx;
+    }
+  }
 }
 </style>
 <template>
@@ -237,11 +317,11 @@
       </view>
       </view>
      <view class="special-title" wx:if="{{specialList.length>0}}"><text>专题栏</text></view>
-     <scroll-view scroll-y style="height: 568rpx;margin-bottom:20rpx;" wx:if="{{specialList.length>0}}">
+     <scroll-view scroll-y style="height: 588rpx;margin-bottom:4rpx;" wx:if="{{specialList.length>0}}">
      <repeat for="{{specialList}}" key="index" index="index" item="item">
-        <view class="special-item" @tap="handleJumpArticle(item.Id)">
+        <view class="special-item" @tap="handleJumpArticle({{item.Id}})">
            <image src="{{imgHost+item.Pic}}" mode="widthFix" />
-           <view class="btm"><text>{{item.Title}}</text></view>
+           <view class="btm"><text>{{item.Tile}}</text></view>
         </view>
     </repeat>
     </scroll-view>
@@ -252,25 +332,33 @@
        </view>
        <repeat for="{{postList}}" key="index" index="index" item="item">
         <view class="post-item">
-           <view class="com-avator" style="margin-top: 36rpx;"><image  src="{{item.s_avator}}" mode="scaleToFill" /></view>
+           <view class="com-avator" style="margin-top: 36rpx;"><image  src="{{item.HeadImg}}" mode="scaleToFill" /></view>
            <view class="rt">
-             <view class="name">{{item.s_name}}</view>
-             <view class="content" @tap="handleJumpDetail">{{item.s_content}}</view>
+             <view class="name">{{item.NickName}}</view>
+             <view class="content" @tap="handleJumpDetail">{{item.Txt}}</view>
+             <view class="imglist">
+             <repeat for="{{item.PicList}}" key="sindex" index="sindex" item="sitem">
+                 <image class="{{sindex%3==1?'mids':''}}" @tap="handlePreviewImg({{imgHost + sitem}},{{index}})" src="{{imgHost + sitem}}}" mode="scaleToFill" />
+              </repeat>
+              </view>
              <view class="time">
-               <text>{{item.s_time}}</text>
-               <image src="../static/img/dynamics/msg.png" mode="aspectFit" style="width:31rpx;height:29rpx;"/>
+               <text class="t-lf">{{item.CreateDate}}</text>
+               <view class="t-rt" @tap="handleReview({{index}})">
+                 <image src="../static/img/dynamics/msg.png" mode="aspectFit" style="width:31rpx;height:29rpx;"/>
+                 </view>
+               
              </view>
              <view class="discuss">
-                  <view class="top">
-                    <image @tap="handleLike" src="../static/img/dynamics/like.png" mode="aspectFit" style="width:22rpx;height:20rpx;"/>
-                    <repeat for="{{item.s_like}}" key="sindex" index="sindex" item="sitem">
-                      <text>{{sitem}}</text>
+                  <view class="top" wx:if="{{item.LikeList.length>0}}">
+                    <image  src="../static/img/dynamics/like.png" mode="aspectFit" style="width:22rpx;height:20rpx;"/>
+                    <repeat for="{{item.LikeList}}" key="sindex" index="sindex" item="sitem">
+                      <text>{{sitem.NickName}}</text>
                     </repeat>
                   </view>
-                  <view class="btm">
-                    <repeat for="{{item.s_discuss}}" key="dindex" index="dindex" item="ditem">
+                  <view class="btm" wx:if="{{item.ReviewList.length>0}}">
+                    <repeat for="{{item.ReviewList}}" key="dindex" index="dindex" item="ditem">
                       <view class="btm-item">
-                        <text class="btm-name">{{ditem.d_name+"："}}</text><text>{{ditem.d_cont}}</text>
+                        <text class="btm-name">{{ditem.NickName+"："}}</text><text>{{ditem.ReviewTxt}}</text>
                       </view>
                     </repeat>
                   </view>
@@ -279,7 +367,7 @@
         </view>
         </repeat>
     </view>
-    <view class="pop-shake" catchtouchmove="preventTouchMove" wx:if="{{isShowPop}}">
+    <!-- <view class="pop-shake" catchtouchmove="preventTouchMove" wx:if="{{isShowPop}}">
        <view class="bg"></view>
         <image class="shake-bg" src="../static/img/dynamics/shake2.gif" mode="scaleToFill" />
          <view class="pop-cont">
@@ -288,6 +376,10 @@
          <image class="gift-bg" src="../static/img/dynamics/zhanli.png" mode="scaleToFill" />
          <text>{{popArr[0].MsgInfo}}</text>
        </view>
+    </view> -->
+    <view wx:if="{{isShowReview}}" class="btm-input" >
+      <input confirm-type="send" type="text" auto-focus bindinput="bindUserInput" bindblur="bindUserBlur" />
+      <button type="primary" size="mini"  @tap="handleLeaveMsg" >发送</button>
     </view>
   </view>
 </template>
@@ -301,48 +393,18 @@ export default class pageDynamics extends wepy.page {
   };
   components = {};
   data = {
+    isShowReview:false,//展示回复框
+    userInput:"",
     timeOut:null,
     interval:null,
     transitionTime:300,
     marqueeDistance:0,
     isShowPop: false,
-    scrollTop: 100,
     msgList:[],
     popArr:[], //需要弹窗队列
     specialList: [],
-    postList: [
-      {
-        s_avator:
-          'https://m.360buyimg.com/mobilecms/s130x130_jfs/t22720/294/691837312/220531/cc7f36e9/5b3d742aN699e6299.jpg!q70.jpg',
-        s_name: '王明欢',
-        s_content:
-          '王者荣耀新赛季已经开启一段时间了，大家伙上王者没。上王者不仅是段位提升的一种激励...',
-        s_time: '1小时前',
-        s_like: [
-          '张三',
-          '李四',
-          '张三',
-          '李四',
-          '张三',
-          '李四',
-          '张三',
-          '李四',
-          '张三',
-          '李四'
-        ],
-        s_discuss: [
-          {
-            d_name: '张三',
-            d_cont:
-              '很不错啊啊啊啊啊啊啊啊很不错啊啊啊啊啊啊啊啊很不错啊啊啊啊啊啊啊啊很不错啊啊啊啊啊啊啊啊很不错啊啊啊啊啊啊啊啊很不错啊啊啊啊啊啊啊啊'
-          },
-          {
-            d_name: '李四',
-            d_cont: '很不错啊啊啊啊啊啊啊啊'
-          }
-        ]
-      }
-    ]
+    nowActive:-1,
+    postList: []
   };
 
  computed = {
@@ -355,6 +417,60 @@ export default class pageDynamics extends wepy.page {
   };
 
   methods = {
+    //发送评论
+    handleLeaveMsg(){
+       if(this.userInput.replace(/\s+/g,'')==''){
+          wx.showToast({
+            title: "评论内容不能为空",
+            icon: 'none',
+            duration: 2000
+          });
+         return ;
+      }
+       this.addPostReView(this.nowActive)
+    },
+    bindUserInput(e){
+      this.userInput=e.detail.value;
+    },
+     bindUserBlur(e){
+       setTimeout(() => {
+         this.isShowReview=false;
+         this.$apply();
+       }, 10);
+    },
+    handleReview(inx){
+      const that=this;
+      this.nowActive=inx;
+      this.checkPostLike(this.nowActive,(code)=>{
+        console.log(code)
+        wx.showActionSheet({
+        itemList: [code==0?'已点赞':'点赞', '评论',],
+        success: function(res) {
+          if(res.tapIndex==0){
+               if(code!=0){
+                 //点赞逻辑
+                 that.addPostLike(that.nowActive);
+                 return;
+               }
+          }else{
+            setTimeout(()=>{
+              that.isShowReview=true;
+               that.$apply();
+            },30)
+          }
+         
+        }
+       })
+      })
+    },
+    // 图片预览
+    handlePreviewImg(url,inx){
+      const that=this;
+        wx.previewImage({
+        current: url, // 当前显示图片的http链接
+        urls: that.postList[inx].PicList // 需要预览的图片http链接列表
+      }) 
+    },
     //关闭弹窗
     handleClosePop(){
        this.isShowPop=false;
@@ -366,13 +482,6 @@ export default class pageDynamics extends wepy.page {
         },5000)
     },
     preventTouchMove() {},
-    handleLike() {
-      wx.showToast({
-        title: '点赞成功',
-        icon: 'success',
-        duration: 2000
-      });
-    },
     handleJumpArticle(id){
        this.$navigate('/pages/articleDetail?id='+(id?id:1));
     },
@@ -418,7 +527,66 @@ export default class pageDynamics extends wepy.page {
      })
      this.popArr=popArr;
   }
-  //去顶部动态消息
+  //查询点赞 
+  async checkPostLike(indx,callback) {
+    const that = this;
+    const res = await wxRequest({
+      query:{
+        opt: 'checkPostLike',
+        userid:that.$parent.globalData.HeroInfo.Id,
+        postid:that.postList[indx].Id,
+      }
+      },that.$parent.globalData.apiUrl);
+      callback(res.data.retcode)
+  }
+  //点赞
+  async addPostLike(indx) {
+    const that = this;
+    const res = await wxRequest({
+      query:{
+        opt: 'addPostLike',
+        userid:that.$parent.globalData.HeroInfo.Id,
+        postid:that.postList[indx].Id,
+      }
+      },that.$parent.globalData.apiUrl);
+   if (res.data.retcode == 0) {
+        wx.showToast({
+          title: '点赞成功',
+          icon: 'success',
+          duration: 2000
+      });
+      this.postList[indx].LikeList.push({
+       NickName:that.$parent.globalData.UserName
+      })
+    }else{
+       this.$parent.showErrorMsg("错误提示", res.data.msg);
+    }
+    this.$apply();
+  }
+  //评论
+  async addPostReView(indx) {
+    const that = this;
+    const res = await wxRequest({
+      query:{
+        opt: 'addPostReView',
+        postid:that.postList[indx].Id,
+        userid:that.$parent.globalData.HeroInfo.Id,
+        txt:that.userInput,
+      }
+      },that.$parent.globalData.apiUrl);
+   if (res.data.retcode == 0) {
+         wx.showToast({
+          title: '评论成功，请耐心等待核审',
+          icon: 'success',
+          duration: 2000
+        });
+        this.userInput=""
+    }else{
+        this.$parent.showErrorMsg("错误提示", res.data.msg);
+    }
+    this.$apply();
+  }
+  //顶部动态消息
   async getMessage() {
     const that = this;
     const res = await wxRequest({
@@ -472,15 +640,14 @@ export default class pageDynamics extends wepy.page {
       }
       },that.$parent.globalData.apiUrl);
    if (res.data.retcode == 0) {
-        this.specialList=res.data.result;
-    }else{
-      this.specialList=[{},{}]
+        this.postList=res.data.result;
     }
     this.$apply();
   }
   onLoad() {
    this.getMessage();
    this.getArticle();
+   this.getPostAllInfo();
   }
 }
 </script>

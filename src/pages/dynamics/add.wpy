@@ -46,15 +46,52 @@
     padding: 20rpx 0;
     margin-right: 35rpx;
   }
+  .imglist{
+        display: flex;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+        .img-item{
+          position: relative;
+           margin-top:20rpx;
+        }
+        image{
+          width: 210rpx;
+          height: 210rpx;
+          position: relative;
+        }
+        .close{
+          width: 40rpx;
+          height: 40rpx;
+            background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAMAAACdt4HsAAAAYFBMVEUAAADYHgbfEADYHgbaGwXYHgXYHgXYHATYHQXYHQbYHAXYHQXYHQbYHgXXGADZHQPXHQXYHgXYHQPYHgb////ncWL1xsDiVUPaKxTzuLD98O/rjoLfSDTfRzPxq6LkY1MUgSlAAAAAE3RSTlMAgBDgMPDvQNCwkGCvcCBQwG9PGjV8NgAAAWdJREFUWMPtl8tywyAMRS1swM+k6cV5p/3/v+y0k5RgYwtGk13Ozot7LYQQonjzUjZ2R9T3RDu7yVd/tjWeqFubo1ZUYkZJKlluEMWkWXQGi5iO/32PVXomiKoEQ1mt6g1YTMXoBQ6MnnVQJRIp45nskUwf3X9k0EUWYJCBmS+CkAVxAfAhcAHcDkd4jocbE8J0C/fOnUc8+D47tz+GWxnqtwi5uF8eDuPf1wUBYYdpZwHcHbze7RHQBgY1Qk7u7uD17oSAOuifmHB1D4d/vTsgRBUeiwle9uWtsJyEAYsOi3oMTBmOjB4UGDAOI1PNH4g6rOrRiA3ESxAnUbyN4kJaK+VbainLD5P8OMsbSrylndiWxjXV66SpXpmmqjSy0Ep+sYhC0Ep4uW6LCA2SaeQDRpRKJyZgeUjSAj3jwOjFg6ZHNUz+FT9s65Xwu7RxXy/ISUkfHBlY9snDo+xA1DREg1XFm1fyA7ilpQKG+277AAAAAElFTkSuQmCC');
+             background-size: cover;
+            background-repeat: no-repeat;
+            position: absolute;
+            top:-20rpx;
+            right: -20rpx;
+            z-index: 999;
+        }
+        .img-item.mids{
+          margin-left:20rpx;
+          margin-right:20rpx;
+        }
+      }
 }
 </style>
 <template>
   <view class="dynamics-add-wrap" >
     <view class="login-com-title" style="margin-bottom:52rpx;">发帖</view>
-    <view class="user-input"><text>帖子标题：</text><input type="text" placeholder="" /></view>
+    <view class="user-input"><text>帖子标题：</text><input type="text" autoFocus bindinput="bindInputTitle" placeholder="请输入标题" /></view>
     <view style="margin-top:36rpx;margin-bottom:86rpx;background-color: #1e3462;">
         <view class="user-input apply-input" >
-            <text>内容：</text><textarea placeholder="请至少输入五个字" />
+            <text>内容：</text><textarea bindinput="bindInputTxt" placeholder="请至少输入五个字" />
+        </view>
+        <view class="imglist">
+             <repeat for="{{tempFilePaths}}" key="sindex" index="sindex" item="sitem">
+                 <view class="{{sindex%3==1?'img-item mids':'img-item'}}">
+                   <image  @tap="handlePreviewImg({{sitem}})" src="{{sitem}}" mode="scaleToFill" />
+                   <view class="close" @tap.stop="handleDelectImg({{sindex}})"></view>
+                  </view>
+              </repeat>
         </view>
         <view class="up-img" @tap="handleChooseImg">
             <image src="../../static/img/login/upimg.png" mode="aspectFit" style="width:39rpx;height:34rpx;"/>
@@ -74,41 +111,113 @@ export default class dynamicsAdd  extends wepy.page {
   };
   components = {};
   data = {
+    inputTitle:"",
+    inputTxt:"",
+    tempFilePaths:[]
   };
 
   computed = {
+    heroInfo(){
+        return this.$parent.globalData.HeroInfo
+    }
   };
 
   methods = {
+    bindInputTitle(e) {
+      this.inputTitle= e.detail.value;
+    },
+    bindInputTxt(e){
+     this.inputTxt= e.detail.value;
+    },
     handleChooseImg(){
-    wx.chooseImage({
-      count: 1, // 默认9
-      sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
-      sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
-      success: function (res) {
-        // 返回选定照片的本地文件路径列表，tempFilePath可以作为img标签的src属性显示图片
-        var tempFilePaths = res.tempFilePaths;
-        console.log(res)
-      }
-    })
+      const that=this;
+        wx.chooseImage({
+          count: 1, // 默认9
+          sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
+          sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
+          success: function (res) {
+            // 返回选定照片的本地文件路径列表，tempFilePath可以作为img标签的src属性显示图片
+            that.tempFilePaths.push(res.tempFilePaths[0]);
+            that.$apply();
+          }
+        })
+    },
+    handleDelectImg(inx){
+       this.tempFilePaths.splice(inx,1)
+    },
+    handlePreviewImg(url){
+       const that=this;
+       console.log({
+        current: url, // 当前显示图片的http链接
+        urls: that.tempFilePaths // 需要预览的图片http链接列表
+      })
+        wx.previewImage({
+        current: url, // 当前显示图片的http链接
+        urls: that.tempFilePaths // 需要预览的图片http链接列表
+      }) 
     },
     handleSubmit(){
-       this.applyStatus=3;
+      if(this.inputTitle.replace(/\s+/g,'')==''){
+         wx.showToast({
+            title: "请输入标题",
+            icon: 'none',
+            duration: 2000
+          });
+        return ;
+      }else if(this.inputTxt.replace(/\s+/g,'').length<6){
+         wx.showToast({
+            title: "留言内容过短，请重新输入",
+            icon: 'none',
+            duration: 2000
+          });
+        return ;
+      }
+      this.addPost()
+
     }
   };
 
   events = {};
-  async getData() {
+  uploadFiles(){
+      wx.uploadFile({
+            url: 'https://example.weixin.qq.com/upload', //仅为示例，非真实的接口地址
+            filePath: tempFilePaths[0],
+            name: 'file',
+            formData:{
+              opt:'uploadPostPic',
+              'PostID': 帖子ID, 
+              'imgIndex': 照片序号
+            },
+            success: function(res){
+              var data = res.data
+              //do something
+            }
+      })
+  }
+  async addPost() {
     const that = this;
     const res = await wxRequest({
       query:{
-        opt: 'CheckCanApply',
+        opt: 'addPost',
+        userid:that.heroInfo.Id, 
+        txt:that.inputTxt, 
       }
       },that.$parent.globalData.apiUrl);
-   if (res.data.retcode == -1) {
-
+    if (res.data.retcode == 0) {
+         that.uploadFiles();
+          wx.showToast({
+            title: '提交成功，请耐先等待核审',
+            icon: 'success',
+            duration: 2000
+          });
+          setTimeout(() => {
+            //返回上一页
+            wx.navigateBack({
+                delta: 1
+              })
+          }, 2000);
     }else {
-
+       this.$parent.showErrorMsg("错误提示", res.data.msg);
     }
   }
   onLoad(){

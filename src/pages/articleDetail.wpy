@@ -269,6 +269,7 @@
       this.$apply();
     }
     onLoad(params) {
+      console.log(params)
       this.artid=params.id;
       this.getArticleByID();//获取专题
       this.getArticleReView();

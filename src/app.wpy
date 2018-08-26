@@ -16,10 +16,10 @@ export default class extends wepy.app {
     pages: [
       //tabar //排行 //商城  //动态 // 我的
       // 
-      'pages/dynamics',
+      
       'pages/index',
       'pages/rank',
-      
+      'pages/dynamics',
       'pages/mall',
       'pages/my',
       'pages/my/feedbackTips',
