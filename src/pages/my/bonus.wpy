@@ -60,15 +60,15 @@
   <view class="my-bonus-wrap">
     <image src="../../static/img/my/score-title.png" mode="aspectFit" style="width:671rpx;height:202rpx;margin-bottom:20rpx"/>
     <view class="bouns-info" @tap="handleShowQuestion"></view>
-    <view class="bouns-nums">4545454</view>
+    <view class="bouns-nums">{{heroInfo.Point}}</view>
     <scroll-view scroll-y style="height: 850rpx;" lower-threshold="50" bindscrolltolower="handleScroll">
     <repeat for="{{listArr}}" key="index" index="index" item="item">
         <view  @tap="handleClickTab('{{index}}')" class="item-txt border-com-line">
                   <view class="top">
-                      <view>{{item.l_name}}</view>
-                      <view>{{item.l_score}}</view>
+                      <view>{{item.Info}}</view>
+                      <view>{{item.Point}}</view>
                   </view>
-                  <view class="btm">{{item.l_time}}</view>
+                  <view class="btm">{{item.CreateDate}}</view>
         </view>
     </repeat>
     </scroll-view>
@@ -85,83 +85,15 @@ export default class myBonus extends wepy.page {
   components = {};
   data = {
     scrollTop: 100,
-    listArr: [
-      {
-        l_name: '员工',
-        l_score: '+1000',
-        l_time: '2018.06.09 12:00:00'
-      },
-      {
-        l_name: '员工',
-        l_score: '+1000',
-        l_time: '2018.06.09 12:00:00'
-      },
-      {
-        l_name: '员工',
-        l_score: '+1000',
-        l_time: '2018.06.09 12:00:00'
-      },
-      {
-        l_name: '员工',
-        l_score: '+3000',
-        l_time: '2018.06.09 12:00:00'
-      },
-      {
-        l_name: '员工',
-        l_score: '+1000',
-        l_time: '2018.06.09 12:00:00'
-      },
-      {
-        l_name: '员工',
-        l_score: '+1000',
-        l_time: '2018.06.09 12:00:00'
-      },
-      {
-        l_name: '员工',
-        l_score: '+1000',
-        l_time: '2018.06.09 12:00:00'
-      },
-      {
-        l_name: '员工',
-        l_score: '+1000',
-        l_time: '2018.06.09 12:00:00'
-      },
-      {
-        l_name: '员工',
-        l_score: '+1000',
-        l_time: '2018.06.09 12:00:00'
-      },
-      {
-        l_name: '员工',
-        l_score: '+1000',
-        l_time: '2018.06.09 12:00:00'
-      },
-      {
-        l_name: '员工',
-        l_score: '+1000',
-        l_time: '2018.06.09 12:00:00'
-      },
-      {
-        l_name: '员工',
-        l_score: '+1000',
-        l_time: '2018.06.09 12:00:00'
-      },
-      {
-        l_name: '员工',
-        l_score: '+1000',
-        l_time: '2018.06.09 12:00:00'
-      },
-      {
-        l_name: '员工',
-        l_score: '+1000',
-        l_time: '2018.06.09 12:00:00'
-      }
-    ]
+    listArr: []
   };
 
   computed = {
-    now() {
-      return +new Date();
+    heroInfo(){
+        return this.$parent.globalData.HeroInfo
+    },
+    imgHost(){
+        return this.$parent.globalData.imgHost
     }
   };
 
@@ -179,19 +111,23 @@ export default class myBonus extends wepy.page {
   };
 
   events = {};
-  async getData() {
+  async getUserPoint() {
     const that = this;
     const res = await wxRequest({
       query:{
-        opt: 'CheckCanApply',
+        opt: 'getUserPoint',
+        Userid:that.heroInfo.Id
       }
       },that.$parent.globalData.apiUrl);
-   if (res.data.retcode == -1) {
-
-    }else {
-
+     if (res.data.retcode == 0) {
+        this.listArr=res.data.result;
+    }else{
+      this.$parent.showErrorMsg("错误提示", res.data.msg);
     }
+    this.$apply();
   }
-  onLoad() {}
+  onLoad() {
+    this.getUserPoint();
+  }
 }
 </script>

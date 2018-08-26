@@ -37,6 +37,7 @@
       }
       .rt-tip {
         line-height: 60rpx;
+        height: 60rpx;
         font-size: 20rpx;
         color: #f1f4ba;
       }
@@ -174,42 +175,42 @@
        <view class="my-info">
           <view class="lf">
             <image src="http://img1.360buyimg.com/da/jfs/t25096/340/321933848/390630/985a448c/5b6bbefeNafcfc263.jpg" mode="scaleToFill" />
-          <view class="name-box">段位：白金</view>          
+          <view class="name-box" wx:if="{{heroInfo.Level}}">{{(heroInfo.Level)}}</view>          
           </view>
           <view class="rt">
-            <view class="rt-name">李小志</view>
-            <view class="rt-tip">称号：刀锋战士</view>
-            <view class="rt-mid"><view class="progress" style="width:50%"></view></view>
+            <view class="rt-name">{{heroInfo.UserName}}</view>
+            <view class="rt-tip" >{{heroInfo.Title?('称号：'+heroInfo.Title):''}}</view>
+            <view class="rt-mid"><view class="progress" style="width:{{precent}}"></view></view>
             <view class="rt-btm">
                 <view class="now">
-                    <text>1级</text>
-                    <text>白银狂战</text>
+                    <text>{{userLevel.thisRank}}级</text>
+                    <text>{{userLevel.thisLevel}}</text>
                 </view>
                 <view class="next">
-                    <text>1级</text>
-                    <text>白银狂战</text>
+                    <text>{{userLevel.nextRank}}级</text>
+                    <text>{{userLevel.nextLevel}}</text>
                 </view>
             </view>
           </view>
       </view>
        <image class="l-title" src="../../static/img/my/titl.png" mode="aspectFit" />
-       <scroll-view scroll-y style="height: 680rpx;" >
-       <repeat for="{{listArr.shushi}}" key="index" index="index" item="item">
+       <!-- <scroll-view scroll-y style="height: 680rpx;" > -->
+       <repeat for="{{listArr}}" key="index" index="index" item="item">
        <view class="level-item">
            <view class="level-bg level-{{(index+1)}}">
-              <image  src="../../static/img/my/shushi.png" mode="aspectFit"  />
+              <image  src="{{imgHost + item.Pic}}" mode="aspectFit"  />
            </view>
            <view class="level-rt-tip" wx:if="{{index%2==0}}">
-               <view class="l-name">{{item.name}}</view>
-               <view class="l-value">{{'战斗值≥'+item.val}}</view>
+               <view class="l-name">{{item.Level}}</view>
+               <view class="l-value">{{'战斗值≥'+item.Power1}}</view>
            </view>
            <view class="level-lf-tip" wx:else>
-                <view class="l-name">{{item.name}}</view>
-               <view class="l-value">{{'战斗值≥'+item.val}}</view>
+                <view class="l-name">{{item.Level}}</view>
+               <view class="l-value">{{'战斗值≥'+item.Power1}}</view>
            </view>
        </view>
        </repeat>
-       </scroll-view>
+       <!-- </scroll-view> -->
   </view>
 </template>
 
@@ -222,54 +223,57 @@ export default class myUpLevel extends wepy.page {
   };
   components = {};
   data = {
-    listArr: {
-      shushi: [
-        {
-          name: '战士1',
-          val: '20w'
-        },
-        {
-          name: '战士2',
-          val: '20w'
-        },
-        {
-          name: '战士3',
-          val: '20w'
-        },
-        {
-          name: '战士4',
-          val: '20w'
-        },
-        {
-          name: '战士5',
-          val: '20w'
-        },
-        {
-          name: '战士6',
-          val: '20w'
-        }
-      ]
-    }
+    listArr:  [],
+    userLevel:{},
+    precent:"0%",
   };
 
-  computed = {};
+ computed = {
+    heroInfo(){
+        return this.$parent.globalData.HeroInfo
+    },
+    imgHost(){
+        return this.$parent.globalData.imgHost
+    }
+  };
 
   methods = {};
 
   events = {};
-  async getData() {
+  async getVocationLevel() {
     const that = this;
     const res = await wxRequest({
       query:{
-        opt: 'CheckCanApply',
+        opt: 'getVocationLevel',
+        // 骑士、战士、射手、法师、术士、修士
+        vocation:that.heroInfo.Vocation
       }
       },that.$parent.globalData.apiUrl);
-   if (res.data.retcode == -1) {
-
+   if (res.data.retcode == 0) {
+        this.listArr=res.data.result;
     }else {
 
     }
+    this.$apply();
   }
-  onLoad() {}
+  async getUserLevelRank() {
+    const that = this;
+    const res = await wxRequest({
+      query:{
+        opt: 'getUserLevelRank',
+        Userid:that.heroInfo.Id
+      }
+      },that.$parent.globalData.apiUrl);
+   if (res.data.retcode == 0) {
+        this.userLevel=res.data.result;
+        this.precent=(this.userLevel.thisPower/this.userLevel.nextPower)*100+"%"
+    }
+    this.$apply();
+  }
+  
+  onLoad() {
+    this.getVocationLevel();
+    this.getUserLevelRank()
+  }
 }
 </script>

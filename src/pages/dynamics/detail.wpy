@@ -70,11 +70,17 @@
         color: #f1f4ba;
         padding-left: 40rpx;
         margin-left: 68rpx;
-        background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAaCAMAAACaYWzBAAAAV1BMVEUAAADx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lp45tP4AAAAHHRSTlMAPEvhRAr6hfLqy5HV0Luaf1ktEt+ja2dBNC4bf/r0rgAAAIBJREFUKM91z0kOhDAMRFEHyEwz9dzt+5+TJCyQsOsv60lRTGdf7++kZBzzaBWYufRS4FZhkrt1FaKED9eChNxglC/FBl7Awq3tuq+u7XE4MuXSn8/zZvhS6Nr3OwHcU68DIwgIJgQLggGAswASAcgIVgR/AA8C8ETwLpAUSJZoB+O9KHScoGflAAAAAElFTkSuQmCC');
+        // background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAaCAMAAACaYWzBAAAAV1BMVEUAAADx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lp45tP4AAAAHHRSTlMAPEvhRAr6hfLqy5HV0Luaf1ktEt+ja2dBNC4bf/r0rgAAAIBJREFUKM91z0kOhDAMRFEHyEwz9dzt+5+TJCyQsOsv60lRTGdf7++kZBzzaBWYufRS4FZhkrt1FaKED9eChNxglC/FBl7Awq3tuq+u7XE4MuXSn8/zZvhS6Nr3OwHcU68DIwgIJgQLggGAswASAcgIVgR/AA8C8ETwLpAUSJZoB+O9KHScoGflAAAAAElFTkSuQmCC');
         background-repeat: no-repeat;
         background-size: 24rpx auto;
         background-position-y: center;
         background-position-x: 0;
+      }
+      .icon.unlike{
+        background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAaCAMAAACaYWzBAAAAWlBMVEUAAAD///////////////////////////////////////////////////////////////////////////////////////////////////////////////////9ZMre9AAAAHXRSTlMAPEvhQ/qF8suR6tXQmn9ZLRgOCwfpu7qja2c0LhjJOAkAAAB/SURBVCjPdc5JEoMwDERRGc8QZjJH979msFlQhdR/2W/TdPYNYSYl45m7TYGe994K3Ao85L75Aq0Ex6UoIVfoxL7eKwQBA9em6z76urfuyCxEv5D7yfCl2NT7jQC2ZHVgBBHBE8GAwAHwK4BEADKCEcEMwBKAF4LPDkmBtBD9AVlWKeEhiYqBAAAAAElFTkSuQmCC');
+      }
+      .icon.like{
+         background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAaCAMAAACaYWzBAAAAV1BMVEUAAADx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lrx9Lp45tP4AAAAHHRSTlMAPEvhRAr6hfLqy5HV0Luaf1ktEt+ja2dBNC4bf/r0rgAAAIBJREFUKM91z0kOhDAMRFEHyEwz9dzt+5+TJCyQsOsv60lRTGdf7++kZBzzaBWYufRS4FZhkrt1FaKED9eChNxglC/FBl7Awq3tuq+u7XE4MuXSn8/zZvhS6Nr3OwHcU68DIwgIJgQLggGAswASAcgIVgR/AA8C8ETwLpAUSJZoB+O9KHScoGflAAAAAElFTkSuQmCC');
       }
     }
   }
@@ -108,31 +114,30 @@
   <view class="dynamic-deatail">
     <view class="cont">
       <view class="info border-com-line">
-        <view class="com-avator"><image src="http://img1.360buyimg.com/da/jfs/t25096/340/321933848/390630/985a448c/5b6bbefeNafcfc263.jpg" mode="scaleToFill" /></view>
+        <view class="com-avator"><image src="{{pageObj.HeadImg}}" mode="scaleToFill" /></view>
         <view class="info-txt">
-              <view class="ye">张三</view>
-              <text>2018.9.45</text>
+              <view class="ye">{{pageObj.NickName}}</view>
+              <text>{{pageObj.CreateDate}}</text>
         </view>
       </view>
-      <view class="titl border-com-line ye">卓系统，QQ微信都可以，人好，</view>
-      <view class="msg">安卓系统，QQ微信都可以，人好，心肠好，不演不挂机不骂人不扣分，每天都时间多，活跃，要求是段位无所谓，铭文两套以上，英雄多一点</view>
+      <view class="titl border-com-line ye" wx:if="{{pageObj.Title}}">{{pageObj.Title}}</view>
+      <view class="msg">{{pageObj.Txt}}</view>
       <view class="status">
-        <view >阅读：565656</view>
-        <view class="icon">阅读：565656</view>
+        <view >评论：{{pageObj.ReviewCount}}</view>
+        <view class="icon {{hasClickLike?'like':'unlike'}}" @tap="handleClickLike">点赞：{{pageObj.LikeCount||'0'}}</view>
       </view>
     </view>
     <view class="msg-title border-com-line">
       <text>留言区</text>
      <image @tap="handleJumpAdd" src="../../static/img/dynamics/msg-add.png" mode="aspectFit" style="width:36rpx;height:45rpx;"/>
     </view>
-    <scroll-view scroll-y style="height: 560rpx;" lower-threshold="50" bindscrolltolower="handleScroll">
-        
+    <scroll-view scroll-y style="height: 560rpx;">
         <repeat for="{{listArr}}" key="index" index="index" item="item">
           <view class="item border-com-line">
-            <view class="com-avator"><image src="{{item.FromHeadImg}}" mode="scaleToFill" /></view>
-            <view class="rt" @tap="handleJumpDetail">
-              <view class="ye">{{item.FromName}}</view>
-              <text>{{item.LeaveWord}}</text>
+            <view class="com-avator"><image src="{{item.HeadImg}}" mode="scaleToFill" /></view>
+            <view class="rt" @tap="handleJumpDetail({{item}})">
+              <view class="ye">{{item.NickName}}</view>
+              <text>{{item.ReviewTxt}}</text>
             </view>
             </view>
         </repeat>
@@ -149,97 +154,115 @@ export default class dynamicDetail extends wepy.page {
   };
   components = {};
   data = {
-    artid:0,
-    listArr: [
-      {
-        d_avator:
-          'http://img1.360buyimg.com/da/jfs/t25096/340/321933848/390630/985a448c/5b6bbefeNafcfc263.jpg',
-        d_name: '张三',
-        d_cont:
-          '王者荣耀新赛季已经开启一段时间了，大家伙上王者没。上王者不仅是段位提升的一种激励王者荣耀新赛季已经开启一段时间了，大家伙上王者没。上王者不仅是段位提升的一种激励'
-      },
-      {
-        d_avator:
-          'http://img1.360buyimg.com/da/jfs/t25096/340/321933848/390630/985a448c/5b6bbefeNafcfc263.jpg',
-        d_name: '张三',
-        d_cont:
-          '王者荣耀新赛季已经开启一段时间了，大家伙上王者没。上王者不仅是段位提升的一种激励王者荣耀新赛季已经开启一段时间了，大家伙上王者没。上王者不仅是段位提升的一种激励'
-      },
-      {
-        d_avator:
-          'http://img1.360buyimg.com/da/jfs/t25096/340/321933848/390630/985a448c/5b6bbefeNafcfc263.jpg',
-        d_name: '张三',
-        d_cont:
-          '王者荣耀新赛季已经开启一段时间了，大家伙上王者没。上王者不仅是段位提升的一种激励王者荣耀新赛季已经开启一段时间了，大家伙上王者没。上王者不仅是段位提升的一种激励'
-      },
-      {
-        d_avator:
-          'http://img1.360buyimg.com/da/jfs/t25096/340/321933848/390630/985a448c/5b6bbefeNafcfc263.jpg',
-        d_name: '张三',
-        d_cont:
-          '王者荣耀新赛季已经开启一段时间了，大家伙上王者没。上王者不仅是段位提升的一种激励王者荣耀新赛季已经开启一段时间了，大家伙上王者没。上王者不仅是段位提升的一种激励'
-      },
-      {
-        d_avator:
-          'http://img1.360buyimg.com/da/jfs/t25096/340/321933848/390630/985a448c/5b6bbefeNafcfc263.jpg',
-        d_name: '张三',
-        d_cont:
-          '王者荣耀新赛季已经开启一段时间了，大家伙上王者没。上王者不仅是段位提升的一种激励王者荣耀新赛季已经开启一段时间了，大家伙上王者没。上王者不仅是段位提升的一种激励'
-      },
-      {
-        d_avator:
-          'http://img1.360buyimg.com/da/jfs/t25096/340/321933848/390630/985a448c/5b6bbefeNafcfc263.jpg',
-        d_name: '张三',
-        d_cont:
-          '王者荣耀新赛季已经开启一段时间了，大家伙上王者没。上王者不仅是段位提升的一种激励王者荣耀新赛季已经开启一段时间了，大家伙上王者没。上王者不仅是段位提升的一种激励'
-      },
-      {
-        d_avator:
-          'http://img1.360buyimg.com/da/jfs/t25096/340/321933848/390630/985a448c/5b6bbefeNafcfc263.jpg',
-        d_name: '张三',
-        d_cont:
-          '王者荣耀新赛季已经开启一段时间了，大家伙上王者没。上王者不仅是段位提升的一种激励王者荣耀新赛季已经开启一段时间了，大家伙上王者没。上王者不仅是段位提升的一种激励'
-      }
-    ]
+    postid:0,
+    hasClickLike:false,//是否点赞
+    pageObj: {},
+    listArr:[]
   };
 
   computed = {
-    now() {
-      return +new Date();
+    heroInfo(){
+      return  this.$parent.globalData.HeroInfo;
     }
   };
 
   methods = {
-    handleScroll() {
-      console.log('scroll');
-    },
+    handleClickLike(){
+        if(this.hasClickLike){
+          wx.showToast({
+          title: '您已经点过赞了',
+          icon: 'none',
+          duration: 2000
+          });
+          return;
+        }
+        this.addPostLike();
+      },
     handleJumpAdd() {
-      this.$navigate('/pages/my/addMsg');
+      this.$navigate('/pages/my/addMsg?type=3&toId='+this.postid+'&fromId='+this.heroInfo.Id+'&toName='+this.pageObj.NickName);
     },
-    handleJumpDetail() {
-      this.$navigate('/pages/dynamics/leaveMsg');
+    handleJumpDetail(item) {
+      this.$navigate('/pages/dynamics/leaveMsg?data='+JSON.stringify(item));
     }
   };
 
   events = {};
-  async getArticleByID() {
+  async getPostByID() {
     const that = this;
     const res = await wxRequest(
       {
         query: {
-          opt: 'getArticleByID',
-          artid: that.artid,
+          opt: 'getPostByID',
+          postid: that.postid,
         }
       },
       that.$parent.globalData.apiUrl
     );
     if (res.data.retcode == 0) {
-    } else {
-    }
+      this.pageObj=res.data.result;
+    } 
+    this.$apply();
   }
+  
+  async getPostReview() {
+    const that = this;
+    const res = await wxRequest(
+      {
+        query: {
+          opt: 'getPostReview',
+          postid: that.postid,
+        }
+      },
+      that.$parent.globalData.apiUrl
+    );
+    if (res.data.retcode == 0) {
+      this.listArr=res.data.result;
+    } 
+    this.$apply();
+  }
+  async checkPostLike() {
+      const that = this;
+      const res = await wxRequest({
+          query: {
+            opt: 'checkPostLike',
+            postid: that.postid,
+            userid:that.heroInfo.Id
+          }
+        },that.$parent.globalData.apiUrl);
+        if (res.data.retcode == 0) {
+            this.hasClickLike = true;
+        }
+        this.$apply();
+    }
+  //点赞 
+    async addPostLike() {
+      const that = this;
+      const res = await wxRequest({
+          query: {
+            opt: 'addPostLike',
+            postid: that.postid,
+            userid:that.heroInfo.Id
+          }
+        },that.$parent.globalData.apiUrl);
+       if (res.data.retcode == 0) {
+          wx.showToast({
+            title: '点赞成功',
+            icon: 'success',
+            duration: 2000
+          });
+          this.hasClickLike=true;
+      }else {
+        this.$parent.showErrorMsg("错误提示", res.data.msg);
+      }
+      this.$apply();
+    }
   onLoad(params) {
-    this.artid=params.id;
-    this.getArticleByID();//获取专题
+    this.postid=params.id;
+    this.getPostByID();//获取帖子
+  }
+  onShow(){
+    this.getPostReview();
+    this.checkPostLike()
   }
 }
 </script>

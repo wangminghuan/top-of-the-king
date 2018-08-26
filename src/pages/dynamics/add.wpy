@@ -3,11 +3,11 @@
 @import '../../static/style/userComBtn.less';
 .dynamics-add-wrap {
   padding: 0 38rpx;
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  left: 0;
-  right: 0;
+  // position: absolute;
+  // top: 50%;
+  // transform: translateY(-50%);
+  // left: 0;
+  // right: 0;
   margin: 0 auto;
   .user-input {
     display: flex;
@@ -97,7 +97,7 @@
             <image src="../../static/img/login/upimg.png" mode="aspectFit" style="width:39rpx;height:34rpx;"/>
         </view>
         </view>
-    <button class="user-com-btn" @tap="handleSubmit" style="width:394rpx">发表</button>
+    <button class="user-com-btn" @tap="handleSubmit" style="width:394rpx;margin-bottom:40rpx;">发表</button>
   </view>
   
 </template>
@@ -130,6 +130,14 @@ export default class dynamicsAdd  extends wepy.page {
      this.inputTxt= e.detail.value;
     },
     handleChooseImg(){
+      if( this.tempFilePaths.length>=6){
+         wx.showToast({
+            title: "超出最大数量限制",
+            icon: 'none',
+            duration: 2000
+          });
+        return
+      }
       const that=this;
         wx.chooseImage({
           count: 1, // 默认9
@@ -147,10 +155,6 @@ export default class dynamicsAdd  extends wepy.page {
     },
     handlePreviewImg(url){
        const that=this;
-       console.log({
-        current: url, // 当前显示图片的http链接
-        urls: that.tempFilePaths // 需要预览的图片http链接列表
-      })
         wx.previewImage({
         current: url, // 当前显示图片的http链接
         urls: that.tempFilePaths // 需要预览的图片http链接列表
@@ -166,7 +170,7 @@ export default class dynamicsAdd  extends wepy.page {
         return ;
       }else if(this.inputTxt.replace(/\s+/g,'').length<6){
          wx.showToast({
-            title: "留言内容过短，请重新输入",
+            title: "内容过短，请重新输入",
             icon: 'none',
             duration: 2000
           });
@@ -178,21 +182,51 @@ export default class dynamicsAdd  extends wepy.page {
   };
 
   events = {};
-  uploadFiles(){
+  uploadFiles(id){
+    wx.showToast({  
+        title: '正在上传...',  
+        icon: 'loading',  
+        mask: true,  
+        duration: 10000  
+      }) 
+    var uploadImgCount = 0;  
+    const that=this;
+    for (var i = 0, h = that.tempFilePaths.length; i < h; i++) { 
       wx.uploadFile({
-            url: 'https://example.weixin.qq.com/upload', //仅为示例，非真实的接口地址
-            filePath: tempFilePaths[0],
+            url: that.$parent.globalData.apiUrl, //仅为示例，非真实的接口地址
+            filePath: that.tempFilePaths[i],
             name: 'file',
             formData:{
-              opt:'uploadPostPic',
-              'PostID': 帖子ID, 
-              'imgIndex': 照片序号
+              'opt':'uploadPostPic',
+              'PostID': id, 
+              'imgIndex': i
             },
+            header: {  
+              "Content-Type": "multipart/form-data"  
+            },  
             success: function(res){
-              var data = res.data
+              uploadImgCount++;  
+              if (uploadImgCount == that.tempFilePaths.length) {  
+                   wx.hideToast();  
+                   wx.showToast({
+                    title: '提交成功，请耐先等待核审',
+                    icon: 'success',
+                    duration: 2000
+                  });
+                  setTimeout(() => {
+                    //返回上一页
+                    wx.navigateBack({
+                        delta: 1
+                      })
+                  }, 2000);
+              }  
               //do something
+            },
+            fail: function (res) { 
+                 that.$parent.showErrorMsg("错误提示",'上传图片失败'); 
             }
       })
+    }
   }
   async addPost() {
     const that = this;
@@ -200,22 +234,12 @@ export default class dynamicsAdd  extends wepy.page {
       query:{
         opt: 'addPost',
         userid:that.heroInfo.Id, 
+        name:that.inputTitle,
         txt:that.inputTxt, 
       }
       },that.$parent.globalData.apiUrl);
     if (res.data.retcode == 0) {
-         that.uploadFiles();
-          wx.showToast({
-            title: '提交成功，请耐先等待核审',
-            icon: 'success',
-            duration: 2000
-          });
-          setTimeout(() => {
-            //返回上一页
-            wx.navigateBack({
-                delta: 1
-              })
-          }, 2000);
+         that.uploadFiles(res.data.result.Id);
     }else {
        this.$parent.showErrorMsg("错误提示", res.data.msg);
     }

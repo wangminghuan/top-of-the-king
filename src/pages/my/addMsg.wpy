@@ -92,6 +92,9 @@ export default class msgAdd extends wepy.page {
       }else if(this.type==2){
         //专题评论
         this.addArticleReView()
+      }else if(this.type==3){
+        //帖子评论
+        this.addPostReView()
       }
       
     }
@@ -150,6 +153,34 @@ export default class msgAdd extends wepy.page {
     }else {
        this.$parent.showErrorMsg("错误提示", res.data.msg);
     }
+  }
+  //评论
+  async addPostReView(indx) {
+    const that = this;
+    const res = await wxRequest({
+      query:{
+        opt: 'addPostReView',
+        postid:that.toId,
+        userid:that.fromId,
+        txt:that.inputMsg,
+      }
+      },that.$parent.globalData.apiUrl);
+   if (res.data.retcode == 0) {
+        wx.showToast({
+            title: '评论成功',
+            icon: 'success',
+            duration: 2000
+          });
+          setTimeout(() => {
+            //返回上一页
+            wx.navigateBack({
+                delta: 1
+              })
+          }, 2000);
+    }else{
+        this.$parent.showErrorMsg("错误提示", res.data.msg);
+    }
+    this.$apply();
   }
   onLoad(params) {
     this.inputToName=params.toName;

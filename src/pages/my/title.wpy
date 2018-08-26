@@ -34,7 +34,6 @@
       overflow: hidden;
       background-image: url('http://s29.9956.cn/res/zhushou/danye/topking/ry_bg.png');
       background-size: cover;
-
       image {
         width: 180rpx;
         height: 180rpx;
@@ -48,21 +47,18 @@
     <view class="login-com-title">
      已获称号
     </view>
-    
         <scroll-view scroll-y style="height: 860rpx;" >
          <view  class="content">
           <repeat for="{{titleList}}" key="index" index="index" item="item">
              <view class="item">
-             <view class="title-bg title-{{(index+1)}}">
-              <image  src="../../static/img/my/ry1.png" mode="aspectFit"  />
-             
+             <view class="title-bg">
+              <image src="{{imgHost+item.Pic}}" mode="aspectFit"  />
              </view>
-              <text>{{item.t_name}}</text>
+              <text>{{item.Title}}</text>
               </view>
             </repeat>
             </view>
             </scroll-view>
-        
   </view>
 </template>
 
@@ -75,49 +71,36 @@ export default class myRecord extends wepy.page {
   };
   components = {};
   data = {
-    titleList: [
-      {
-        t_name: '销售',
-        t_val: '1'
-      },
-      {
-        t_name: '销售2',
-        t_val: '1'
-      },
-      {
-        t_name: '销售',
-        t_val: '1'
-      },
-      {
-        t_name: '销售2',
-        t_val: '1'
-      },
-      {
-        t_name: '销售',
-        t_val: '1'
-      },
-      {
-        t_name: '销售2',
-        t_val: '1'
-      }
-    ]
+    titleList: []
+  };
+  computed = {
+    heroInfo(){
+        return this.$parent.globalData.HeroInfo
+    },
+    imgHost(){
+        return this.$parent.globalData.imgHost
+    }
   };
   methods = {};
 
- async getData() {
+ async getUserTitle() {
     const that = this;
     const res = await wxRequest({
       query:{
-        opt: 'CheckCanApply',
+        opt: 'getUserTitle',
+         Userid:that.heroInfo.Id
       }
       },that.$parent.globalData.apiUrl);
-   if (res.data.retcode == -1) {
-
+     if (res.data.retcode == 0) {
+       this.titleList=res.data.result;
     }else {
-
+       this.$parent.showErrorMsg("提示", res.data.msg);
     }
+    this.$apply();
   }
 
-  onLoad() {}
+  onLoad() {
+    this.getUserTitle();
+  }
 }
 </script>

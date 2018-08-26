@@ -200,7 +200,7 @@
       </view>
       <view class="user-wrap">
            <repeat for="{{userArr}}" key="index" index="index" item="item">
-             <view class="user-item"  @tap="handleJumpDetail({{item}})">
+             <view class="user-item">
                <image src="{{item.HeadImg?item.HeadImg:'../static/img/my/logo-def.png'}}" mode="scaleToFill" />
                <view style="color:#b7e3f6">{{item.UserTitle}}</view>
                <view style="color:#f1f4ba">{{item.NickName}}</view>
@@ -383,10 +383,32 @@ export default class pageRank extends wepy.page {
     }
     this.$apply();
   }
-   onLoad() {
+  async getMessage() {
+    const that = this;
+    const res = await wxRequest({
+      query:{
+        opt: 'getMessage',
+        userid:that.heroInfo.Id,
+        num:6,
+      }
+      },that.$parent.globalData.apiUrl);
+   if (res.data.retcode == 0) {
+        const arr=res.data.result;
+        if(arr instanceof Array && arr.length>0){
+               that.msgList=arr.concat(arr[0]);
+        }else{
+           that.msgList=[{
+             MsgInfo:"暂无最新动态"
+           }];
+        }
+        that.scrollTxtY();
+    }
+    this.$apply();
+  }
+   onShow() {
      this.getMaxUser();
      this.getUserRank();
-     this.scrollTxtY();
+     this.getMessage();
   }
 }
 </script>

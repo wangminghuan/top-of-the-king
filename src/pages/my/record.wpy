@@ -19,6 +19,9 @@
       height: 68rpx;
       .item {
         width: 33.3%;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
         color: #b7e3f6;
         font-size: 26rpx;
         align-self: center;
@@ -49,9 +52,9 @@
         <scroll-view scroll-y style="height: 764rpx;" >
           <repeat for="{{contList}}" key="index" index="index" item="item">
              <view class="row-wrap">
-               <view class="item">{{item.c_event}}</view>
-               <view class="item">{{item.c_power}}</view>
-               <view class="item">{{item.c_time}}</view>
+               <view class="item">{{item.Info}}</view>
+               <view class="item">{{item.Power}}</view>
+               <view class="item">{{item.CreateDate}}</view>
               </view>
             </repeat>
             </scroll-view>
@@ -68,112 +71,36 @@ export default class myRecord extends wepy.page {
   };
   components = {};
   data = {
-    contList: [
-      {
-        c_event: '销售',
-        c_power: '获得888技能',
-        c_time: '09.30 08:00'
-      },
-      {
-        c_event: '销售',
-        c_power: '获得888技能',
-        c_time: '09.30 08:00'
-      },
-      {
-        c_event: '销售',
-        c_power: '获得888技能',
-        c_time: '09.30 08:00'
-      },
-      {
-        c_event: '销售',
-        c_power: '获得888技能',
-        c_time: '09.30 08:00'
-      },
-      {
-        c_event: '销售',
-        c_power: '获得888技能',
-        c_time: '09.30 08:00'
-      },
-      {
-        c_event: '销售',
-        c_power: '获得888技能',
-        c_time: '09.30 08:00'
-      },
-      {
-        c_event: '销售',
-        c_power: '获得888技能',
-        c_time: '09.30 08:00'
-      },
-      {
-        c_event: '销售',
-        c_power: '获得888技能',
-        c_time: '09.30 08:00'
-      },
-      {
-        c_event: '销售',
-        c_power: '获得888技能',
-        c_time: '09.30 08:00'
-      },
-      {
-        c_event: '销售',
-        c_power: '获得888技能',
-        c_time: '09.30 08:00'
-      },
-      {
-        c_event: '销售',
-        c_power: '获得888技能',
-        c_time: '09.30 08:00'
-      },
-      {
-        c_event: '销售',
-        c_power: '获得888技能',
-        c_time: '09.30 08:00'
-      },
-      {
-        c_event: '销售',
-        c_power: '获得888技能',
-        c_time: '09.30 08:00'
-      },
-      {
-        c_event: '销售',
-        c_power: '获得888技能',
-        c_time: '09.30 08:00'
-      },
-      {
-        c_event: '销售',
-        c_power: '获得888技能',
-        c_time: '09.30 08:00'
-      },
-      {
-        c_event: '销售',
-        c_power: '获得888技能',
-        c_time: '09.30 08:00'
-      }
-    ]
+    contList: []
   };
 
   computed = {
-    now() {
-      return +new Date();
-    }
+    heroInfo(){
+        return this.$parent.globalData.HeroInfo
+    },
   };
 
   methods = {};
  
   events = {};
-  async getData() {
+  async getUserPower(id) {
     const that = this;
     const res = await wxRequest({
       query:{
-        opt: 'CheckCanApply',
+        opt: 'getUserPower',
+        Userid:id,
+        num:0,
       }
       },that.$parent.globalData.apiUrl);
-   if (res.data.retcode == -1) {
-
+   if (res.data.retcode == 0) {
+     this.contList=res.data.result;
     }else {
-
+      this.$parent.showErrorMsg("提示", res.data.msg);
     }
+    this.$apply()
   }
-  onLoad() {}
+  onLoad(params) {
+    this.getUserPower(params.id)
+  }
 }
 </script>

@@ -1,44 +1,51 @@
 <style lang="less">
-@import '../../static/style/userComBtn.less';
-@import '../../static/style/borderComLine.less';
-@import '../../static/style/comAvator.less';
-.my-npc-wrap {
-  padding: 0 38rpx;
-  height: 100%;
-  .item {
-    height: 161rpx;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
+@import '../../static/style/loginComTitle.less';
+.feedback-list-wrap {
+  padding: 0 44rpx;
+  padding-bottom: 100rpx;
+  .login-com-title {
+    margin-top: 38rpx;
+    margin-bottom: 64rpx;
   }
-  // .icon{
-  //     width:100rpx;
-  //     height: 100rpx;
-  //     border-radius: 50%;
-  //     border:1rpx solid red;
-  // }
-  .txt {
-    display: flex;
-    flex-direction: column;
-    width: 470rpx;
-    margin-left: 30rpx;
-    justify-content: flex-start;
-    //  align-items: center;
-  }
-  .top {
-    display: flex;
-
-    //  width: 100%;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 26rpx;
-    line-height: 66rpx;
-    //  margin-top:30rpx;
-  }
-  .btm {
-    color: #cbe3f7;
-    font-size: 24rpx;
+  .cont {
+    border: 1px solid #85d1ea;
+    // height: 454rpx;
+    box-shadow: inset 0 0 10rpx 3rpx #405784;
+    background-color: #475881;
+    padding: 26rpx 52rpx;
+    margin-bottom: 40rpx;
+    .top {
+      font-size: 32rpx;
+      color: #f1f4ba;
+      line-height: 110rpx;
+      text-align: center;
+    }
+    .mid {
+      // width: 172rpx;
+      // height:175rpx;
+      // background-color: red;
+      // margin:0 auto;
+      // margin-bottom: 44rpx;
+      color: #fff;
+      font-size: 24rpx;
+      line-height: 38rpx;
+    }
+    .btm {
+      display: flex;
+      justify-content: space-between;
+      color: #f1f4ba;
+      font-size: 24rpx;
+      height: 36rpx;
+      line-height: 36rpx;
+      margin-top: 48rpx;
+      .icon {
+        padding-left: 46rpx;
+        background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACIAAAAkCAYAAADsHujfAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoV2luZG93cykiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6OUY4QUZCOEJBMTQzMTFFOEE3RUJDODM3RUU1NDBDRDAiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6OUY4QUZCOENBMTQzMTFFOEE3RUJDODM3RUU1NDBDRDAiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo5RjhBRkI4OUExNDMxMUU4QTdFQkM4MzdFRTU0MENEMCIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo5RjhBRkI4QUExNDMxMUU4QTdFQkM4MzdFRTU0MENEMCIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PtVK+agAAANFSURBVHja5JhJaBRBFIZ7TFQ0Jm64xMiowQVjjBEiLiiCGFwOARVFcYsLeBGFIBERPaioeHDDix4EVwLigmvcNYhBxg3RCHGLRMwQF3SGGJDo+D/5S4qhK91jT+OADz6qmuru+uvVq6rXHYjFYlak6apF6wsGgTQrufYJPAE/7BqzMoqtdNbbgf1gMQhY/thLMAc8smtsw3IzKPVRhNhAcA50sGtUHilleRCsNbnQgw0DN0AOmExBtkJ6sjwDPvrgjTugAQQpxjg1yn5a/lvAjZB/Zulx11NNrkuCdUpEyMpU8UgYfPOpr6BNf0Yhy8EFn4S8pRgrpYP1vxTyQTsAHWNEWQYoY+lkt0Cli/vmgSJwMhEhs8EmlyNdBPq4uO8FsRIRcp4HYKaLDi4ZpjxIgc2g3ukMMwmRh5b95VG/BszQDlJlj8FxsI/ifAlWOcg2gGdghSZCNscW1gvBDlALiv0QIiKOMKYk06sBC0EvBnt7kMfkK8J0VKZzbrKFiID5IAa2guHgKGjUUovnYCMYAqqZEx8Co51iRFy7zSZYo8zgVOBJp+tY3w7WO4gOc1qq+ewBMFLEmoRMB0sNbZLyV7BextHVMEacrC0HL0n6fVAApshUmYSc4FzG5xARppPqpSWs73SR5/YHF0E/Bm4lBzyzNSFNYIvDi4eCbqxf5kjHgZDN8iykiGy2yUq6QiETvAar2k3lpe9BObjNbL2zdp9k7VUU8QVMA29AHdt7exXSogW8TNNrXo+h20XMAuY3mcziJ1KsxWWtvG/OmFxYnVbPYwBnM15EzEMwgPtMLYNSf6aA5TuvHnnFKVGHpNguriSxXIqQmBkfJyJNe+auLuQ7y+4JCJEN7LCWdOdoYlZzI5MgnqTlIpb2ZTmY9d/vCPBvQBWjt5EubjZ0HmVHKsHuQbd3Afe4WUXZ1hV8tfloGwuugY7gtCxf+RughIxiY5bLBKdCuy7hC8W7T7kRhgwn/RKwhx/iEhvSb1j/LRFi8JRrLrOzzxSs21mwCuwF+fTMTU5LPQ/CfG5cuXymgR9z4T8nZ9yPGi8m07KbK6i1uDrFmArb/ahJhsloRoBZHH1RXIZ2HRwDD2xzCfFIKtgvAQYA5BrDq5qrB0MAAAAASUVORK5CYII=');
+        background-size: 34rpx 36rpx;
+        background-repeat: no-repeat;
+        background-position: 0 0;
+      }
+    }
   }
   .btm-fix {
     color: #fff;
@@ -64,78 +71,72 @@
 }
 </style>
 <template>
-  <view class="my-npc-wrap">
-    <scroll-view scroll-y style="height: 500rpx;" lower-threshold="50" bindscrolltolower="handleScroll">
-    <repeat for="{{listArr}}" key="index" index="index" item="item">
-        <view  @tap="handleClickTab('{{index}}')" class="item border-com-line">
-            <view class="com-avator"></view>
-             <view class="txt">
-                  <view class="top">
-                      <view style="color:#f1f4ba;font-size:26rpx;">{{item.l_name}}</view>
-                      <view style="color:#799ac4;font-size:20rpx;">{{item.l_time}}</view>
-                  </view>
-                  <view class="btm">{{item.l_cont}}</view>
-             </view>
-             </view>
-    </repeat>
-    </scroll-view>
-    <button class="user-com-btn" style="width:400rpx;margin-top:134rpx">全部清空</button>
-    <view class="btm-fix" @tap="handleJump">意见和反馈</view>
+  <view class="feedback-list-wrap">
+      <view class="login-com-title">反馈列表</view>
+      <repeat for="{{listArr}}" key="index" index="index" item="item">
+      <view class="cont" @tap="handleClick({{item}})">
+          <view class="top">{{item.Name}}</view>
+          <view class="mid">{{item.Txt}}</view>
+          <view class="btm">
+              <text class="icon">{{item.Status==1?'已审核':contObj.Status==0?'未审核':'已关闭'}}</text>
+              <text>{{item.CreateDate}}</text>
+          </view>
+      </view>
+      </repeat>
+       <view class="btm-fix" @tap="handleJump">意见和反馈</view>
   </view>
 </template>
 
 <script>
 import wepy from 'wepy';
-import wxRequest from '../../util/wxRequest.js';
-export default class myNpc extends wepy.page {
+import wxRequest from "../../util/wxRequest.js";
+export default class feedbackList extends wepy.page {
   config = {
-    navigationBarTitleText: '我的积分'
+    navigationBarTitleText: '反馈列表'
   };
   components = {};
   data = {
-    listArr: [
-      {
-        l_name: '兑换消息',
-        l_cont: '恭喜您获得一个小熊猫',
-        l_time: '12:00:00'
-      },
-      {
-        l_name: '受理提醒',
-        l_cont: '恭喜您获得一个小熊猫',
-        l_time: '12:00:00'
-      }
-    ]
+    listArr:[]
   };
-
   computed = {
-    now() {
-      return +new Date();
+    imgHost(){
+        return this.$parent.globalData.imgHost
+    },
+    heroInfo(){
+        return this.$parent.globalData.HeroInfo
     }
   };
-
   methods = {
-    handleScroll() {
-      console.log('scroll');
-    },
-    handleJump() {
-      this.$navigate('/pages/my/feedback');
-    }
+       handleClick(item){
+          this.$navigate('/pages/my/feedbackTips?id='+item.Id);
+       },
+       handleJump() {
+        this.$navigate('/pages/my/feedback');
+      }
   };
 
   events = {};
-  async getData() {
+  
+  async getNPC() {
     const that = this;
     const res = await wxRequest({
       query:{
-        opt: 'CheckCanApply',
+        opt: 'getNPC',
+        userid:that.heroInfo.Id
       }
       },that.$parent.globalData.apiUrl);
-   if (res.data.retcode == -1) {
-
-    }else {
-
+    if (res.data.retcode == 0) {
+        this.listArr=res.data.result;
+    }else{
+      this.$parent.showErrorMsg("提示", res.data.msg);
     }
+    this.$apply();
   }
-  onLoad() {}
+  
+  onLoad() {
+  }
+  onShow(){
+    this.getNPC()
+  }
 }
 </script>

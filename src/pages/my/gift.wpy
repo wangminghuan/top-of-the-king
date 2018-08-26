@@ -60,124 +60,84 @@
   <view class="my-gift-wrap">
     <view class="top-wrap">
     <view class="tab-com">
-      <view class="active">我收到的礼包</view>
-      <view class="">我发出的礼包</view>
+      <view class="{{activeTab==0?'active':''}}" @tap="handleClickTab(0)">我收到的礼包</view>
+      <view class="{{activeTab==1?'active':''}}" @tap="handleClickTab(1)">我发出的礼包</view>
     </view>
     </view>
-    <scroll-view scroll-y style="height: 606rpx;" lower-threshold="50" bindscrolltolower="handleScroll">
+    <scroll-view scroll-y style="height: 834rpx;">
         <view class="border-com-line" style="height:2rpx;"></view>
         <repeat for="{{listArr}}" key="index" index="index" item="item">
           <view class="item border-com-line">
             <view class="lf">
-            <view class="com-avator"><image src="{{item.d_avator}}" mode="scaleToFill" /></view>
+            <view class="com-avator"><image src="{{imgHost + item.Pic}}" mode="scaleToFill" /></view>
             <view class="lf-box">
-             <view class="lf-titl">{{item.d_name}}</view>
-             <text>{{item.d_time}}</text>
+             <view class="lf-titl">{{activeTab==0?(item.NickName+'赠送'):('赠送给'+item.NickName)}}</view>
+             <text>{{item.BuyDate}}</text>
             </view>
             </view>
-            <view class="rt">{{item.d_nums}}</view>
+            <view class="rt">+{{item.GiftCount}}</view>
             </view>
         </repeat>
     </scroll-view>
+    <!-- <button class="btm-btn user-com-btn" @tap="handleJumpAdd">我要留言</button> -->
   </view>
 </template>
 
 <script>
 import wepy from 'wepy';
-import wxRequest from '../../util/wxRequest.js';
+import wxRequest from "../../util/wxRequest.js";
 export default class myGift extends wepy.page {
   config = {
-    navigationBarTitleText: '留言'
+    navigationBarTitleText: '礼包'
   };
   components = {};
   data = {
-    listArr: [
-      {
-        d_avator:
-          'http://img1.360buyimg.com/da/jfs/t25096/340/321933848/390630/985a448c/5b6bbefeNafcfc263.jpg',
-        d_name: '张三赠送',
-        d_time: '08.09 12:00',
-        d_nums: '+11'
-      },
-      {
-        d_avator:
-          'http://img1.360buyimg.com/da/jfs/t25096/340/321933848/390630/985a448c/5b6bbefeNafcfc263.jpg',
-        d_name: '张三赠送',
-        d_time: '08.09 12:00',
-        d_nums: '+11'
-      },
-      {
-        d_avator:
-          'http://img1.360buyimg.com/da/jfs/t25096/340/321933848/390630/985a448c/5b6bbefeNafcfc263.jpg',
-        d_name: '张三赠送',
-        d_time: '08.09 12:00',
-        d_nums: '+11'
-      },
-      {
-        d_avator:
-          'http://img1.360buyimg.com/da/jfs/t25096/340/321933848/390630/985a448c/5b6bbefeNafcfc263.jpg',
-        d_name: '张三赠送',
-        d_time: '08.09 12:00',
-        d_nums: '+11'
-      },
-      {
-        d_avator:
-          'http://img1.360buyimg.com/da/jfs/t25096/340/321933848/390630/985a448c/5b6bbefeNafcfc263.jpg',
-        d_name: '张三赠送',
-        d_time: '08.09 12:00',
-        d_nums: '+11'
-      },
-      {
-        d_avator:
-          'http://img1.360buyimg.com/da/jfs/t25096/340/321933848/390630/985a448c/5b6bbefeNafcfc263.jpg',
-        d_name: '张三赠送',
-        d_time: '08.09 12:00',
-        d_nums: '+11'
-      },
-      {
-        d_avator:
-          'http://img1.360buyimg.com/da/jfs/t25096/340/321933848/390630/985a448c/5b6bbefeNafcfc263.jpg',
-        d_name: '张三赠送',
-        d_time: '08.09 12:00',
-        d_nums: '+11'
-      }
-    ]
+    activeTab:0,
+    listArr: []
   };
 
   computed = {
-    now() {
-      return +new Date();
-    }
+     heroInfo(){
+      return  this.$parent.globalData.HeroInfo;
+    },
+    imgHost(){
+        return this.$parent.globalData.imgHost
+    },
   };
 
   methods = {
-    handleScroll() {
-      console.log('scroll');
-    },
-    handleJumpAdd() {
-      this.$navigate('/pages/dynamics/add');
-    },
-    handleJumpDetail() {
-      this.$navigate('/pages/dynamics/leaveMsg');
+    handleClickTab(inx){
+       this.activeTab=inx;
+       this.activeTab==0?this.getUserGift(this.heroInfo.Id,0):this.getUserGift(0,this.heroInfo.Id);
     }
   };
 
   events = {};
-  async getGift() {
+  async getUserGift(tid,fid) {
     const that = this;
     const res = await wxRequest({
       query:{
-        opt: 'getGift',
+        opt: 'getUserGift',
+        touserid:tid,
+        fromuserid:fid,
       }
       },that.$parent.globalData.apiUrl);
-   if (res.data.retcode == -1) {
-
-    }else {
-
-    }
+     if (res.data.retcode == 0) {
+         this.listArr=res.data.result;
+         if(this.listArr.length==0){
+            wx.showToast({
+            title: '暂无礼包',
+            icon: 'none',
+            duration: 2000
+          });
+         }
+     }else{
+       this.$parent.showErrorMsg("提示", res.data.msg);
+     }
+     this.$apply()
   }
-  onLoad() {
-    this.getGift();
+  onLoad(){
+    this.getUserGift(this.heroInfo.Id,0)
   }
 }
 </script>

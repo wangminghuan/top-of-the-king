@@ -80,6 +80,7 @@
       display: flex;
       justify-content: space-between;
       border-bottom: 1rpx solid #3b8dc5;
+      padding-bottom: 10rpx;
       &:last-child{
         border-bottom: none;
       }
@@ -334,15 +335,15 @@
         <view class="post-item">
            <view class="com-avator" style="margin-top: 36rpx;"><image  src="{{item.HeadImg}}" mode="scaleToFill" /></view>
            <view class="rt">
-             <view class="name">{{item.NickName}}</view>
-             <view class="content" @tap="handleJumpDetail">{{item.Txt}}</view>
+             <view class="name" @tap="handleJumpDetail({{item.Id}})">{{item.NickName}}</view>
+             <view class="content" @tap="handleJumpDetail({{item.Id}})">{{item.Txt}}</view>
              <view class="imglist">
              <repeat for="{{item.PicList}}" key="sindex" index="sindex" item="sitem">
                  <image class="{{sindex%3==1?'mids':''}}" @tap="handlePreviewImg({{imgHost + sitem}},{{index}})" src="{{imgHost + sitem}}}" mode="scaleToFill" />
               </repeat>
               </view>
              <view class="time">
-               <text class="t-lf">{{item.CreateDate}}</text>
+               <text class="t-lf" @tap="handleJumpDetail({{item.Id}})">{{item.CreateDate}}</text>
                <view class="t-rt" @tap="handleReview({{index}})">
                  <image src="../static/img/dynamics/msg.png" mode="aspectFit" style="width:31rpx;height:29rpx;"/>
                  </view>
@@ -367,7 +368,7 @@
         </view>
         </repeat>
     </view>
-    <!-- <view class="pop-shake" catchtouchmove="preventTouchMove" wx:if="{{isShowPop}}">
+    <view class="pop-shake" catchtouchmove="preventTouchMove" wx:if="{{isShowPop}}">
        <view class="bg"></view>
         <image class="shake-bg" src="../static/img/dynamics/shake2.gif" mode="scaleToFill" />
          <view class="pop-cont">
@@ -376,7 +377,7 @@
          <image class="gift-bg" src="../static/img/dynamics/zhanli.png" mode="scaleToFill" />
          <text>{{popArr[0].MsgInfo}}</text>
        </view>
-    </view> -->
+    </view>
     <view wx:if="{{isShowReview}}" class="btm-input" >
       <input confirm-type="send" type="text" auto-focus bindinput="bindUserInput" bindblur="bindUserBlur" />
       <button type="primary" size="mini"  @tap="handleLeaveMsg" >发送</button>
@@ -466,18 +467,24 @@ export default class pageDynamics extends wepy.page {
     // 图片预览
     handlePreviewImg(url,inx){
       const that=this;
+      const urls=that.postList[inx].PicList.map((item)=>{
+           item=that.imgHost+item;
+      })
         wx.previewImage({
         current: url, // 当前显示图片的http链接
-        urls: that.postList[inx].PicList // 需要预览的图片http链接列表
+        urls: urls // 需要预览的图片http链接列表
       }) 
     },
     //关闭弹窗
     handleClosePop(){
+      console.log(1,this.popArr)
        this.isShowPop=false;
        if(this.popArr.length==0) return;
+       this.setMessageRead(this.popArr[0].Id);
        setTimeout(()=>{
           this.popArr.splice(0,1)
           this.isShowPop=true;
+          console.log(2,this.popArr)
           this.$apply();
         },5000)
     },
@@ -485,8 +492,8 @@ export default class pageDynamics extends wepy.page {
     handleJumpArticle(id){
        this.$navigate('/pages/articleDetail?id='+(id?id:1));
     },
-    handleJumpDetail() {
-      this.$navigate('/pages/dynamics/detail');
+    handleJumpDetail(id) {
+      this.$navigate('/pages/dynamics/detail?id='+id);
     },
     handleJumpAdd() {
       this.$navigate('/pages/dynamics/add');
@@ -527,6 +534,18 @@ export default class pageDynamics extends wepy.page {
      })
      this.popArr=popArr;
   }
+  
+  //设置消息已读
+  async setMessageRead(msgid) {
+    const that = this;
+    const res = await wxRequest({
+      query:{
+        opt: 'setMessageRead',
+        msgid:msgid,
+        userid:that.$parent.globalData.HeroInfo.Id,
+      }
+      },that.$parent.globalData.apiUrl);
+  }
   //查询点赞 
   async checkPostLike(indx,callback) {
     const that = this;
@@ -556,7 +575,7 @@ export default class pageDynamics extends wepy.page {
           duration: 2000
       });
       this.postList[indx].LikeList.push({
-       NickName:that.$parent.globalData.UserName
+       NickName:that.$parent.globalData.HeroInfo.UserName
       })
     }else{
        this.$parent.showErrorMsg("错误提示", res.data.msg);
@@ -576,10 +595,14 @@ export default class pageDynamics extends wepy.page {
       },that.$parent.globalData.apiUrl);
    if (res.data.retcode == 0) {
          wx.showToast({
-          title: '评论成功，请耐心等待核审',
+          title: '评论成功',
           icon: 'success',
           duration: 2000
         });
+        this.postList[indx].ReviewList.push({
+          NickName:that.$parent.globalData.HeroInfo.UserName,
+          ReviewTxt:that.userInput
+        })
         this.userInput=""
     }else{
         this.$parent.showErrorMsg("错误提示", res.data.msg);
@@ -640,11 +663,11 @@ export default class pageDynamics extends wepy.page {
       }
       },that.$parent.globalData.apiUrl);
    if (res.data.retcode == 0) {
-        this.postList=res.data.result;
+        this.postList=res.data.result
     }
     this.$apply();
   }
-  onLoad() {
+  onShow() {
    this.getMessage();
    this.getArticle();
    this.getPostAllInfo();

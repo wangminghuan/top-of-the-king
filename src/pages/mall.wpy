@@ -41,7 +41,7 @@
         <scroll-view scroll-y="true" style="height: 700rpx;padding-top:56rpx;" scroll-top="{{scrollTop}}">
           <view class="content" >
           <repeat for="{{contList}}" key="index" index="index" item="item">
-             <view class="card-com-item"  @tap="handleClick({{item}})">
+             <view class="card-com-item" @tap="handleClick({{item}})">
              <view class="txt">
                       <view class="top">{{item.PrdtName}}</view>
                       <image class="mid" src="{{imgHost+item.PrdtPic}}" mode="aspectFit" style="width:96rpx;height:96rpx"/>
@@ -85,7 +85,10 @@ export default class pageMall extends wepy.page {
   computed = {
     imgHost(){
         return this.$parent.globalData.imgHost
-    }
+    },
+     heroInfo(){
+        return this.$parent.globalData.HeroInfo
+    },
     
   };
 
@@ -161,9 +164,31 @@ export default class pageMall extends wepy.page {
       }
       this.$apply();
   }
-  onLoad() {
+  async getMessage() {
+    const that = this;
+    const res = await wxRequest({
+      query:{
+        opt: 'getMessage',
+        userid:that.heroInfo.Id,
+        num:6,
+      }
+      },that.$parent.globalData.apiUrl);
+   if (res.data.retcode == 0) {
+        const arr=res.data.result;
+        if(arr instanceof Array && arr.length>0){
+               that.msgList=arr.concat(arr[0]);
+        }else{
+           that.msgList=[{
+             MsgInfo:"暂无最新动态"
+           }];
+        }
+        that.scrollTxtY();
+    }
+    this.$apply();
+  }
+  onShow() {
     this.getProduct("学习类");
-    this.scrollTxtY();
+    this.getMessage();
   }
 }
 </script>

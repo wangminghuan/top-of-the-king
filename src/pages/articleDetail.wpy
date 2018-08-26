@@ -110,14 +110,15 @@
       </view>
       <view class="status">
         <view >阅读：{{articleObj.ReadCount}}</view>
-        <view class="icon {{hasClickLike?'like':'unlike'}}" @tap="handleClickLike">点赞：{{articleObj.LikeCount}}</view>
+        <view class="icon {{hasClickLike?'like':'unlike'}}" @tap="handleClickLike">点赞：{{articleObj.LikeCount||'0'}}</view>
       </view>
     </view>
     <view class="msg-title border-com-line">
       <text>留言区</text>
      <image @tap="handleJumpAdd" src="../../static/img/dynamics/msg-add.png" mode="aspectFit" style="width:36rpx;height:45rpx;"/>
     </view>
-    <scroll-view scroll-y style="height: 560rpx;">
+    <view>
+    <!-- <scroll-view scroll-y style="height: 560rpx;"> -->
         <repeat for="{{listArr}}" key="index" index="index" item="item">
           <!-- 只展示已核审的 -->
           <view class="item border-com-line" wx:if="{{item.Status==1}}">
@@ -128,7 +129,8 @@
             </view>
             </view>
         </repeat>
-    </scroll-view>
+    <!-- </scroll-view> -->
+    </view>
   </view>
 </template>
 
@@ -150,7 +152,6 @@
       articleObj:{},
       name: 'myHtmlParserKiner',
       textContent: '',
-      mock: "<p>JavaScript 是世界上最流行的脚本语言。</p><p>JavaScript 是属于 web 的语言，它适用于 PC、笔记本电脑、平板电脑和移动电话。</p><p>JavaScript 被设计为向 HTML 页面增加交互性。</p><p>许多 HTML 开发者都不是<span style='color: red;'>程序员</span>，但是 JavaScript 却拥有非常简单的语法。几乎每个人都有能力将小的 JavaScript 片段添加到网页中。</p>",
       artid:0,
       listArr:[],
     }
@@ -175,7 +176,7 @@
         this.addArticleLike();
       },
       handleJumpAdd() {
-        this.$navigate('/pages/my/addMsg?type=2&toId='+this.artid+'&fromId='+this.heroInfo.Id+'&toName='+this.articleObj.Title);
+        this.$navigate('/pages/my/addMsg?type=2&toId='+this.artid+'&fromId='+this.heroInfo.Id+'&toName=专题：'+this.articleObj.Name);
       },
       handleJumpDetail() {
         this.$navigate('/pages/dynamics/leaveMsg');
@@ -269,9 +270,9 @@
       this.$apply();
     }
     onLoad(params) {
-      console.log(params)
       this.artid=params.id;
-      this.getArticleByID();//获取专题
+    }
+    onShow(){
       this.getArticleReView();
       this.addArticleRead();
       this.checkArticleLike();

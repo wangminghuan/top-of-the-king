@@ -54,20 +54,48 @@
     line-height: 46rpx;
     text-align: center;
   }
+  .imglist{
+    margin-top:20rpx;
+        display: flex;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+        image{
+          width: 170rpx;
+          height: 170rpx;
+          margin-top:20rpx;
+        }
+        image.mids{
+          margin-left:20rpx;
+          margin-right:20rpx;
+        }
+      }
 }
 </style>
 <template>
   <view class="feedback-tips-wrap">
-      <view class="login-com-title">反馈提醒</view>
+      <view class="login-com-title">意见反馈</view>
       <view class="cont">
-          <view class="top">反馈标题</view>
-          <view class="mid">在某种程度上来说，设计游戏就是给玩家设计体验，而设计体验中最常见的一环就是反馈。下面是从自己项目或者近期的游戏经历中总结的几种</view>
+          <view class="top">{{contObj.Name}}</view>
+          <view class="mid">{{contObj.Txt}}</view>
+          <view class="imglist">
+             <repeat for="{{picList}}" key="sindex" index="sindex" item="sitem">
+                 <image class="{{sindex%3==1?'mids':''}}" @tap="handlePreviewImg({{sitem}})" src="{{sitem}}" mode="scaleToFill" />
+              </repeat>
+          </view>
           <view class="btm">
-              <text class="icon">待受理</text>
-              <text>2018.09.08</text>
+              <text class="icon">{{contObj.Status==1?'已审核':contObj.Status==0?'未审核':'已关闭'}}</text>
+              <text>{{contObj.CreateDate}}</text>
           </view>
       </view>
-      <view class="btm-tips">您提交的意见和反馈待受理，感谢您宝贵的意见,敬请等待受理结果</view>
+      <view class="btm-tips" wx:if="{{contObj.Status==0}}">您提交的意见和反馈待受理，感谢您宝贵的意见,敬请等待受理结果</view>
+      <view class="cont"  wx:else>
+          <view class="top">反馈回复</view>
+          <view class="mid">{{contObj.ReplyTxt}}</view>
+          <view class="btm">
+              <text>回复人：{{contObj.ReplyUser}}</text>
+              <text>{{contObj.ReplyDate}}</text>
+          </view>
+      </view>
   </view>
 </template>
 
@@ -79,30 +107,64 @@ export default class feedbackTips extends wepy.page {
     navigationBarTitleText: '反馈提醒'
   };
   components = {};
-  data = {};
-
+  data = {
+    contObj:{},
+    picList:[]
+  };
   computed = {
-    now() {
-      return +new Date();
+    imgHost(){
+        return this.$parent.globalData.imgHost
     }
   };
-
-  methods = {};
+  methods = {
+    handlePreviewImg(url){
+      const that=this;
+        wx.previewImage({
+        current: url, // 当前显示图片的http链接
+        urls: that.picList // 需要预览的图片http链接列表
+      }) 
+    },
+  };
 
   events = {};
-  async getData() {
+  
+  async getNPCPic() {
     const that = this;
     const res = await wxRequest({
       query:{
-        opt: 'CheckCanApply',
+        opt: 'getNPCPic',
+        npcid:that.pageId
       }
       },that.$parent.globalData.apiUrl);
-   if (res.data.retcode == -1) {
-
-    }else {
-
+    if (res.data.retcode == 0) {
+      let arr=[];
+      res.data.result.map((item)=>{
+          arr.push(that.imgHost+item.Pic)
+      })
+      this.picList=arr;
     }
+    this.$apply();
   }
-  onLoad() {}
+  async getNPCByID() {
+    const that = this;
+    const res = await wxRequest({
+      query:{
+        opt: 'getNPCByID',
+        npcid:that.pageId
+      }
+      },that.$parent.globalData.apiUrl);
+    if (res.data.retcode == 0) {
+        this.contObj=res.data.result;
+    }else{
+      this.$parent.showErrorMsg("提示", res.data.msg);
+    }
+    this.$apply();
+  }
+  
+  onLoad(params) {
+    this.pageId=params.id||"0";
+    this.getNPCByID();
+    this.getNPCPic();
+  }
 }
 </script>

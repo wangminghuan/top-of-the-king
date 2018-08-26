@@ -255,10 +255,10 @@
     <view class="top-wrap mrg40">
       <image class="avator" src="{{item.HeadImg?item.HeadImg:'../../static/img/my/logo-def.png'}}" mode="scaleToFill" style="margin:0" />
       <view class="t-name">{{playerData.NickName}}</view>
-      <view class="t-part"><text>所属部门：xxx </text><text> 姓名：{{playerData.NickName}}</text></view>
-      <view class="lf-top btn-2">{{playerData.UserTitle}}</view>
-      <view class="lf-btm btn-1">段位:{{playerData.Level}}</view>
-      <view class="rt-top btn-2">战斗值：{{playerData.Power}}</view>
+      <view class="t-part"><text wx:if="{{playerData.TeamName}}">所属部门：{{playerData.TeamName}} </text><text> 姓名：{{playerData.NickName}}</text></view>
+      <view class="lf-top btn-2" wx:if="{{playerData.UserTitle}}">{{playerData.UserTitle}}</view>
+      <view class="lf-btm btn-1">{{playerData.Level}}</view>
+      <view class="rt-top btn-2" @tap="handleJumpPower">战力：{{playerData.Power}}</view>
       <view class="rt-btm btn-2">{{playerData.Vocation}}</view>
     </view>
     <view class="info-wrap mrg40">
@@ -279,17 +279,19 @@
       <text>留言区</text>
      <image @tap="handleJumpAdd" src="../../static/img/dynamics/msg-add.png" mode="aspectFit" style="width:36rpx;height:45rpx;"/>
     </view>
-    <scroll-view scroll-y style="height: 560rpx;" lower-threshold="50" bindscrolltolower="handleScroll" wx:if="{{listArr.length>0}}">
+    <view wx:if="{{listArr.length>0}}">
+    <!-- <scroll-view scroll-y style="height: 560rpx;" lower-threshold="50" bindscrolltolower="handleScroll" wx:if="{{listArr.length>0}}"> -->
         <repeat for="{{listArr}}" key="index" index="index" item="item">
           <view class="item btm-line">
-            <image class="avator" src="{{imgHost + item.FromHeadImg}}" mode="scaleToFill" />
+            <image class="avator" src="{{item.FromHeadImg}}" mode="scaleToFill" />
             <view class="rt" @tap="handleJumpDetail">
               <view class="ye">{{item.FromName}}</view>
               <text>{{item.LeaveWord}}</text>
             </view>
             </view>
         </repeat>
-    </scroll-view>
+      </view>
+    <!-- </scroll-view> -->
     </view>
     <view class="pop-wrap" catchtouchmove="preventTouchMove" style="display:{{isShowPop?'block':'none'}}">
         <view class="bg"></view>
@@ -343,6 +345,9 @@ export default class rankDeatail extends wepy.page {
   };
 
   methods = {
+    handleJumpPower(){
+         this.$navigate('/pages/my/record?id='+this.playerData.UserID);
+    },
     handleClickAdd() {
       if(this.popItem.isCount){
          this.giftNums++;
@@ -376,7 +381,7 @@ export default class rankDeatail extends wepy.page {
     handleJumpAdd() {
       // console.log('/pages/my/addMsg?toId='+this.touserid+'&toName='+"张三"+'&formId='+this.heroInfo.Id)
       // return;
-      this.$navigate('/pages/my/addMsg?type=1&toId='+this.playerData.Id+'&fromId='+this.heroInfo.Id+'&toName='+this.playerData.NickName);
+      this.$navigate('/pages/my/addMsg?type=1&toId='+this.playerData.UserID+'&fromId='+this.heroInfo.Id+'&toName='+this.playerData.NickName);
     },
     handleJumpDetail() {
       this.$navigate('/pages/dynamics/leaveMsg');
@@ -389,7 +394,7 @@ export default class rankDeatail extends wepy.page {
     const res = await wxRequest({
       query:{
         opt: 'getLeaveWord',
-        touserid:that.playerData.Id,
+        touserid:that.playerData.UserID,
         fromuserid:that.heroInfo.Id,
       }
       },that.$parent.globalData.apiUrl);
@@ -418,7 +423,7 @@ export default class rankDeatail extends wepy.page {
       query:{
         opt: 'addGift',
         giftid:that.popItem.Id,
-        touserid:that.playerData.Id,
+        touserid:that.playerData.UserID,
         fromuserid:that.heroInfo.Id,
         giftcount:that.giftNums
       }
@@ -439,7 +444,9 @@ export default class rankDeatail extends wepy.page {
   onLoad(data) {
     this.playerData=JSON.parse(data.data);
     this.getGift();
-    this.getLeaveWord();
+  }
+  onShow(){
+     this.getLeaveWord();
   }
 }
 </script>

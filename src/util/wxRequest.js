@@ -1,7 +1,7 @@
 import wepy from 'wepy';
 const wxRequest = async(params = {}, url) => {
     // tip.loading();
-    wx.showLoading()
+    params.query.opt!=='setMessageRead' && wx.showLoading();
     let data = params.query || {};
     let res = await wepy.request({
         url: url,

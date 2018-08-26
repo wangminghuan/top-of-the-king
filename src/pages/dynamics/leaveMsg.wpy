@@ -11,7 +11,7 @@
     font-size: 26rpx;
     color: #cbe3f7;
     line-height: 40rpx;
-    height: 980rpx;
+    // height: 980rpx;
   }
   .title {
     height: 80rpx;
@@ -42,12 +42,12 @@
 <template>
   <view class="dynamic-leave-msg">
         <view class="title">
-            <view class="lf"><text>昵称：</text><text class="name">JACK ROULU</text></view>
-            <text class="rt">9:40</text>
+            <view class="lf"><text>昵称：</text><text class="name">{{pageObj.FromName || pageObj.NickName}}</text></view>
+            <text class="rt">{{pageObj.CreateDate}}</text>
         </view>
         <view class="cont">
             <view style="line-height:66rpx">内容：</view>
-            <text>-webkit-line-clamp用来限制在一个块元素显示的文本的行数。 为了实现该效果，它需要组合其他的WebKit属性。常见结合属性</text>
+            <text>{{pageObj.LeaveWord||pageObj.ReviewTxt}}</text>
             </view>
   </view>
 </template>
@@ -60,31 +60,18 @@ export default class dynamicLeaveMsg extends wepy.page {
     navigationBarTitleText: '留言详情'
   };
   components = {};
-  data = {};
+  data = {
+    pageObj:{}
+  };
 
   computed = {
-    now() {
-      return +new Date();
-    }
   };
 
   methods = {};
 
   events = {};
-  async getData() {
-    const that = this;
-    const res = await wxRequest(
-      {
-        query: {
-          opt: 'CheckCanApply'
-        }
-      },
-      that.$parent.globalData.apiUrl
-    );
-    if (res.data.retcode == -1) {
-    } else {
-    }
+  onLoad(params) {
+    this.pageObj=JSON.parse(params.data);
   }
-  onLoad() {}
 }
 </script>

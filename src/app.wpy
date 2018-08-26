@@ -4,6 +4,8 @@ page {
   width: 100%;
   background-image: url('http://s29.9956.cn/res/zhushou/danye/topking/bg.png');
   background-size: cover;
+  // background-repeat: no-repeat;
+  // background-color: #242b5b;
 }
 </style>
 
