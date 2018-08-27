@@ -328,7 +328,8 @@ import wxRequest from '../util/wxRequest.js';
 
 export default class pageMy extends wepy.page {
   config = {
-    navigationBarTitleText: '我的'
+    navigationBarTitleText: '我的',
+    enablePullDownRefresh:true,
   };
   components = {};
   data = {
@@ -340,7 +341,8 @@ export default class pageMy extends wepy.page {
       { t_name: '未使用', t_value: '0', t_active: 0 }
     ],
     contList: [],
-    scoreList: []
+    scoreList: [],
+    activeStatus:'-1'
   };
 
   computed = {
@@ -385,7 +387,8 @@ export default class pageMy extends wepy.page {
       this.tabArr.map((item, index) => {
         index == inx ? (item.t_active = 1) : (item.t_active = 0);
       });
-      this.getUserProduct(this.tabArr[inx].t_value)
+      this.activeStatus=this.tabArr[inx].t_value;
+      this.getUserProduct();
     },
     handleJumpMall() {
       wx.switchTab({
@@ -396,7 +399,14 @@ export default class pageMy extends wepy.page {
       this.$navigate(path);
     }
   };
-
+//下拉刷新
+  onPullDownRefresh(){
+     this.getUserPower();
+     this.getUserProduct()
+     setTimeout(() => {
+         wx.stopPullDownRefresh()
+       }, 1000);
+  }
   events = {};
   //最近战绩
    async getUserPower() {
@@ -413,13 +423,13 @@ export default class pageMy extends wepy.page {
     }
     this.$apply()
   };
-  async getUserProduct(status) {
+  async getUserProduct() {
     const that = this;
     const res = await wxRequest({
       query:{
         opt: 'getUserProduct',
         userid:that.heroInfo.Id,
-        status:status
+        status:that.activeStatus
       }
       },that.$parent.globalData.apiUrl);
    if (res.data.retcode == 0) {
@@ -436,11 +446,9 @@ export default class pageMy extends wepy.page {
     this.$apply()
   }
 
-  onLoad() {
+  onShow() {
     this.getUserPower();
-  }
-  onShow(){
-     this.getUserProduct(-1)
+    this.getUserProduct()
   }
 }
 </script>

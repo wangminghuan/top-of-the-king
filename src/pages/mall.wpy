@@ -47,7 +47,7 @@
                       <image class="mid" src="{{imgHost+item.PrdtPic}}" mode="aspectFit" style="width:96rpx;height:96rpx"/>
                       <view class="btm">
                         <view class="btm-point">{{item.Point}}积分</view>
-                        <view class="btm-ex" style="color:#fffd78;padding-left:48rpx;" @tap.stop="handleClickExchange({{item}})">兑换</view>
+                        <view class="btm-ex" style="color:#fffd78;padding-left:48rpx;">兑换</view>
                       </view>
                </view>
               </view>
@@ -63,7 +63,8 @@ import wepy from 'wepy';
 import wxRequest from '../util/wxRequest.js';
 export default class pageMall extends wepy.page {
   config = {
-    navigationBarTitleText: '商城'
+    navigationBarTitleText: '商城',
+    enablePullDownRefresh:true,
   };
   components = {};
   data = {
@@ -73,11 +74,12 @@ export default class pageMall extends wepy.page {
     marqueeDistance:0,
     msgList:[],
     scrollTop:0,
+    activeName:"学习类",
     tabArr: [
       { t_name: '学习类', t_active: 1 },
       { t_name: '特权类', t_active: 0 },
       { t_name: '礼品类', t_active: 0 },
-      { t_name: '其他类',  t_active: 0 }
+      { t_name: '其他类', t_active: 0 }
     ],
     contList: []
   };
@@ -105,7 +107,8 @@ export default class pageMall extends wepy.page {
       this.tabArr.map((item, index) => {
         index == inx ? (item.t_active = 1) : (item.t_active = 0);
       });
-      this.getProduct(this.tabArr[inx].t_name)
+      this.activeName=this.tabArr[inx].t_name;
+      this.getProduct();
     },
     handleClick(item) {
       this.$navigate('/pages/mall/goodsDetail?data='+JSON.stringify(item));
@@ -114,7 +117,14 @@ export default class pageMall extends wepy.page {
       this.$navigate(path);
     }
   };
-
+//下拉刷新
+  onPullDownRefresh(){
+    this.getProduct();
+    this.getMessage();
+     setTimeout(() => {
+         wx.stopPullDownRefresh()
+       }, 1000);
+  }
   events = {};
   scrollTxtY(){
     const winWidth=(this.$parent.globalData.systemInfo.windowWidth);
@@ -141,12 +151,12 @@ export default class pageMall extends wepy.page {
          this.$apply();
     },5000)
   }
-  async getProduct(type) {
+  async getProduct() {
     const that = this;
     const res = await wxRequest({
       query:{
         opt: 'getProduct',
-        type:type
+        type:that.activeName
       }
       },that.$parent.globalData.apiUrl);
      if (res.data.retcode == 0) {
@@ -187,7 +197,7 @@ export default class pageMall extends wepy.page {
     this.$apply();
   }
   onShow() {
-    this.getProduct("学习类");
+    this.getProduct();
     this.getMessage();
   }
 }

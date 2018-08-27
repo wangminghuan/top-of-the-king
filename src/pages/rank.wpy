@@ -200,7 +200,7 @@
       </view>
       <view class="user-wrap">
            <repeat for="{{userArr}}" key="index" index="index" item="item">
-             <view class="user-item">
+             <view class="user-item" @tap="handleJumpDetail({{item}})">
                <image src="{{item.HeadImg?item.HeadImg:'../static/img/my/logo-def.png'}}" mode="scaleToFill" />
                <view style="color:#b7e3f6">{{item.UserTitle}}</view>
                <view style="color:#f1f4ba">{{item.NickName}}</view>
@@ -221,12 +221,12 @@
         <view class="tab-cont">
           <view class="lf">
             <repeat for="{{lfArr}}" key="index" index="index" item="item">
-             <view class="{{item.l_active==1?'active lf-item':'lf-item'}}" @tap="handleClickTabLf('{{index}}')">{{item.l_name}}</view>
+             <view class="{{item.l_active==1?'active lf-item':'lf-item'}}" @tap="handleClickTabLf({{index}})">{{item.l_name}}</view>
             </repeat>
           </view>
           <scroll-view scroll-y="true" style="height: 560rpx;" class="rt" scroll-top="{{scrollTop}}">
               <repeat for="{{rtArr}}" key="index" index="index" item="item">
-               <view class="rt-item" @tap="handleJumpDetail({{item}})">
+               <view class="rt-item" @tap="handleJumpDetail({{item}},1)">
                  <view class="item-1">{{item.RankID}}</view>
                   <image class="item-2" src="{{item.HeadImg?item.HeadImg:'../static/img/my/logo-def.png'}}" mode="scaleToFill" />
                  <view class="item-3">
@@ -253,7 +253,8 @@ import wepy from 'wepy';
 import wxRequest from '../util/wxRequest.js';
 export default class pageRank extends wepy.page {
   config = {
-    navigationBarTitleText: '排行'
+    navigationBarTitleText: '排行',
+    enablePullDownRefresh:true,
   };
   components = {};
   data = {
@@ -264,15 +265,15 @@ export default class pageRank extends wepy.page {
     scrollTop:0,
     userArr: [],
     rankType:"D",
-    vocation:"战士",
+    vocation:"骑士",
     msgList:[],
      tabArr: [
-      { t_name: '战士',t_active: 1 },
+      { t_name: '骑士',t_active: 1 },
       { t_name: '射手',t_active: 0 },
       { t_name: '法师',t_active: 0 },
       { t_name: '术士',t_active: 0 },
       { t_name: '修士',t_active: 0 },
-      { t_name: '骑士',t_active: 0 }
+      { t_name: '战士',t_active: 0 }
     ],
     lfArr:[
       { l_name: '日榜', l_value: 'D', l_active: 1 },
@@ -292,7 +293,11 @@ export default class pageRank extends wepy.page {
   };
 
   methods = {
-    handleJumpDetail(item){
+    handleJumpDetail(item,type){
+       if(type==1&& this.rankType=='T'){
+         //团队无详情页
+         return;
+       }
         this.$navigate('/pages/rank/detail?data='+JSON.stringify(item));
     },
     handleClickTab(inx) {
@@ -325,7 +330,15 @@ export default class pageRank extends wepy.page {
       this.$navigate(path);
     }
   };
-
+  //下拉刷新
+  onPullDownRefresh(){
+     this.getMaxUser();
+     this.getUserRank();
+     this.getMessage();
+       setTimeout(() => {
+         wx.stopPullDownRefresh()
+       }, 1000);
+  }
   events = {};
   scrollTxtY(){
     const winWidth=(this.$parent.globalData.systemInfo.windowWidth);

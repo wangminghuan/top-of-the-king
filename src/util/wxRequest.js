@@ -9,7 +9,7 @@ const wxRequest = async(params = {}, url) => {
         data: data,
         header: {'Content-Type': 'application/json'},
     });
-    wx.hideLoading();
+    params.query.opt!=='setMessageRead' && wx.hideLoading();
     return res;
 };
 

@@ -183,6 +183,7 @@ export default class dynamicsAdd  extends wepy.page {
 
   events = {};
   uploadFiles(id){
+    if(this.tempFilePaths.length==0) return;
     wx.showToast({  
         title: '正在上传...',  
         icon: 'loading',  
@@ -209,7 +210,7 @@ export default class dynamicsAdd  extends wepy.page {
               if (uploadImgCount == that.tempFilePaths.length) {  
                    wx.hideToast();  
                    wx.showToast({
-                    title: '提交成功，请耐先等待核审',
+                    title: '提交成功',
                     icon: 'success',
                     duration: 2000
                   });

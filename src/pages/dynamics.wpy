@@ -339,7 +339,7 @@
              <view class="content" @tap="handleJumpDetail({{item.Id}})">{{item.Txt}}</view>
              <view class="imglist">
              <repeat for="{{item.PicList}}" key="sindex" index="sindex" item="sitem">
-                 <image class="{{sindex%3==1?'mids':''}}" @tap="handlePreviewImg({{imgHost + sitem}},{{index}})" src="{{imgHost + sitem}}}" mode="scaleToFill" />
+                 <image class="{{sindex%3==1?'mids':''}}" @tap="handlePreviewImg({{imgHost + sitem.Pic}},{{index}})" src="{{imgHost + sitem.Pic}}" mode="scaleToFill" />
               </repeat>
               </view>
              <view class="time">
@@ -390,7 +390,8 @@ import wepy from 'wepy';
 import wxRequest from '../util/wxRequest.js';
 export default class pageDynamics extends wepy.page {
   config = {
-    navigationBarTitleText: '动态'
+    navigationBarTitleText: '动态',
+    enablePullDownRefresh:true,
   };
   components = {};
   data = {
@@ -467,25 +468,26 @@ export default class pageDynamics extends wepy.page {
     // 图片预览
     handlePreviewImg(url,inx){
       const that=this;
-      const urls=that.postList[inx].PicList.map((item)=>{
-           item=that.imgHost+item;
+      let urlsArr=[];
+      that.postList[inx].PicList.map((item)=>{
+           urlsArr.push(that.imgHost+item.Pic);
       })
         wx.previewImage({
         current: url, // 当前显示图片的http链接
-        urls: urls // 需要预览的图片http链接列表
+        urls: urlsArr // 需要预览的图片http链接列表
       }) 
     },
     //关闭弹窗
     handleClosePop(){
-      console.log(1,this.popArr)
        this.isShowPop=false;
        if(this.popArr.length==0) return;
        this.setMessageRead(this.popArr[0].Id);
        setTimeout(()=>{
-          this.popArr.splice(0,1)
-          this.isShowPop=true;
-          console.log(2,this.popArr)
-          this.$apply();
+          this.popArr.splice(0,1);
+          if(this.popArr.length>0){
+            this.isShowPop=true;
+            this.$apply();
+          }
         },5000)
     },
     preventTouchMove() {},
@@ -499,7 +501,15 @@ export default class pageDynamics extends wepy.page {
       this.$navigate('/pages/dynamics/add');
     }
   };
-
+//下拉刷新
+  onPullDownRefresh(){
+    this.getMessage();
+    this.getArticle();
+    this.getPostAllInfo();
+     setTimeout(() => {
+         wx.stopPullDownRefresh()
+       }, 1000);
+  }
   events = {};
    scrollTxtY(){
     const winWidth=(this.$parent.globalData.systemInfo.windowWidth);
@@ -528,7 +538,7 @@ export default class pageDynamics extends wepy.page {
   getPopArr(arr){
      let popArr=[];
      arr.map((item)=>{
-         if(item.ShowType!=0){
+         if(item.ReadStatus==0){
            popArr.push(item)
          }
      })

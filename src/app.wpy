@@ -5,7 +5,7 @@ page {
   background-image: url('http://s29.9956.cn/res/zhushou/danye/topking/bg.png');
   background-size: cover;
   // background-repeat: no-repeat;
-  // background-color: #242b5b;
+  background-color: #242b5b;
 }
 </style>
 
@@ -17,8 +17,7 @@ export default class extends wepy.app {
   config = {
     pages: [
       //tabar //排行 //商城  //动态 // 我的
-      // 
-      
+      // 'pages/indexParse',
       'pages/index',
       'pages/rank',
       'pages/dynamics',
@@ -52,6 +51,7 @@ export default class extends wepy.app {
       navigationBarBackgroundColor: '#242d56',
       navigationBarTitleText: 'WeChat',
       navigationBarTextStyle: 'white',
+      backgroundColor:'#242d56',
       // enablePullDownRefresh:true
     },
     tabBar: {

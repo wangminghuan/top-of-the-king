@@ -174,7 +174,7 @@
   <view class="my-up-level">
        <view class="my-info">
           <view class="lf">
-            <image src="http://img1.360buyimg.com/da/jfs/t25096/340/321933848/390630/985a448c/5b6bbefeNafcfc263.jpg" mode="scaleToFill" />
+            <image src="{{heroInfo.HeadImg}}" mode="scaleToFill" />
           <view class="name-box" wx:if="{{heroInfo.Level}}">{{(heroInfo.Level)}}</view>          
           </view>
           <view class="rt">

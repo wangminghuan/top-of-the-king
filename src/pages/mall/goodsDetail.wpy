@@ -93,7 +93,7 @@
   <view class="goods-detail-wrap">
       <view class="cont">
           <view class="lf "><view class="card-com-bg">
-               <image src="../../static/img/mall/1-1.png" mode="aspectFit" style="width:120rpx;height:100rpx;"/>
+               <image src="{{imgHost + parentData.PrdtPic}}" mode="aspectFit" style="width:120rpx;height:100rpx;"/>
               </view></view>
           <view class="rt">
           <view class="top">{{parentData.PrdtName}}</view>
@@ -104,16 +104,16 @@
           </view>
           </view>
       </view>
-      <view class="titl">选择岗位级别</view>
-      <view class="tab-wrap">
+      <view class="titl" wx:if="{{tabList.length>0}}">选择岗位级别</view>
+      <view class="tab-wrap" wx:if="{{tabList.length>0}}">
           <repeat for="{{tabList}}" key="index" index="index" item="item">
              <view @tap="handleClickTab({{item}})" class="item {{item.Id==activeSkuId?'active':''}}">{{item.SKU}}</view>
             </repeat>
       </view>
-      <view class="txt">
+      <view class="txt" wx:if="{{tabList.length>0}}">
           <text>使用要求：</text><text style="color:#b7e3f6">{{useTips}}</text>
       </view>
-      <button class="sub-btn user-com-btn" disabled="{{disabled}}"  @tap="handleClickSubmit">立即兑换</button>
+      <button class="sub-btn user-com-btn"  @tap="handleClickSubmit">立即兑换</button>
   </view>
 </template>
 
@@ -122,7 +122,8 @@ import wepy from 'wepy';
 import wxRequest from '../../util/wxRequest.js';
 export default class goodsDetail extends wepy.page {
   config = {
-    navigationBarTitleText: '商品详情'
+    navigationBarTitleText: '商品详情',
+    enablePullDownRefresh:true,
   };
   components = {};
   data = {
@@ -136,7 +137,10 @@ export default class goodsDetail extends wepy.page {
   computed = {
     heroInfo(){
       return  this.$parent.globalData.HeroInfo;
-    }
+    },
+    imgHost(){
+        return this.$parent.globalData.imgHost
+    },
   };
 
   methods = {
@@ -148,8 +152,6 @@ export default class goodsDetail extends wepy.page {
       this.addUserProduct();
     }
   };
-
-  events = {};
   async getProductSKU() {
     const that = this;
     const res = await wxRequest({
