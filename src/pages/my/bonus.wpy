@@ -20,7 +20,9 @@
     top: 27rpx;
     width: 40rpx;
     height: 40rpx;
-    right: 72rpx;
+    right: 75rpx;
+    background-color: #4b668f;
+    border-radius: 50%;
   }
   .item {
     display: flex;
@@ -61,7 +63,7 @@
     <image src="../../static/img/my/score-title.png" mode="aspectFit" style="width:671rpx;height:202rpx;margin-bottom:20rpx"/>
     <view class="bouns-info" @tap="handleShowQuestion"></view>
     <view class="bouns-nums">{{heroInfo.Point}}</view>
-    <scroll-view scroll-y style="height: 850rpx;" lower-threshold="50" bindscrolltolower="handleScroll">
+    <scroll-view scroll-y style="height: 850rpx;" >
     <repeat for="{{listArr}}" key="index" index="index" item="item">
         <view  @tap="handleClickTab('{{index}}')" class="item-txt border-com-line">
                   <view class="top">
@@ -99,14 +101,11 @@ export default class myBonus extends wepy.page {
 
   methods = {
     handleShowQuestion() {
-      wx.showToast({
-        title: '点击展示',
-        icon: 'success',
-        duration: 2000
-      });
-    },
-    handleScroll() {
-      console.log('lower');
+      // wx.showToast({
+      //   title: '点击展示',
+      //   icon: 'success',
+      //   duration: 2000
+      // });
     }
   };
 

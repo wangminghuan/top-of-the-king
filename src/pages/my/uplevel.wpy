@@ -1,4 +1,5 @@
 <style lang="less">
+@import '../../static/style/levelComIcon.less';
 .my-up-level {
   padding: 0 32rpx;
   height: 100%;
@@ -6,15 +7,27 @@
     display: flex;
     // justify-content: space-between;
     padding-top: 30rpx;
-    .name-box {
-      width: 160rpx;
-      height: 44rpx;
-      background-image: url('http://s29.9956.cn/res/zhushou/danye/topking/btn1.png');
-      background-size: 100% 100%;
-      font-size: 20rpx;
-      color: #b7e3f6;
-      line-height: 44rpx;
-      text-align: center;
+    // .name-box {
+    //   width: 160rpx;
+    //   height: 44rpx;
+    //   background-image: url('http://s29.9956.cn/res/zhushou/danye/topking/btn1.png');
+    //   background-size: 100% 100%;
+    //   font-size: 20rpx;
+    //   color: #b7e3f6;
+    //   line-height: 44rpx;
+    //   text-align: center;
+    // }
+    .power-info{
+      width: 330rpx;
+      height: 24rpx;
+      line-height: 24rpx;
+      display: flex;
+      justify-content: space-between;
+      // transform: translateY(-30rpx);
+      text{
+        font-size: 20rpx;
+        color: #fff;
+      }
     }
     .lf {
       width: 166rpx;
@@ -31,23 +44,36 @@
       //   width: 454rpx;
       margin-left: 38rpx;
       .rt-name {
-        line-height: 50rpx;
+        line-height: 48rpx;
         font-size: 28rpx;
         color: #f1f4ba;
       }
       .rt-tip {
-        line-height: 60rpx;
-        height: 60rpx;
+        line-height: 48rpx;
+        height: 48rpx;
         font-size: 20rpx;
         color: #f1f4ba;
       }
+      // .mid-wrap{
+        
+      //   .now-power{
+      //      width: 330rpx;
+      //      text-align: center;
+      //       font-size: 18rpx;
+      //       color: #333;
+      //       line-height: 22rpx;
+      //       position: absolute;
+      //       top:2rpx;
+      //       left:0;
+      //   }
+      // }
       .rt-mid {
         width: 330rpx;
+        position: relative;
         height: 22rpx;
         background-color: #38587f;
         border-radius: 32rpx;
         padding: 5rpx;
-        position: relative;
         display: flex;
         margin-top: 5rpx;
         box-shadow: inset 0 0 6rpx 6rpx #68add2;
@@ -55,9 +81,6 @@
           background-color: #fff;
           height: 20rpx;
           border-radius: 20rpx;
-          // position: absolute;
-          // top:5rpx;
-          // left: 0;
         }
       }
       .rt-btm {
@@ -66,7 +89,7 @@
         width: 340rpx;
         font-size: 20rpx;
         color: #cbe3f7;
-        margin-top: 20rpx;
+        margin-top: 10rpx;
         .now,
         .next {
           display: flex;
@@ -175,12 +198,18 @@
        <view class="my-info">
           <view class="lf">
             <image src="{{heroInfo.HeadImg}}" mode="scaleToFill" />
-          <view class="name-box" wx:if="{{heroInfo.Level}}">{{(heroInfo.Level)}}</view>          
+          <view class="level-com-icon level-{{userLevel.thisRank}}" wx:if="{{heroInfo.Level}}">{{(heroInfo.Level)}}</view>          
           </view>
           <view class="rt">
             <view class="rt-name">{{heroInfo.UserName}}</view>
-            <view class="rt-tip" >{{heroInfo.Title?('称号：'+heroInfo.Title):''}}</view>
-            <view class="rt-mid"><view class="progress" style="width:{{precent}}"></view></view>
+            <view class="rt-tip" >{{userLevel.Power?('战斗值：'+ userLevel.Power):''}}</view>
+            <view class="power-info">
+                <text style="padding-left:10rpx;">{{userLevel.thisPower}}</text>
+                <text style="padding-right:10rpx;">{{userLevel.nextPower}}</text>
+              </view>
+             <view class="rt-mid">
+              <view class="progress" style="width:{{precent}}"></view>
+            </view>
             <view class="rt-btm">
                 <view class="now">
                     <text>{{userLevel.thisRank}}级</text>

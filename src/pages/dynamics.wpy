@@ -374,7 +374,7 @@
          <view class="pop-cont">
          <image class="close" src="../static/img/dynamics/close.png" mode="scaleToFill" @tap="handleClosePop" />
          <image class="animate-bg" src="../static/img/dynamics/light-ani.png" mode="scaleToFill" />
-         <image class="gift-bg" src="../static/img/dynamics/zhanli.png" mode="scaleToFill" />
+         <image class="gift-bg" src="{{popArr[0].ShowType==1?'../static/img/dynamics/shangcheng.png':popArr[0].ShowType==2?'../static/img/dynamics/duanwei.png':popArr[0].ShowType==3?'../static/img/dynamics/chenghao.png':'../static/img/dynamics/zhanli.png'}}" mode="scaleToFill" />
          <text>{{popArr[0].MsgInfo}}</text>
        </view>
     </view>
@@ -395,6 +395,8 @@ export default class pageDynamics extends wepy.page {
   };
   components = {};
   data = {
+    isWaitingPop:false,//是否等待弹窗中
+    isOperating:false,//是否处于操作中
     isShowReview:false,//展示回复框
     userInput:"",
     timeOut:null,
@@ -408,7 +410,17 @@ export default class pageDynamics extends wepy.page {
     nowActive:-1,
     postList: []
   };
-
+ watch = {
+      isOperating (curVal, oldVal) {
+        //当操作值从true 变为false ，并且检测到弹幕暂停了就弹出弹幕
+        console.log([curVal,oldVal,this.isWaitingPop,this.popArr[0].MsgInfo])
+        if(!curVal && oldVal && this.isWaitingPop && this.popArr[0].MsgInfo && this.popArr[0].MsgInfo!=""){
+            this.isShowPop=true;
+            this.isWaitingPop=false;
+            this.$apply();
+        }
+      }
+    }
  computed = {
     heroInfo(){
         return this.$parent.globalData.HeroInfo
@@ -437,14 +449,15 @@ export default class pageDynamics extends wepy.page {
      bindUserBlur(e){
        setTimeout(() => {
          this.isShowReview=false;
+         this.isOperating=false;
          this.$apply();
        }, 10);
     },
     handleReview(inx){
       const that=this;
+      this.isOperating=true; //处于操作中
       this.nowActive=inx;
       this.checkPostLike(this.nowActive,(code)=>{
-        console.log(code)
         wx.showActionSheet({
         itemList: [code==0?'已点赞':'点赞', '评论',],
         success: function(res) {
@@ -461,6 +474,9 @@ export default class pageDynamics extends wepy.page {
             },30)
           }
          
+        },
+        fail: function(res) {
+          that.isOperating=false; //操作状态失效
         }
        })
       })
@@ -484,9 +500,16 @@ export default class pageDynamics extends wepy.page {
        this.setMessageRead(this.popArr[0].Id);
        setTimeout(()=>{
           this.popArr.splice(0,1);
-          if(this.popArr.length>0){
-            this.isShowPop=true;
-            this.$apply();
+          if(this.popArr.length>0 && this.popArr[0].MsgInfo && this.popArr[0].MsgInfo!=""){
+            //如果处于操作中就暂停弹出特效
+            if(this.isOperating){
+              this.isWaitingPop=true;
+              this.$apply();
+            }else{
+               this.isShowPop=true;
+               this.$apply();
+            }
+           
           }
         },5000)
     },
@@ -590,6 +613,7 @@ export default class pageDynamics extends wepy.page {
     }else{
        this.$parent.showErrorMsg("错误提示", res.data.msg);
     }
+    this.isOperating=false;
     this.$apply();
   }
   //评论
@@ -659,7 +683,7 @@ export default class pageDynamics extends wepy.page {
    if (res.data.retcode == 0) {
         this.specialList=res.data.result;
     }else{
-      this.specialList=[{},{}]
+      this.specialList=[]
     }
     this.$apply();
   }
@@ -677,8 +701,10 @@ export default class pageDynamics extends wepy.page {
     }
     this.$apply();
   }
+  onLoad(){
+    this.getMessage();
+  }
   onShow() {
-   this.getMessage();
    this.getArticle();
    this.getPostAllInfo();
   }

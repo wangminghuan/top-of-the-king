@@ -130,9 +130,10 @@ export default class dynamicsAdd  extends wepy.page {
      this.inputTxt= e.detail.value;
     },
     handleChooseImg(){
+      const tips="超出最大上传数量限制";
       if( this.tempFilePaths.length>=6){
          wx.showToast({
-            title: "超出最大数量限制",
+            title: tips,
             icon: 'none',
             duration: 2000
           });
@@ -140,12 +141,23 @@ export default class dynamicsAdd  extends wepy.page {
       }
       const that=this;
         wx.chooseImage({
-          count: 1, // 默认9
+          count: 6, // 默认9
           sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
           sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
           success: function (res) {
             // 返回选定照片的本地文件路径列表，tempFilePath可以作为img标签的src属性显示图片
-            that.tempFilePaths.push(res.tempFilePaths[0]);
+           for(let j=0;j<res.tempFilePaths.length;j++){
+              if(that.tempFilePaths.length==6){
+                 wx.showToast({
+                  title: tips,
+                  icon: 'none',
+                  duration: 2000
+                });
+                break;
+              }else{
+                that.tempFilePaths.push(res.tempFilePaths[j])
+              }
+            }
             that.$apply();
           }
         })

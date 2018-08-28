@@ -1,5 +1,6 @@
 <style lang="less">
 @import '../../static/style/userComBtn.less';
+@import '../../static/style/levelComIcon.less';
 .rank-deatail {
   padding-bottom: 40rpx;
   // height: 100%;
@@ -24,14 +25,14 @@
     }
   }
   .btn-1 {
-    height: 46rpx;
-    display: flex;
-    align-items: center;
-    background-image: url('http://s29.9956.cn/res/zhushou/danye/topking/btn1.png');
-    background-size: 100% 100%;
-    font-size: 20rpx;
-    color: #b7e3f6;
-    justify-content: space-around;
+    // height: 46rpx;
+    // display: flex;
+    // align-items: center;
+    // // background-image: url('http://s29.9956.cn/res/zhushou/danye/topking/btn1.png');
+    // background-size: 100% 100%;
+    // font-size: 20rpx;
+    // color: #b7e3f6;
+    // justify-content: space-around;
   }
   .btn-2 {
     height: 46rpx;
@@ -257,13 +258,13 @@
       <view class="t-name">{{playerData.NickName}}</view>
       <view class="t-part"><text wx:if="{{playerData.TeamName}}">所属部门：{{playerData.TeamName}} </text><text> 姓名：{{playerData.NickName}}</text></view>
       <view class="lf-top btn-2" wx:if="{{playerData.UserTitle}}">{{playerData.UserTitle}}</view>
-      <view class="lf-btm btn-1">{{playerData.Level}}</view>
+      <view class="lf-btm btn-1 level-com-icon level-{{playerData.Rank}}">{{playerData.Level}}</view>
       <view class="rt-top btn-2" @tap="handleJumpPower">战力：{{playerData.Power}}</view>
       <view class="rt-btm btn-2">{{playerData.Vocation}}</view>
     </view>
     <view class="info-wrap mrg40">
       <image class="titl" src="../../static/img/rank/intro.png"  mode="scaleToFill" />
-      <view>安卓系统，QQ微信都可以，人好，心肠好，不演不挂机不骂人不扣分，每天都时间多，活跃，要求是段位无所谓，铭文两套以上，英雄多一点</view>
+      <view>暂无说明</view>
     </view>
      <view class="gift-wrap">
        <view class="gift-btn">

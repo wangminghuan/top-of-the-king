@@ -1,6 +1,7 @@
 <style lang="less">
 @import '../static/style/cardComItem.less';
 @import '../static/style/tabCom.less';
+@import '../static/style/levelComIcon.less';
 .page-my {
   padding: 0 38rpx;
   .my-tool {
@@ -225,7 +226,7 @@
        <view class="my-info">
           <view class="lf">
             <image src="{{heroInfo.HeadImg}}" mode="scaleToFill" />
-          <view class="name-box">{{heroInfo.Level}}</view>          
+          <view class="level-com-icon level-{{heroInfo.Rank}}" @tap="handleClikLevel">{{heroInfo.Level}}</view>          
           </view>
           <view class="rt">
             <view class="rt-top">
@@ -333,6 +334,7 @@ export default class pageMy extends wepy.page {
   };
   components = {};
   data = {
+    levelIndex:"I",//
     isShowPop: false,
     isEditName: false,
     tabArr: [
